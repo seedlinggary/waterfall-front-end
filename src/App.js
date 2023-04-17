@@ -1,23 +1,39 @@
-import logo from './logo.svg';
 import './App.css';
+import Home from './Home';
+import About from './About';
+import ComingSoon from './ComingSoon';
+import Contact from './Contact';
+import Calculator from './calculator/Calculator';
+import Workflow from './Workflow';
+import NotFound from './NotFound';
+import Navbar from './Navbar';
+import Footer from './Footer';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import Definitions from './Definitions';
 
 function App() {
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+    <Router>
+      <div className="App">
+        <Navbar />
+        <div className="content">
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/calculator" element={<Calculator />} />
+            <Route path="/workflow" element={<Workflow />} />
+            <Route path="/definitions" element={<Definitions />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/comingsoon" element={<ComingSoon />} />
+            <Route path="*" element={<NotFound />} />
+
+          </Routes>
+        </div>
+        <Footer />
+      </div>
+    </Router>
     </div>
   );
 }
