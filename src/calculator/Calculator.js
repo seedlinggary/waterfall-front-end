@@ -69,7 +69,7 @@ const Calculator = () => {
         "investment_type": investment_type,
         "cost": cost_of_property,
         // "mortgage_amount": bank_loan_amount,
-        "investment_return": profit,
+        "investment_return": profit
 
         },
          "llcs": [{"name": "Gary's LLC",
@@ -88,6 +88,7 @@ const Calculator = () => {
          "amount_lp_invested": lp_amount,
          "fees": fee,
         "investors": investora,
+        "investment_frequency": profitFrequency,
         "capital_calls": []
         }]
         }  
@@ -95,8 +96,20 @@ const Calculator = () => {
     }
     const inputSavedData = e => {
       e.preventDefault();
+      console.log(e.target.value)
       var savedData = JSON.parse(e.target.value);
-      setProfit(savedData.investment_info.investment_return)
+      console.log(savedData)
+      
+      const fixed_investment_return = savedData.investment_info.investment_return.map(myFunction);
+      
+      function myFunction(value, index, array) {
+        const new_value = value
+        new_value.value.date = Date.parse(value.value.date)
+        return new_value;
+      }
+      console.log(fixed_investment_return)
+      console.log(savedData.investment_info.investment_return)
+      setProfit(fixed_investment_return)
       console.log(savedData.investment_info.investment_return)
       
       setIRRPariPassu(savedData.llcs[0].waterfall_preferences.irr_parri_passu)
@@ -115,6 +128,11 @@ const Calculator = () => {
       setGPAmount(savedData.llcs[0].amount_gp_invested)
       setPercentageInvestmentOwned(savedData.llcs[0].percentage_investment_owned)
       setFee(savedData.llcs[0].fees)
+      const new_investment_frequency  = savedData.llcs[0].investment_frequency
+      new_investment_frequency.start_date = Date.parse(savedData.llcs[0].investment_frequency.start_date)
+      console.log(new_investment_frequency)
+      console.log(savedData.llcs[0].investment_frequency)
+      setProfitFrequency(savedData.llcs[0].investment_frequency)
 
     }
     const inputArr = [
@@ -144,17 +162,20 @@ const Calculator = () => {
       ];
     const [fee, setFee] = useState(feeArr);
 
-
+    const timeElapsed = Date.now();
+    const today = new Date(timeElapsed);
       const profitArr = [
         {
-          value: {'profit' : 1000},
+          value: {'profit' : 1000,
+                  'date': today},
                   type: "",
       id: 0       }
 
       ];
     
     
-    const [profit, setProfit] = useState(profitArr);
+      const [profit, setProfit] = useState(profitArr);
+      const [profitFrequency, setProfitFrequency] = useState({'rate':'Year','start_date': today} );
 
 
       const investorArr = [
@@ -548,7 +569,7 @@ const SendCatchUp = (e) => {
           "investment_type": investment_type,
           "cost": cost_of_property,
           // "mortgage_amount": bank_loan_amount,
-          "investment_return": profit,
+          "investment_return": profit
 
           },
            "llcs": [{"name": "Gary's LLC",
@@ -566,7 +587,8 @@ const SendCatchUp = (e) => {
            "amount_gp_invested": gp_amount,
            "amount_lp_invested": lp_amount,
            "fees": fee,
-          "investors": investora
+          "investors": investora,
+          "investment_frequency": profitFrequency,
           }]
           }  
 
@@ -640,7 +662,8 @@ const SendCatchUp = (e) => {
              "amount_gp_invested": gp_amount,
              "amount_lp_invested": lp_amount,
              "fees": fee,
-            "investors": investora
+            "investors": investora,
+            "investment_frequency": profitFrequency,
             }]
             }  
 
@@ -1007,7 +1030,7 @@ const SendCatchUp = (e) => {
         <Accordion.Header>Years Of Profit</Accordion.Header>
         <Accordion.Body>
     
-        <Profit profit={profit} setProfit={setProfit}></Profit>
+        <Profit profit={profit} setProfit={setProfit} profitFrequency={profitFrequency} setProfitFrequency={setProfitFrequency}></Profit>
 
               </Accordion.Body>
       </Accordion.Item>    

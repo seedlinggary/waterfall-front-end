@@ -46,7 +46,6 @@ const Hurdle = ({arr, setArr}) => {
         }
         setArr(s => {
           const newArr = s.slice();
-          console.log(newArr[index])
           newArr[index].value.limited_partner_percent = e.target.value;
     
           return newArr;
@@ -80,16 +79,10 @@ const Hurdle = ({arr, setArr}) => {
         setArr(s => {
           const newArr = s.slice();
           newArr[index].value['hurdle'] = e.target.value;
-          console.log(newArr[index])
-
           return newArr;
         });
       };
-      
-
-            
               
-       
             return ( 
         <div > 
  
