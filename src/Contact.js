@@ -62,7 +62,7 @@ const User = () => {
         <Col xs={{ span: 3, offset: 1 }}> 
         <img
           className="d-block w-100"
-          src={require('./pictures/artem-riasnianskyi-lYnGCjTCRj4-unsplash.jpg')}
+          // src={require('./pictures/artem-riasnianskyi-lYnGCjTCRj4-unsplash.jpg')}
                     alt="Second slide"
         />
     </Col>

@@ -12,9 +12,15 @@ import Accordion from 'react-bootstrap/Accordion';
 import Offcanvas from 'react-bootstrap/Offcanvas';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Alert from 'react-bootstrap/Alert';
-// import Profit from './calucator/Profit';
-const Calculator = () => {
+import Profit from './Profit';
+import Hurdle from './Hurdle';
+import Fee from './Fee';
+import Investor from './Investor';
+import {parentList} from './GrabFresh'
+
+const Calculator = ({pageID, amountOfWaterfalls, setAmountOfWaterfalls}) => {
     const navigate = useNavigate()
+    console.log(amountOfWaterfalls)
     const [irr_parri_passu, setIRRPariPassu] = useState(true)
     const [pay_gp_principal, setPayGPPrincipal] = useState(false)
     const [pay_gp_prefered, setPayGPPrefered] = useState(false)
@@ -125,70 +131,7 @@ const Calculator = () => {
     
       ];
         const [arr, setArr] = useState(inputArr);
-    const addInput = () => {
-        setArr(s => {
-          const lastId = s[s.length - 1].id;
-          return [
-            ...s,
-            {
-                value: {'limited_partner_percent' : 0,
-                        'sponsor_percent' : 1,
-                    'hurdle' : .8},
-                    type: ""
-            }
-          ];
-        });
-      };
 
-      const handleLPChange = e => {
-        e.preventDefault();
-        let index = e.target.id;
-        if (e.target.id > 0){
-            index = e.target.id
-        }else{
-            index = 0
-        }
-        setArr(s => {
-          const newArr = s.slice();
-          console.log(newArr[index])
-          newArr[index].value.limited_partner_percent = e.target.value;
-    
-          return newArr;
-        });
-      };   
-      const handleGPChange = e => {
-        e.preventDefault();
-    
-        let index = e.target.id;
-        if (e.target.id > 0){
-            index = e.target.id
-        }else{
-            index = 0
-        }
-        setArr(s => {
-          const newArr = s.slice();
-          newArr[index].value['sponsor_percent'] = e.target.value;
-    
-          return newArr;
-        });
-      };
-      const handleIRRChange = e => {
-        e.preventDefault();
-    
-        let index = e.target.id;
-        if (e.target.id > 0){
-            index = e.target.id
-        }else{
-            index = 0
-        }
-        setArr(s => {
-          const newArr = s.slice();
-          newArr[index].value['hurdle'] = e.target.value;
-          console.log(newArr[index])
-
-          return newArr;
-        });
-      };
       
     const feeArr = [
         {
@@ -204,197 +147,18 @@ const Calculator = () => {
       ];
     const [fee, setFee] = useState(feeArr);
 
-    const addFee = () => {
-        setFee(s => {
-          const lastId = s[s.length - 1].id;
-          return [
-            ...s,
-            {
-                value: {'year' : 1000,
-                'before_what_hurdle' : 1,
-                'who_gets_this_fee' : 'NEED AN INPUT',
-                'percentage_or_cash' : 324,
-                'type_transaction' : 'cash',
-                'type_of_fee' : 'hurdle'},
-                    type: ""
-            }
-          ];
-        });
-      };
-        
-      const handleFeeYearChange = e => {
-        e.preventDefault();
-        let index = e.target.id;
-        if (e.target.id > 0){
-            index = e.target.id
-        }else{
-            index = 0
-        }
-        setFee(s => {
-          const newFee = s.slice();
-          console.log(newFee[index])
-          newFee[index].value.year = e.target.value;
-    
-          return newFee;
-        });
-      };
-      const handleFeeHurdleChange = e => {
-        e.preventDefault();
-        let index = e.target.id;
-        if (e.target.id > 0){
-            index = e.target.id
-        }else{
-            index = 0
-        }
-        setFee(s => {
-          const newFee = s.slice();
-          console.log(newFee[index])
-          newFee[index].value.before_what_hurdle = e.target.value;
-    
-          return newFee;
-        });
-      };
-      const handleFeeWhomChange = e => {
-        e.preventDefault();
-        let index = e.target.id;
-        if (e.target.id > 0){
-            index = e.target.id
-        }else{
-            index = 0
-        }
-        setFee(s => {
-          const newFee = s.slice();
-          console.log(newFee[index])
-          newFee[index].value.who_gets_this_fee = e.target.value;
-    
-          return newFee;
-        });
-      };
-      const handleFeePCChange = e => {
-        e.preventDefault();
-        let index = e.target.id;
-        if (e.target.id > 0){
-            index = e.target.id
-        }else{
-            index = 0
-        }
-        setFee(s => {
-          const newFee = s.slice();
-          console.log(newFee[index])
-          newFee[index].value.percentage_or_cash = e.target.value;
-    
-          return newFee;
-        });
-      };
-      const handleFeeTransactionChange = e => {
-        e.preventDefault();
-        let index = e.target.id;
-        if (e.target.id > 0){
-            index = e.target.id
-        }else{
-            index = 0
-        }
-        setFee(s => {
-          const newFee = s.slice();
-          console.log(newFee[index])
-          newFee[index].value.type_transaction = e.target.value;
-    
-          return newFee;
-        });
-      };
-      const handleFeeTypeChange = e => {
-        e.preventDefault();
-        let index = e.target.id;
-        if (e.target.id > 0){
-            index = e.target.id
-        }else{
-            index = 0
-        }
-        setFee(s => {
-          const newFee = s.slice();
-          console.log(newFee[index])
-          newFee[index].value.type_of_fee = e.target.value;
-    
-          return newFee;
-        });
-      };
 
       const profitArr = [
         {
           value: {'profit' : 1000},
                   type: "",
-      id: 0       },
-      {
-        value: {'profit' : 2},
-                type: "",
-    id: 1       },
-    {
-      value: {'profit' : 3},
-              type: "",
-  id: 2       },
-  {
-    value: {'profit' : 4},
-            type: "",
-id: 3       },
+      id: 0       }
 
       ];
     
     
     const [profit, setProfit] = useState(profitArr);
 
-    const deleteYear = e => {
-      // e.preventDefault();
-      let index = e.target.id;
-      if (e.target.id > 0){
-          index = e.target.id
-      }else{
-          index = 0
-      }
-      console.log(index)
-      console.log(e.target.value)
-      console.log(profit[index])
-      // profit.splice(index, 1)
-      setProfit(profits=> profits.filter((s,i)=>(i != e.target.id)))
-      // setProfit(s => {
-      //   const removed = s.splice(index-1, 1)
-      //   console.log(s)
-      //   console.log(removed)
-      //   // newProfit[index].value.profit = e.target.value;
-  
-      //   return s;
-      // });
-        }
-    const addProfit = () => {
-        setProfit(s => {
-          const lastId = s[s.length - 1].id;
-          return [
-            ...s,
-            {
-                value: {'profit' : 1000},
-                    type: "",
-                    // id: lastId+1
-            }
-          ];
-        });
-      };
-
-      const handleProfitChange = e => {
-        e.preventDefault();
-        let index = e.target.id;
-        if (e.target.id > 0){
-            index = e.target.id
-        }else{
-            index = 0
-        }
-        console.log(profit)
-        setProfit(s => {
-          const newProfit = s.slice();
-          console.log(newProfit[index])
-          newProfit[index].value.profit = e.target.value;
-    
-          return newProfit;
-        });
-      };
 
       const investorArr = [
         {
@@ -405,101 +169,6 @@ id: 3       },
     
       ];
     const [investora, setInvestorA] = useState(investorArr);
-    const addInvestorInput = () => {
-        setInvestorA(s => {
-          const lastId = s[s.length - 1].id;
-          return [
-            ...s,
-            {
-                value: {'name': "gary",
-                "email": "yahoo@all.com",
-                "country_of_origin": "US",
-                "tax_percentage_withheld": .06,
-                "amount_invested": 100,
-                "year_bought_in": 1},
-                    type: ""
-            }
-          ];
-        });
-      };
-
-      const handleInvestorNameChange = e => {
-        e.preventDefault();
-        let index = e.target.id;
-        if (e.target.id > 0){
-            index = e.target.id
-        }else{
-            index = 0
-        }
-        setInvestorA(s => {
-          const newArr = s.slice();
-          console.log(newArr[index])
-          newArr[index].value.name = e.target.value;
-          newArr[index].value.email = e.target.value;
-    
-          return newArr;
-        });
-      }; const handleInvestorEmailChange = e => {
-        e.preventDefault();
-        let index = e.target.id;
-        if (e.target.id > 0){
-            index = e.target.id
-        }else{
-            index = 0
-        }
-        setInvestorA(s => {
-          const newArr = s.slice();
-          console.log(newArr[index])
-          newArr[index].value.email = e.target.value;
-    
-          return newArr;
-        });
-      }; const handleInvestorCountryChange = e => {
-        e.preventDefault();
-        let index = e.target.id;
-        if (e.target.id > 0){
-            index = e.target.id
-        }else{
-            index = 0
-        }
-        setInvestorA(s => {
-          const newArr = s.slice();
-          console.log(newArr[index])
-          newArr[index].value.country_of_origin = e.target.value;
-    
-          return newArr;
-        });
-      }; const handleInvestorWithheldChange = e => {
-        e.preventDefault();
-        let index = e.target.id;
-        if (e.target.id > 0){
-            index = e.target.id
-        }else{
-            index = 0
-        }
-        setInvestorA(s => {
-          const newArr = s.slice();
-          console.log(newArr[index])
-          newArr[index].value.tax_percentage_withheld = e.target.value;
-    
-          return newArr;
-        });
-      }; const handleInvestorAmountInvestedChange = e => {
-        e.preventDefault();
-        let index = e.target.id;
-        if (e.target.id > 0){
-            index = e.target.id
-        }else{
-            index = 0
-        }
-        setInvestorA(s => {
-          const newArr = s.slice();
-          console.log(newArr[index])
-          newArr[index].value.amount_invested = e.target.value;
-    
-          return newArr;
-        });
-      };
       const SendPromoteWaterfall = (e) => {
 
         setIRRPariPassu(true)
@@ -877,7 +546,7 @@ const SendCatchUp = (e) => {
         // SendApi()
     }
     const SendApi = (e) => {
-      let info = {
+      let info = [{
           "investment_info": {"name": investment_name,
           "investment_type": investment_type,
           "cost": cost_of_property,
@@ -902,13 +571,16 @@ const SendCatchUp = (e) => {
            "fees": fee,
           "investors": investora
           }]
-          }  
+          }]
+          // parentList.pop(info)
+          // console.log(parentList)
 
-      let backend = 'http://127.0.0.1:5000'
-      // let backend = 'http://waterfall-env.eba-a4a3q6d3.ap-northeast-1.elasticbeanstalk.com/'
+      // let backend = 'http://127.0.0.1:5000'
+      let backend = 'http://waterfall-env.eba-a4a3q6d3.ap-northeast-1.elasticbeanstalk.com/'
       // let backend = 'https://d30c84rzmrhbgy.cloudfront.net'
       // let address = `/waterfall_calc`
       let address = `/investment_calc`
+      console.log(pay_gp_principal)
       const requestOptions = {
           method: 'POST',
           headers: { 'Content-Type': 'application/json',
@@ -1123,7 +795,11 @@ const SendCatchUp = (e) => {
     
             
             }    
-       
+            function addWaterfall() {
+              console.log(amountOfWaterfalls.length)
+              setAmountOfWaterfalls([...amountOfWaterfalls, amountOfWaterfalls.length ]);
+              console.log(amountOfWaterfalls.length)
+            }
             return ( 
         <div > 
           {showError &&  <Alert variant="danger" onClose={() => setShowError(false)} dismissible>
@@ -1135,6 +811,17 @@ const SendCatchUp = (e) => {
          
                 <>
                 <br></br>
+                <br/>
+                <div>
+      {/* {amountOfWaterfalls.map((amount, index) => ( */}
+        <div>
+          <p>{pageID}</p>
+        <button onClick={addWaterfall}>Add Waterfall</button>
+        </div>
+      {/* ))} */}
+      
+    </div>
+    <br></br>
                 <Row>
       <Col md={{ span: 2, offset: 3 }}>   
       <Button variant="info" onClick={handleShow}  >
@@ -1157,11 +844,12 @@ const SendCatchUp = (e) => {
 
       <Offcanvas show={showSave} onHide={handleCloseSave} placement="end">
         <Offcanvas.Header closeButton>
-          <Offcanvas.Title>Offcanvas</Offcanvas.Title>
+          <Offcanvas.Title>Saved Data</Offcanvas.Title>
         </Offcanvas.Header>
         <Offcanvas.Body>
-          Some text as placeholder. In real life you can have the elements you
-          have chosen. Like, text, images, lists, etc.
+          To save time click the button bellow. Save the code somewhere safe for later.
+           Whenever you come back take the code you saved and place it in the text box bellow. All of your information and preferences will return
+          <br></br>
           <Button variant="info" onClick={saveInfo}>
         Show me what to save
       </Button>
@@ -1169,7 +857,7 @@ const SendCatchUp = (e) => {
       
       </br>
       <ListGroup>
-      <ListGroup.Item disabled>Take this info and out it somewhere safe</ListGroup.Item>
+      <ListGroup.Item disabled>Take this info and put it somewhere safe</ListGroup.Item>
       <ListGroup.Item>{savedInfo}</ListGroup.Item>
     </ListGroup>
     <Form>
@@ -1184,7 +872,7 @@ const SendCatchUp = (e) => {
     
       <Offcanvas show={sho} onHide={handleClos} scroll={true} backdrop={true}>
         <Offcanvas.Header closeButton>
-          <Offcanvas.Title>Offcanvas</Offcanvas.Title>
+          <Offcanvas.Title>Sample Inputs</Offcanvas.Title>
         </Offcanvas.Header>
         <Offcanvas.Body>
         <ListGroup>
@@ -1339,24 +1027,7 @@ const SendCatchUp = (e) => {
         <Accordion.Header>Years Of Profit</Accordion.Header>
         <Accordion.Body>
     
-      {profit.map((item, i) => {
-                    return (
-                        
-        <div key={i}>
-                  <Row className="mb-3">
-              <Form.Group as={Col}  >
-              <Form.Label>Year {i + 1}'s worth of profit <Button variant="danger" id={i} onClick={deleteYear}>
-            Close
-          </Button></Form.Label >
-              <Form.Control  value={item.value.profit} id={i}  onChange={handleProfitChange}/>
-            </Form.Group>
-            
-          
-            </Row>
-      </div>
-                    )
-      })} 
-          <Button  variant="outline-primary" onClick={addProfit}>add more years of profit</Button>
+        <Profit profit={profit} setProfit={setProfit}></Profit>
 
               </Accordion.Body>
       </Accordion.Item>    
@@ -1476,141 +1147,42 @@ const SendCatchUp = (e) => {
       <Accordion.Item eventKey="2">
         <Accordion.Header>Split and Hurdle Information</Accordion.Header>
         <Accordion.Body>
-  
+        <Hurdle arr={arr} setArr={setArr}></Hurdle>
 
-    <Button  variant="primary" onClick={addInput}>add more  hurdles</Button>
-    <p> The first hurdle will be the preferred return.</p>
-      {arr.map((item, i) => {
-                    return (
-                        
-        <div>
-           {i == 0 && <h3>Preferred Return: </h3>}
-           {i != 0 && <h3>Hurdle {i}: </h3>}
-                  <Row className="mb-3">
-                  {i != 0 && <>   <Form.Group as={Col}  >
-              <Form.Label>LP's take of the cut </Form.Label >
-              <Form.Control  placeholder={item.value.limited_partner_percent} id={i}  onChange={handleLPChange}/>
-            </Form.Group>
-            <Form.Group as={Col}>
-              <Form.Label>GP's take of the cut (Promote amount)</Form.Label>
-              <Form.Control  placeholder={item.value.sponsor_percent}  id={i} onChange={handleGPChange}/>
-            </Form.Group></>}
-           
-            <Form.Group as={Col} >
-              <Form.Label>Hurdle top amount</Form.Label>
-              <Form.Control  placeholder={item.value.hurdle} id={i} onChange={handleIRRChange} />
-            </Form.Group>
-            </Row>
-      </div>
-                    )
-      })} 
               </Accordion.Body>
       </Accordion.Item>  
        <Accordion.Item eventKey="3">
         <Accordion.Header>Fee's (optional)</Accordion.Header>
         <Accordion.Body>
-    
-    <Button  variant="primary" onClick={addFee}>Add more Fees (advanced)</Button>
-      {fee.map((item, i) => {
-                    return (
-                    
-        <div>
-                  <Row className="mb-3">
-                  <Form.Group as={Col} >
-      <Form.Label>Type of fee</Form.Label>
-      <Form.Select aria-label="Default select example" id={i} onChange={handleFeeTypeChange}>
-            <option value={item.value.type_of_fee}>{item.value.type_of_fee} </option>
-            <option value="hurdle">hurdle </option>
-            <option value="capital">capital</option>
-            <option value="catch_up">catch_up</option>
-        </Form.Select>
-        </Form.Group>
-        {item.value.type_of_fee === "hurdle" && <>
-                  <Form.Group as={Col}  >
-              <Form.Label>What year would you like the fee to come in? Type x for all years.</Form.Label >
-              <Form.Control  placeholder={item.value.year} id={i}  onChange={handleFeeYearChange}/>
-            </Form.Group>
-            <Form.Group as={Col}>
-              <Form.Label>Before which Hurdle?</Form.Label>
-              <Form.Control  placeholder={item.value.before_what_hurdle}  id={i} onChange={handleFeeHurdleChange}/>
-            </Form.Group>
-            </>
-      }
-            <Form.Group as={Col} >
-              <Form.Label>Name of company that recieves this fee.</Form.Label>
-              <Form.Control  placeholder={item.value.who_gets_this_fee} id={i} onChange={handleFeeWhomChange} />
-            </Form.Group>
-            <Form.Group as={Col}  >
-              <Form.Label>Type in your amount of cash or percentage amount</Form.Label >
-              <Form.Control  placeholder={item.value.percentage_or_cash} id={i}  onChange={handleFeePCChange}/>
-            </Form.Group>
-
-            <Form.Group as={Col} >
-      <Form.Label>Choose Cash or Percentage</Form.Label>
-      <Form.Select aria-label="Default select example" id={i} onChange={handleFeeTransactionChange}>
-      
-            <option value={item.value.type_transaction}>{item.value.type_transaction} </option>
-            <option value="cash">cash </option>
-            <option value="percentage">percentage</option>
-        </Form.Select>
-        </Form.Group>
-
-
-            </Row>
-      </div>
-                    )
-      })} 
+    <Fee fee={fee} setFee={setFee}></Fee>
               </Accordion.Body>
       </Accordion.Item>     <Accordion.Item eventKey="4">
         <Accordion.Header>Add Investors (optional)</Accordion.Header>
         <Accordion.Body>
-          
+          <Investor investora={investora} setInvestorA={setInvestorA}></Investor>
 
-    <Button  variant="primary" onClick={addInvestorInput}>Add more Investors (advanced)</Button>
-      {investora.map((item, i) => {
-                    return (
-                        
-        <div>
-                  <Row className="mb-3">
-                  <Form.Group as={Col}  >
-              <Form.Label>Name</Form.Label >
-              <Form.Control  placeholder={item.value.name} id={i}  onChange={handleInvestorNameChange}/>
-            </Form.Group>
-            {/* <Form.Group as={Col}>
-              <Form.Label>Email</Form.Label>
-              <Form.Control  placeholder={item.value.email}  id={i} onChange={handleInvestorEmailChange}/>
-            </Form.Group> */}
-            <Form.Group as={Col} >
-              <Form.Label>Amount Invested</Form.Label>
-              <Form.Control  placeholder={item.value.amount_invested} id={i} onChange={handleInvestorAmountInvestedChange} />
-            </Form.Group>
-            <Form.Group as={Col}  >
-              <Form.Label>Country of Origin</Form.Label >
-              <Form.Control  placeholder={item.value.country_of_origin} id={i}  onChange={handleInvestorCountryChange}/>
-            </Form.Group>
-            <Form.Group as={Col}  >
-              <Form.Label>Tax Withholding percentage</Form.Label >
-              <Form.Control  placeholder={item.value.tax_percentage_withheld} id={i}  onChange={handleInvestorWithheldChange}/>
-            </Form.Group>
-
-
-            </Row>
-      </div>
-                    )
-      })} 
               </Accordion.Body>
       </Accordion.Item>
     </Accordion>
 
     <br></br>
-        <Button variant="success" onClick={SendApi}>
+       
+<br></br>
+      
+      <Row>
+      <Col md={{ span: 2, offset: 3 }}>   
+      <Button variant="success" onClick={SendApi}>
         Create Waterfall
       </Button>
-<br></br>
-      <Button variant="info" onClick={downloadcsv}>
-        download csv
+
+      
+      </Col>  <Col md={{ span: 2, offset: 2 }}>   
+      <Button variant="success" onClick={downloadcsv}>
+        Download .xlsx File
       </Button>
 
+    </Col>  
+               </Row>
       </Col>
         <Col></Col>
 </Row>

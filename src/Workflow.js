@@ -49,7 +49,7 @@ const Workflow = () => {
     </Col>
         <Col xs={{ span: 3, offset: 2 }}>   <img
           className="d-block w-100"
-          src={require('./pictures/new-data-services-0tSiofevpUs-unsplash.jpg')}
+          // src={require('./pictures/new-data-services-0tSiofevpUs-unsplash.jpg')}
                     alt="Second slide"
         /></Col>
       </Row>
@@ -57,7 +57,7 @@ const Workflow = () => {
         <Col xs={{ span: 3, offset: 1 }}> 
         <img
           className="d-block w-100"
-          src={require('./pictures/afshin-t2y-9iMwtLr1WvI-unsplash.jpg')}
+          // src={require('./pictures/afshin-t2y-9iMwtLr1WvI-unsplash.jpg')}
                     alt="Second slide"
         />
     </Col>
@@ -81,7 +81,7 @@ const Workflow = () => {
 </Col>
         <Col xs={{ span: 3, offset: 2 }}>   <img
           className="d-block w-100"
-          src={require('./pictures/kelly-sikkema-HymOWIY2o3s-unsplash.jpg')}
+          // src={require('./pictures/kelly-sikkema-HymOWIY2o3s-unsplash.jpg')}
                     alt="Second slide"
         /></Col>
       </Row>
@@ -89,7 +89,7 @@ const Workflow = () => {
         <Col xs={{ span: 3, offset: 1 }}> 
         <img
           className="d-block w-100"
-          src={require('./pictures/sketching.jpg')}
+          // src={require('./pictures/sketching.jpg')}
                     alt="Second slide"
         />
     </Col>
@@ -110,7 +110,7 @@ const Workflow = () => {
        </Col>
         <Col xs={{ span: 3, offset: 2 }}>   <img
           className="d-block w-100"
-          src={require('./pictures/new-data-services-0tSiofevpUs-unsplash.jpg')}
+          // src={require('./pictures/new-data-services-0tSiofevpUs-unsplash.jpg')}
                     alt="Second slide"
         /></Col>
       </Row>
@@ -118,7 +118,7 @@ const Workflow = () => {
         <Col xs={{ span: 3, offset: 1 }}> 
         <img
           className="d-block w-100"
-          src={require('./pictures/afshin-t2y-9iMwtLr1WvI-unsplash.jpg')}
+          // src={require('./pictures/afshin-t2y-9iMwtLr1WvI-unsplash.jpg')}
                     alt="Second slide"
         />
     </Col>
@@ -138,7 +138,7 @@ const Workflow = () => {
        </Col>
         <Col xs={{ span: 3, offset: 2 }}>   <img
           className="d-block w-100"
-          src={require('./pictures/kelly-sikkema-HymOWIY2o3s-unsplash.jpg')}
+          // src={require('./pictures/kelly-sikkema-HymOWIY2o3s-unsplash.jpg')}
                     alt="Second slide"
         /></Col>
       </Row>
@@ -146,7 +146,7 @@ const Workflow = () => {
         <Col xs={{ span: 3, offset: 1 }}> 
         <img
           className="d-block w-100"
-          src={require('./pictures/sketching.jpg')}
+          // src={require('./pictures/sketching.jpg')}
                     alt="Second slide"
         />
     </Col>
@@ -165,7 +165,7 @@ const Workflow = () => {
        </Col>
         <Col xs={{ span: 3, offset: 2 }}>   <img
           className="d-block w-100"
-          src={require('./pictures/new-data-services-0tSiofevpUs-unsplash.jpg')}
+          // src={require('./pictures/new-data-services-0tSiofevpUs-unsplash.jpg')}
                     alt="Second slide"
         /></Col>
       </Row>

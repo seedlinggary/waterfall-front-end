@@ -21,7 +21,7 @@ const User = () => {
         width={710}
         height={800}
         alt="171x180"
-        src={require('./pictures/ben-spray-gEvMA8O6Et4-unsplash.jpg')}
+        // src={require('./pictures/ben-spray-gEvMA8O6Et4-unsplash.jpg')}
       />
     
     </Figure>
@@ -39,7 +39,7 @@ const User = () => {
       <Row>
       <Col md={{ span: 2, offset: 2 }}>    <Card >
           
-      <Card.Img variant="top"  src={require('./pictures/brian-tromp-B4VXQIJ_oew-unsplash.jpg')} />
+      {/* <Card.Img variant="top"  src={require('./pictures/brian-tromp-B4VXQIJ_oew-unsplash.jpg')} /> */}
       <Card.Body>
         <Card.Title>Mom's Review</Card.Title>
         <Card.Text>
@@ -49,7 +49,7 @@ const User = () => {
 
    
     </Card></Col>  <Col md={{ span: 2, offset: 1 }}>    <Card>
-      <Card.Img variant="top"  src={require('./pictures/m-cooper-vwIthdobS3o-unsplash.jpg')} />
+      {/* <Card.Img variant="top"  src={require('./pictures/m-cooper-vwIthdobS3o-unsplash.jpg')} /> */}
       <Card.Body>
         <Card.Title>Adina's Review</Card.Title>
         <Card.Text>
@@ -59,7 +59,7 @@ const User = () => {
 
      
     </Card></Col>  <Col md={{ span: 2, offset: 1 }}>    <Card >
-      <Card.Img variant="top"  src={require('./pictures/jakob-owens-DhS2f0QO7z4-unsplash.jpg')} />
+      {/* <Card.Img variant="top"  src={require('./pictures/jakob-owens-DhS2f0QO7z4-unsplash.jpg')} /> */}
       <Card.Body>
         <Card.Title>Card Title</Card.Title>
         <Card.Text>
