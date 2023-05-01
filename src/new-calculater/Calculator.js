@@ -1,26 +1,21 @@
 import React, { useState } from 'react'
-import Button from 'react-bootstrap/Button';
-import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import { useNavigate } from "react-router-dom";
-import Table from 'react-bootstrap/Table';
+ 
 import Modal from 'react-bootstrap/Modal';
-import Tab from 'react-bootstrap/Tab';
-import Tabs from 'react-bootstrap/Tabs';
 import Accordion from 'react-bootstrap/Accordion';
 import Offcanvas from 'react-bootstrap/Offcanvas';
 import ListGroup from 'react-bootstrap/ListGroup';
-import Alert from 'react-bootstrap/Alert';
+
 import Profit from './Profit';
-import Hurdle from './Hurdle';
-import Fee from './Fee';
-import Investor from './Investor';
+import Hurdle from '../calculator/Hurdle';
+import Fee from '../calculator/Fee';
+import Investor from '../calculator/Investor';
 import {parentList} from './GrabFresh'
 
 const Calculator = ({pageID, amountOfWaterfalls, setAmountOfWaterfalls}) => {
     const navigate = useNavigate()
-    console.log(amountOfWaterfalls)
     const [irr_parri_passu, setIRRPariPassu] = useState(true)
     const [pay_gp_principal, setPayGPPrincipal] = useState(false)
     const [pay_gp_prefered, setPayGPPrefered] = useState(false)
@@ -62,7 +57,7 @@ const Calculator = ({pageID, amountOfWaterfalls, setAmountOfWaterfalls}) => {
     const handleCloseSave = () => setShowSave(false);
     const handleShowSave = () => setShowSave(true);
   
-    const [showError, setShowError] = useState(true);
+    
 
     const [savedInfo, setSavedInfo] = useState();
 
@@ -72,7 +67,7 @@ const Calculator = ({pageID, amountOfWaterfalls, setAmountOfWaterfalls}) => {
         "investment_type": investment_type,
         "cost": cost_of_property,
         // "mortgage_amount": bank_loan_amount,
-        "investment_return": profit,
+        "investment_return": profit
 
         },
          "llcs": [{"name": "Gary's LLC",
@@ -91,6 +86,7 @@ const Calculator = ({pageID, amountOfWaterfalls, setAmountOfWaterfalls}) => {
          "amount_lp_invested": lp_amount,
          "fees": fee,
         "investors": investora,
+        "investment_frequency": profitFrequency,
         "capital_calls": []
         }]
         }  
@@ -98,8 +94,20 @@ const Calculator = ({pageID, amountOfWaterfalls, setAmountOfWaterfalls}) => {
     }
     const inputSavedData = e => {
       e.preventDefault();
+      console.log(e.target.value)
       var savedData = JSON.parse(e.target.value);
-      setProfit(savedData.investment_info.investment_return)
+      console.log(savedData)
+      
+      const fixed_investment_return = savedData.investment_info.investment_return.map(myFunction);
+      
+      function myFunction(value, index, array) {
+        const new_value = value
+        new_value.value.date = Date.parse(value.value.date)
+        return new_value;
+      }
+      console.log(fixed_investment_return)
+      console.log(savedData.investment_info.investment_return)
+      setProfit(fixed_investment_return)
       console.log(savedData.investment_info.investment_return)
       
       setIRRPariPassu(savedData.llcs[0].waterfall_preferences.irr_parri_passu)
@@ -118,6 +126,11 @@ const Calculator = ({pageID, amountOfWaterfalls, setAmountOfWaterfalls}) => {
       setGPAmount(savedData.llcs[0].amount_gp_invested)
       setPercentageInvestmentOwned(savedData.llcs[0].percentage_investment_owned)
       setFee(savedData.llcs[0].fees)
+      const new_investment_frequency  = savedData.llcs[0].investment_frequency
+      new_investment_frequency.start_date = Date.parse(savedData.llcs[0].investment_frequency.start_date)
+      console.log(new_investment_frequency)
+      console.log(savedData.llcs[0].investment_frequency)
+      setProfitFrequency(savedData.llcs[0].investment_frequency)
 
     }
     const inputArr = [
@@ -147,17 +160,20 @@ const Calculator = ({pageID, amountOfWaterfalls, setAmountOfWaterfalls}) => {
       ];
     const [fee, setFee] = useState(feeArr);
 
-
+    const timeElapsed = Date.now();
+    const today = new Date(timeElapsed);
       const profitArr = [
         {
-          value: {'profit' : 1000},
+          value: {'profit' : 1000,
+                  'date': today},
                   type: "",
       id: 0       }
 
       ];
     
     
-    const [profit, setProfit] = useState(profitArr);
+      const [profit, setProfit] = useState(profitArr);
+      const [profitFrequency, setProfitFrequency] = useState({'rate':'Year','start_date': today} );
 
 
       const investorArr = [
@@ -551,7 +567,7 @@ const SendCatchUp = (e) => {
           "investment_type": investment_type,
           "cost": cost_of_property,
           // "mortgage_amount": bank_loan_amount,
-          "investment_return": profit,
+          "investment_return": profit
 
           },
            "llcs": [{"name": "Gary's LLC",
@@ -569,11 +585,12 @@ const SendCatchUp = (e) => {
            "amount_gp_invested": gp_amount,
            "amount_lp_invested": lp_amount,
            "fees": fee,
-          "investors": investora
+          "investors": investora,
+          "investment_frequency": profitFrequency,
           }]
-          }]
-          // parentList.pop(info)
-          // console.log(parentList)
+          }  ]
+          parentList.push(info)
+          console.log(parentList)
 
       // let backend = 'http://127.0.0.1:5000'
       let backend = 'http://waterfall-env.eba-a4a3q6d3.ap-northeast-1.elasticbeanstalk.com/'
@@ -645,7 +662,8 @@ const SendCatchUp = (e) => {
              "amount_gp_invested": gp_amount,
              "amount_lp_invested": lp_amount,
              "fees": fee,
-            "investors": investora
+            "investors": investora,
+            "investment_frequency": profitFrequency,
             }]
             }  
 
@@ -800,28 +818,17 @@ const SendCatchUp = (e) => {
               setAmountOfWaterfalls([...amountOfWaterfalls, amountOfWaterfalls.length ]);
               console.log(amountOfWaterfalls.length)
             }
+       
             return ( 
-        <div > 
-          {showError &&  <Alert variant="danger" onClose={() => setShowError(false)} dismissible>
-        <Alert.Heading>Warning!</Alert.Heading>
-        <p>
-          This website does not take responsibility for any information given or provided. Please compare your waterfall results against your own information for accurecy.
-        </p>
-      </Alert>}
+        <div> 
          
                 <>
                 <br></br>
-                <br/>
                 <div>
-      {/* {amountOfWaterfalls.map((amount, index) => ( */}
-        <div>
-          <p>{pageID}</p>
-        <button onClick={addWaterfall}>Add Waterfall</button>
-        </div>
-      {/* ))} */}
-      
-    </div>
-    <br></br>
+                  <p>{pageID}</p>
+                <button onClick={addWaterfall}>Add Waterfall</button>
+                </div>
+                <br></br>
                 <Row>
       <Col md={{ span: 2, offset: 3 }}>   
       <Button variant="info" onClick={handleShow}  >
@@ -997,9 +1004,9 @@ const SendCatchUp = (e) => {
     </>  
           <p>Add the Investment information so you can check the numbers and see if it is a good deal for you!</p>     
           <h3>Investment information</h3>     
-          <Row>
+          {/* <Row>
         <Col></Col>
-        <Col xs={9}>  
+        <Col xs={9}>   */}
       
               
       {/* <Row className="mb-3">
@@ -1027,7 +1034,7 @@ const SendCatchUp = (e) => {
         <Accordion.Header>Years Of Profit</Accordion.Header>
         <Accordion.Body>
     
-        <Profit profit={profit} setProfit={setProfit}></Profit>
+        <Profit profit={profit} setProfit={setProfit} profitFrequency={profitFrequency} setProfitFrequency={setProfitFrequency}></Profit>
 
               </Accordion.Body>
       </Accordion.Item>    
@@ -1169,443 +1176,7 @@ const SendCatchUp = (e) => {
        
 <br></br>
       
-      <Row>
-      <Col md={{ span: 2, offset: 3 }}>   
-      <Button variant="success" onClick={SendApi}>
-        Create Waterfall
-      </Button>
-
       
-      </Col>  <Col md={{ span: 2, offset: 2 }}>   
-      <Button variant="success" onClick={downloadcsv}>
-        Download .xlsx File
-      </Button>
-
-    </Col>  
-               </Row>
-      </Col>
-        <Col></Col>
-</Row>
-
-    
-      
-      
-      {isPending && <div> Loading... </div>}
-              {error && <div> error loading... </div>}
-              <Tabs
-      defaultActiveKey="home"
-      transition={false}
-      id="noanim-tab-example"
-      className="mb-3"
-    >
-      <Tab eventKey="home" title="General Waterfall Info">
-        <div>        <Table responsive>
-      <thead>
-        <tr>
-        <th>Hurdle</th>
-        <th>info/yrs</th>
-
-          {new_investor_profits && new_investor_profits.map((profit, index) => (
-            <th key={index}>{profit.toLocaleString()}
-            </th>
-          ))}
-        </tr>
-      </thead>
-      <tbody>
-
-              { waterfall_resp && waterfall_resp.map((year, id) =>  
-               
-               <tr>
-                               <td>{id + 1}  {new_splits  && new_splits[id] && <div>Hurdle:{new_splits[id].hurdle.toLocaleString()} Split:{new_splits[id].limited_partner_percent.toLocaleString()}/{new_splits[id].sponsor_percent.toLocaleString()}</div>}</td>
-
-                <td>
-                                            <Table striped>
-                                <tbody>
-                                
-                                <tr>
-                            <td>capital_returned</td>
-                            </tr>
-                            
-                          
-                            <tr>
-                            <td>Amount to distribute</td>
-                            </tr>
-                            <tr>
-                            <td>Sponsor Share</td>
-                            </tr>
-                            <tr>
-                            <td>LP share</td>
-                            </tr>
-                            
-                                </tbody>
-                                </Table>
-                                </td>
-               {year.map((inf, index) => (
-                 <td key={index}> 
-
-                    <Table striped>
-                        <tbody>
-                
-                        <tr>
-                            <td>{inf.capital_returned.toLocaleString()}  </td>
-                            </tr>
-                            
-                    
-                            <tr>
-                            <td>{inf.amount_to_distribute_in_this_hurdle.toLocaleString()}</td>
-                            </tr>
-                            <tr>
-                            <td>{inf.sponsor_share.toLocaleString()}</td>
-                            </tr>
-                            <tr>
-                            <td>{inf.lp_share.toLocaleString()}</td>
-                            </tr>
-                            
-                            {inf.fees && inf.fees.map((fee, index) => (
-                                 <>
-                                
-                            <tr>
-                            <td>{fee.name}: {fee.amount_given}/{fee.out_of}</td>
-                            </tr>
-                          
-                                
-                                 </>
-                            ))
-                            }
-                        </tbody>
-                        </Table>
-                 </td>
-               ))}
-               
-             </tr>
-           )}
-            </tbody>
-            <tbody>
-        <tr>
-        <th>Yearly Respective Profits</th>
-          {respective_returns && respective_returns.map((profit, index) => (
-                            <td key={index}> 
-
-                            <Table striped>
-                                <tbody>
-                                <tr>
-                            <td> Sponsor distributions</td>
-                            <td>{profit.sponsor.toLocaleString()}</td>
-                            </tr>       <tr>
-                            <td>LP distributions</td>
-                            <td>{profit.lp.toLocaleString()}</td>
-                            </tr>
-                                </tbody>
-                                </Table>
-                         </td>
-        
-               
-           
-      ))}
-        </tr>
-      </tbody>          <tbody>
-        <tr>
-        <th>Total returned  capital till this point in year</th>
-          {respective_returns && cap_by_yr.map((capital, index) => (
-                            <td key={index}> 
-
-                            <Table striped>
-                                <tbody>
-                                <tr>
-                            <td> Sponsor Capital</td>
-                            <td>{capital[1].toLocaleString()}</td>
-                            </tr>       <tr>
-                            <td>LP capital</td>
-                            <td>{capital[0].toLocaleString()}</td>
-                            </tr>
-                                </tbody>
-                                </Table>
-                         </td>
-            // const [cap_by_yr,setCapByYr] = useState(null)
-            // const [total_returned,setTotalReturned] = useState(null)
-        
-               
-           
-      ))}
-        </tr>
-      </tbody>
-      {total_returned && <div>    <tbody>
-        <tr>
-        <th>Total returned</th>
-
-        <Table striped>
-            <tbody>
-            <tr>
-        <td> Sponsor </td>
-        <td>{total_returned.sponsor.toLocaleString()}</td>
-        </tr>       <tr>
-        <td>LP </td>
-        <td>{total_returned.lp.toLocaleString()}</td>
-        </tr>
-            </tbody>
-            </Table>
-   
-        </tr>
-      </tbody></div>}
-  
-    </Table>
-</div>
-      </Tab><Tab eventKey="in_depth" title="In Depth Waterfall">
-        <div>        <Table responsive>
-      <thead>
-        <tr>
-        <th>Hurdle</th>
-        <th>info/yrs</th>
-
-          {new_investor_profits && new_investor_profits.map((profit, index) => (
-            <th key={index}>{profit.toLocaleString()}
-            </th>
-          ))}
-        </tr>
-      </thead>
-      <tbody>
-
-              { waterfall_resp && waterfall_resp.map((year, id) =>  
-               
-               <tr>
-                               <td>{id + 1}  {new_splits  && new_splits[id] && <div>Hurdle:{new_splits[id].hurdle.toLocaleString()} Split:{new_splits[id].limited_partner_percent.toLocaleString()}/{new_splits[id].sponsor_percent.toLocaleString()}</div>}</td>
-
-                <td>
-                                            <Table striped>
-                                <tbody>
-                                {id == 0 && <><tr>
-                            <td>gp_prehurdle  </td>
-                            </tr>
-                            
-                            <tr>
-                            <td>gp_hurdle_top_amount</td>
-                            </tr>
-                        </>}
-                                <tr>
-                            <td>capital_returned</td>
-                            </tr>
-                            
-                            <tr>
-                            <td>pre hurdle amount</td>
-                            </tr>
-                        
-                            <tr>
-                            <td>Amount to distribute</td>
-                            </tr>
-                            <tr>
-                            <td>Sponsor Share</td>
-                            </tr>
-                            <tr>
-                            <td>LP share</td>
-                            </tr>
-                            <tr>
-                            <td>hurdle_top_amount</td>
-                            </tr>
-                            <tr>
-                            <td>Money left to distribute</td>
-                            </tr>
-                            <tr>
-                            <td>total up to date distributions</td>
-                            </tr>
-                                </tbody>
-                                </Table>
-                                </td>
-               {year.map((inf, index) => (
-                 <td key={index}> 
-
-                    <Table striped>
-                        <tbody>
-                        {id == 0 && <><tr>
-                            <td>{inf.gp_prehurdle.toLocaleString()}  </td>
-                            </tr>
-                            
-                            <tr>
-                            <td>{inf.gp_hurdle_top_amount.toLocaleString()}</td>
-                            </tr>
-                        </>}
-                        <tr>
-                            <td>{inf.capital_returned.toLocaleString()}  </td>
-                            </tr>
-                            
-                            <tr>
-                            <td>{inf.prehurdle.toLocaleString()}</td>
-                            </tr>
-                        
-                            <tr>
-                            <td>{inf.amount_to_distribute_in_this_hurdle.toLocaleString()}</td>
-                            </tr>
-                            <tr>
-                            <td>{inf.sponsor_share.toLocaleString()}</td>
-                            </tr>
-                            <tr>
-                            <td>{inf.lp_share.toLocaleString()}</td>
-                            </tr>
-                            <tr>
-                            <td>{inf.hurdle_top_amount}</td>
-                            </tr>
-                            <tr>
-                            <td>{inf.money_left_to_distribute_after_hurdle.toLocaleString()}</td>
-                            </tr>
-                            <tr>
-                            <td>{inf.total_up_to_date_amount_distributed_to_lp.toLocaleString()}</td>
-                            </tr>
-                            {inf.fees && inf.fees.map((fee, index) => (
-                                 <>
-                                
-                            <tr>
-                            <td>{fee.name}: {fee.amount_given.toLocaleString()}/{fee.out_of.toLocaleString()}</td>
-                            </tr>
-                          
-                                
-                                 </>
-                            ))
-                            }
-                        </tbody>
-                        </Table>
-                 </td>
-               ))}
-               
-             </tr>
-           )}
-            </tbody>
-            <tbody>
-        <tr>
-        <th>Yearly Respective Profits</th>
-          {respective_returns && respective_returns.map((profit, index) => (
-                            <td key={index}> 
-
-                            <Table striped>
-                                <tbody>
-                                <tr>
-                            <td> Sponsor distributions</td>
-                            <td>{profit.sponsor.toLocaleString()}</td>
-                            </tr>       <tr>
-                            <td>LP distributions</td>
-                            <td>{profit.lp.toLocaleString()}</td>
-                            </tr>
-                                </tbody>
-                                </Table>
-                         </td>
-        
-               
-           
-      ))}
-        </tr>
-      </tbody>          <tbody>
-        <tr>
-        <th>Total returned  capital till this point in year</th>
-          {respective_returns && cap_by_yr.map((capital, index) => (
-                            <td key={index}> 
-
-                            <Table striped>
-                                <tbody>
-                                <tr>
-                            <td> Sponsor Capital</td>
-                            <td>{capital[1].toLocaleString()}</td>
-                            </tr>       <tr>
-                            <td>LP capital</td>
-                            <td>{capital[0].toLocaleString()}</td>
-                            </tr>
-                                </tbody>
-                                </Table>
-                         </td>               
-           
-      ))}
-        </tr>
-      </tbody>
-      {total_returned && <div>    <tbody>
-        <tr>
-        <th>Total returned</th>
-
-        <Table striped>
-            <tbody>
-            <tr>
-        <td> Sponsor </td>
-        <td>{total_returned.sponsor.toLocaleString()}</td>
-        </tr>       <tr>
-        <td>LP </td>
-        <td>{total_returned.lp.toLocaleString()}</td>
-        </tr>
-            </tbody>
-            </Table>
-   
-        </tr>
-      </tbody></div>}
-  
-    </Table>
-</div>
-      </Tab>
-      {investor_returns && 
-      <Tab eventKey="profile" title="Each persons return">
-      <div>        <Table responsive striped="columns">
-      <thead>
-        <tr>
-        <th>Investor</th>
-        
-        { investor_returns && investor_returns.map((investor_return, id) =>  
-        <>
-               
-               
-               {id == 0 && investor_return[1].map((inv, index) => (
-                <>
-                <td> year # {index + 1}</td>
-                 {inv.returns.map((inv, index) => (
-                <>
-                
-                    <td>hurdle num</td>
-                    <td>portion recieved</td>
-                </>
-                 ))}
-                <td>Total year recieved</td>
-                    <td>amount withheld</td>
-                    <td>actual returned</td>
-                    <td>percentage withheld</td>
-                    <td>country</td>
-                    <td>ownership %</td>
-                    <td>capital returned</td>
-                    
-                </>
-               
-               ))}
-             </>
-        )}
-        </tr>
-      </thead>
-      <tbody>
-
-              { investor_returns && investor_returns.map((investor_return, id) =>  
-               <tr>
-               <td>{investor_return[0]}</td>
-               {investor_return[1].map((inv, index) => (
-                <>
-                 <td> new year</td>
-                 {inv.returns.map((inv, index) => (
-                <>
-                    <td>{inv.hurdle_num}</td>
-                    <td>{inv.portion_recieved.toLocaleString()}</td>
-                </>
-                 ))}
-                <td>{inv.total_investor_returned.toLocaleString()}</td>
-                    <td >{inv.amount_withheld.toLocaleString()}</td>
-                    <td>{inv.actual_returned.toLocaleString()}</td>
-                    <td>{inv.percentage_withheld}</td>
-                    <td>{inv.country_of_origin}</td>
-                    <td>{inv.percentage_of_total}</td>
-                    <td>{inv.capital_returned.toLocaleString()}</td>
-                   
-                </>
-              
-                ))}       
-             </tr>
-           )}
-            </tbody>
-
-  
-    </Table>
-</div>
-      </Tab>
-      }
-    </Tabs>
       </div>   
     )
 }

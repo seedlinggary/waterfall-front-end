@@ -12,11 +12,13 @@ import Accordion from 'react-bootstrap/Accordion';
 import Offcanvas from 'react-bootstrap/Offcanvas';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Alert from 'react-bootstrap/Alert';
-import Profit from './Profit';
-import Hurdle from './Hurdle';
-import Fee from './Fee';
-import Investor from './Investor';
-const Calculator = () => {
+import Profit from '../calculator/Profit';
+import Hurdle from '../calculator/Hurdle';
+import Fee from '../calculator/Fee';
+import Investor from '../calculator/Investor';
+import {parentList} from './GrabFresh'
+
+const Calculator = ({pageID, amountOfWaterfalls, setAmountOfWaterfalls}) => {
     const navigate = useNavigate()
     const [irr_parri_passu, setIRRPariPassu] = useState(true)
     const [pay_gp_principal, setPayGPPrincipal] = useState(false)
@@ -813,6 +815,11 @@ const SendCatchUp = (e) => {
     
             
             }    
+            function addWaterfall() {
+              console.log(amountOfWaterfalls.length)
+              setAmountOfWaterfalls([...amountOfWaterfalls, amountOfWaterfalls.length ]);
+              console.log(amountOfWaterfalls.length)
+            }
        
             return ( 
         <div > 
@@ -824,6 +831,11 @@ const SendCatchUp = (e) => {
       </Alert>}
          
                 <>
+                <br></br>
+                <div>
+                  <p>{pageID}</p>
+                <button onClick={addWaterfall}>Add Waterfall</button>
+                </div>
                 <br></br>
                 <Row>
       <Col md={{ span: 2, offset: 3 }}>   
