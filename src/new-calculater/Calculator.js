@@ -1,8 +1,10 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import Button from 'react-bootstrap/Button';
+import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import { useNavigate } from "react-router-dom";
- 
+import NewCalculator from './Calculator'
 import Modal from 'react-bootstrap/Modal';
 import Accordion from 'react-bootstrap/Accordion';
 import Offcanvas from 'react-bootstrap/Offcanvas';
@@ -11,11 +13,12 @@ import ListGroup from 'react-bootstrap/ListGroup';
 import Profit from './Profit';
 import Hurdle from '../calculator/Hurdle';
 import Fee from '../calculator/Fee';
-import Investor from '../calculator/Investor';
+import Investor from '../new-calculater/Investor';
 import {parentList} from './GrabFresh'
 
-const Calculator = ({pageID, amountOfWaterfalls, setAmountOfWaterfalls}) => {
+const Calculator = ({pageID, wtrfall, setWtrfall,buttonClick, setButtonClick ,investorA ,setInvestorA}) => {
     const navigate = useNavigate()
+    // const [waterfallInfo ,setWaterfallInfo] = useState[]
     const [irr_parri_passu, setIRRPariPassu] = useState(true)
     const [pay_gp_principal, setPayGPPrincipal] = useState(false)
     const [pay_gp_prefered, setPayGPPrefered] = useState(false)
@@ -32,110 +35,10 @@ const Calculator = ({pageID, amountOfWaterfalls, setAmountOfWaterfalls}) => {
     const [percentage_investment_owned, setPercentageInvestmentOwned] = useState(1)
     const [gp_amount, setGPAmount] = useState(100000)
     const [lp_amount, setLPAmount] = useState(0)
-    const [waterfall_resp,setResp] = useState(null)
-    const [investor_returns,setInvestorReturns] = useState(null)
-    const [new_investor_profits,setNewLLcProfits] = useState([])
     
-    const [respective_returns,setRespectiveReturns] = useState(null)
-    const [cap_by_yr,setCapByYr] = useState(null)
-    const [total_returned,setTotalReturned] = useState(null)
-    const [new_splits,setNewSplits] = useState(null)
-    const [isPending, setIsPending] = useState(true)
-    const [error, setError] = useState(null)
-    
-    const [show, setShow] = useState(false);
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
-
-    const [sho, setSho] = useState(false);
-
-    const handleClos = () => setSho(false);
-    const handleSho = () => setSho(true);
-
-    const [showSave, setShowSave] = useState(false);
-
-    const handleCloseSave = () => setShowSave(false);
-    const handleShowSave = () => setShowSave(true);
-  
-    
-
-    const [savedInfo, setSavedInfo] = useState();
-
-    const saveInfo = () => {
-      let info = {
-        "investment_info": {"name": investment_name,
-        "investment_type": investment_type,
-        "cost": cost_of_property,
-        // "mortgage_amount": bank_loan_amount,
-        "investment_return": profit
-
-        },
-         "llcs": [{"name": "Gary's LLC",
-         "waterfall_preferences": {'irr_parri_passu': irr_parri_passu,
-         'pay_gp_principal': pay_gp_principal,
-         'pay_gp_prefered': pay_gp_prefered,
-         'type_of_split': type_of_split,
-         'capital_parri_passu': capital_parri_passu,
-         'type_of_hurdle': type_of_hurdle,
-         'way_in_which_to_split' : way_in_which_to_split,
-         'principal_after_preffered': principal_after_preffered,
-         'yr_strt_capital_payback': (yr_strt_capital_payback - 1)},
-         "splits": arr,
-         "percentage_investment_owned": percentage_investment_owned,
-         "amount_gp_invested": gp_amount,
-         "amount_lp_invested": lp_amount,
-         "fees": fee,
-        "investors": investora,
-        "investment_frequency": profitFrequency,
-        "capital_calls": []
-        }]
-        }  
-        setSavedInfo(JSON.stringify(info))
-    }
-    const inputSavedData = e => {
-      e.preventDefault();
-      console.log(e.target.value)
-      var savedData = JSON.parse(e.target.value);
-      console.log(savedData)
-      
-      const fixed_investment_return = savedData.investment_info.investment_return.map(myFunction);
-      
-      function myFunction(value, index, array) {
-        const new_value = value
-        new_value.value.date = Date.parse(value.value.date)
-        return new_value;
-      }
-      console.log(fixed_investment_return)
-      console.log(savedData.investment_info.investment_return)
-      setProfit(fixed_investment_return)
-      console.log(savedData.investment_info.investment_return)
-      
-      setIRRPariPassu(savedData.llcs[0].waterfall_preferences.irr_parri_passu)
-      setPayGPPrincipal(savedData.llcs[0].waterfall_preferences.pay_gp_principal)
-      setPayGPPrefered(savedData.llcs[0].waterfall_preferences.pay_gp_prefered)
-      setTypeOfSplit(savedData.llcs[0].waterfall_preferences.type_of_split)
-      setCapitalParriPasu(savedData.llcs[0].waterfall_preferences.capital_parri_passu)
-      setTypeOfHurdle(savedData.llcs[0].waterfall_preferences.type_of_hurdle)
-      setWayInWhichToSplit(savedData.llcs[0].waterfall_preferences.way_in_which_to_split)
-      setPrincipalAfterPreffered(savedData.llcs[0].waterfall_preferences.principal_after_preffered)
-      seYrStartCapitalPayback(savedData.llcs[0].waterfall_preferences.yr_strt_capital_payback)
-
-      setArr(savedData.llcs[0].splits);
-      setInvestorA(savedData.llcs[0].investors)
-      setLPAmount(savedData.llcs[0].amount_lp_invested)
-      setGPAmount(savedData.llcs[0].amount_gp_invested)
-      setPercentageInvestmentOwned(savedData.llcs[0].percentage_investment_owned)
-      setFee(savedData.llcs[0].fees)
-      const new_investment_frequency  = savedData.llcs[0].investment_frequency
-      new_investment_frequency.start_date = Date.parse(savedData.llcs[0].investment_frequency.start_date)
-      console.log(new_investment_frequency)
-      console.log(savedData.llcs[0].investment_frequency)
-      setProfitFrequency(savedData.llcs[0].investment_frequency)
-
-    }
     const inputArr = [
         {
-            value: {'hurdle' : .08,
+            value: {'hurdinvestorArrle' : .08,
                     'sponsor_percent' : 0,
                     'limited_partner_percent' : 1},
                     type: "",
@@ -184,7 +87,11 @@ const Calculator = ({pageID, amountOfWaterfalls, setAmountOfWaterfalls}) => {
     
     
       ];
-    const [investora, setInvestorA] = useState(investorArr);
+    const [subwtrfall, setSubwtrfall]= useState([])
+
+    // const [investora, setInvestorA] = useState(investorArr);
+    const [subInvestorA,setSubInvestorA]=useState(investorArr)
+
       const SendPromoteWaterfall = (e) => {
 
         setIRRPariPassu(true)
@@ -207,361 +114,7 @@ const Calculator = ({pageID, amountOfWaterfalls, setAmountOfWaterfalls}) => {
       setPrincipalAfterPreffered(false)
 
   }
-  const SendEuropean = (e) => {
-    const prof = [
-        {
-            value: {'profit' : 8000},
-                    type: "",
-        id: 0       },
-        {
-            value: {'profit' :2500},
-                    type: "",
-        id: 1       },
-        {
-            value: {'profit' : 1040},
-                    type: "",
-        id: 2},
-        {
-            value: {'profit' :2000},
-                    type: "",
-        id: 3       },
-        {
-            value: {'profit' : 10340},
-                    type: "",
-        id: 4}
-      ];
-     
-      const inp= [
-        {
-            value: {'hurdle' : .08,
-                    'sponsor_percent' : 0,
-                    'limited_partner_percent' : 1},
-                    type: "",
-        id: 0       },
-        {
-            value: {'hurdle' : .12,
-                    'sponsor_percent' : .25,
-                    'limited_partner_percent' : .75},
-                    type: "",
-        id: 1       },
-    
-        {
-            value: {'hurdle' : 0,
-                    'sponsor_percent' : .4,
-                    'limited_partner_percent' : .6},
-                    type: "",
-        id: 2       }
-    
-      ];
-    setProfit(prof)
-    setArr(inp);
-    setIRRPariPassu(true)
-    setPayGPPrincipal(true)
-    setTypeOfSplit("split_percentage_of_owned")
-    setCapitalParriPasu(false)
-    setTypeOfHurdle("non_yearly_compund")
-    setWayInWhichToSplit("investor_in_the_irr")
-    setPrincipalAfterPreffered(false)
-    seYrStartCapitalPayback(0)
-    setCostOfProperty(100000)
-    setBankLoanAmount(90000)
-    setLPAmount(9000)
-    setGPAmount(1000)
-    setInvestmentName('SendEuropean')
-    setInvestmentType('real estate')
-
-}
-const SendCatchUp = (e) => {
-        const prof = [
-            {
-                value: {'profit' : 8000},
-                        type: "",
-            id: 0       },
-            {
-                value: {'profit' :2500},
-                        type: "",
-            id: 1       },
-            {
-                value: {'profit' : 1040},
-                        type: "",
-            id: 2},
-            {
-                value: {'profit' :2000},
-                        type: "",
-            id: 3       },
-            {
-                value: {'profit' : 10340},
-                        type: "",
-            id: 4}
-          ];
-         
-          const inp= [
-            {
-                value: {'hurdle' : .08,
-                        'sponsor_percent' : 0,
-                        'limited_partner_percent' : 1},
-                        type: "",
-            id: 0       },
-            {
-                value: {'hurdle' : .12,
-                        'sponsor_percent' : .25,
-                        'limited_partner_percent' : .75},
-                        type: "",
-            id: 1       },
-        
-            {
-                value: {'hurdle' : 0,
-                        'sponsor_percent' : .4,
-                        'limited_partner_percent' : .6},
-                        type: "",
-            id: 2       }
-        
-          ];
-          const fe= [
-          {
-            value: {'year' : 0,
-                    'before_what_hurdle' : 0,
-                    'who_gets_this_fee' : 'Catch_up',
-                    'percentage_or_cash' : .04,
-                    'type_transaction' : 'percentage',
-                    'type_of_fee' : 'catch_up'},
-            type: "",
-        id: 0       }]
-        setProfit(prof)
-        setArr(inp);
-        setFee(fe)
-        setIRRPariPassu(true)
-        setPrincipalAfterPreffered(false)
-        seYrStartCapitalPayback(0)
-        setCostOfProperty(100000)
-        setBankLoanAmount(90000)
-        setLPAmount(9000)
-        setGPAmount(1000)
-        setInvestmentName('SendCatchUp')
-        setInvestmentType('real estate')
-        setIRRPariPassu(false)
-      setPayGPPrincipal(false)
-      setPayGPPrefered(false)
-      setTypeOfSplit("split_plus_percentage")
-      setCapitalParriPasu(true)
-      setTypeOfHurdle("irr_yearly_compund")
-      setWayInWhichToSplit("investor_on_top_of_irr")
-
-    }
-        const SendAmerican = (e) => {
-        const prof = [
-            {
-                value: {'profit' : 3185},
-                        type: "",
-            id: 0       },
-            {
-                value: {'profit' :5000},
-                        type: "",
-            id: 1       },
-            {
-                value: {'profit' : 303400},
-                        type: "",
-            id: 2}
-          ];
-          const inp = [
-            {
-                value: {'hurdle' : .02,
-                        'sponsor_percent' : 0,
-                        'limited_partner_percent' : 1},
-                        type: "",
-            id: 0       },
-            {
-                value: {'hurdle' : .15,
-                        'sponsor_percent' : .2,
-                        'limited_partner_percent' : .8},
-                        type: "",
-            id: 1       },
-        
-            {
-                value: {'hurdle' : 0,
-                        'sponsor_percent' : .4,
-                        'limited_partner_percent' : .6},
-                        type: "",
-            id: 2       }
-        
-          ];
-        setProfit(prof)
-        setArr(inp);
-
-        setIRRPariPassu(false)
-        setPayGPPrincipal(true)
-        setTypeOfSplit("split_plus_percentage")
-        setCapitalParriPasu(false)
-        setTypeOfHurdle("irr_yearly_compund")
-        setWayInWhichToSplit("investor_on_top_of_irr")
-        setPrincipalAfterPreffered(false)
-        seYrStartCapitalPayback(3)
-        setCostOfProperty(100000)
-        setBankLoanAmount(90000)
-        setLPAmount(9000)
-        setGPAmount(1000)
-        setInvestmentName('SendAmerican')
-        setInvestmentType('real estate')
-      
-        // SendApi()
-    }
-    const SendAfterPreffered = (e) => {
-        const prof = [
-            {
-                value: {'profit' : 500000},
-                        type: "",
-            id: 0       },
-            {
-                value: {'profit' :500000},
-                        type: "",
-            id: 1       },
-            {
-                value: {'profit' : 750000},
-                        type: "",
-            id: 2},
-            {
-                value: {'profit' : 750000},
-                        type: "",
-            id: 3},
-            {
-                value: {'profit' :1000000},
-                        type: "",
-            id: 4       },
-            {
-                value: {'profit' : 25000000},
-                        type: "",
-            id: 5}
-          ];
-          const inp = [
-            {
-                value: {'hurdle' : .08,
-                        'sponsor_percent' : 0,
-                        'limited_partner_percent' : 1},
-                        type: "",
-            id: 0       },
-            {
-                value: {'hurdle' : .125,
-                        'sponsor_percent' : .15,
-                        'limited_partner_percent' : .85},
-                        type: "",
-            id: 1       },
-        
-            {
-                value: {'hurdle' : .15,
-                        'sponsor_percent' : .25,
-                        'limited_partner_percent' : .75},
-                        type: "",
-            id: 2       },
-            {
-                value: {'hurdle' : .175,
-                        'sponsor_percent' : .40,
-                        'limited_partner_percent' : .60},
-                        type: "",
-            id: 3       },
-        
-            {
-                value: {'hurdle' : 0,
-                        'sponsor_percent' : .50,
-                        'limited_partner_percent' : .50},
-                        type: "",
-            id: 4       }
-        
-          ];
-          let inv = [
-            {value :{},
-        id: 0},]
-        setProfit(prof)
-        setArr(inp);
-
-        setIRRPariPassu(true)
-        setPayGPPrincipal(false)
-        setTypeOfSplit("straight")
-        setCapitalParriPasu(true)
-        setTypeOfHurdle("paydown_capital_paydown_irr")
-        setWayInWhichToSplit("investor_on_top_of_irr")
-        setPrincipalAfterPreffered(true)
-        seYrStartCapitalPayback(8)
-        setCostOfProperty(100000000)
-        setBankLoanAmount(90000000)
-        setLPAmount(10000000)
-        setGPAmount(0)
-        setInvestmentName('SendAfterPreffered')
-        setInvestmentType('real estate')
-        setInvestorA(inv)
-
-      
-        // SendApi()
-    }
-    const SendPrefferedNonIRRpari = (e) => {
-        const prof = [
-            {
-                value: {'profit' : 300},
-                        type: "",
-            id: 0       },
-            {
-                value: {'profit' :3000},
-                        type: "",
-            id: 1       },
-            {
-                value: {'profit' : 10000},
-                        type: "",
-            id: 2}
-          ];
-          const inp = [
-            {
-                value: {'hurdle' : .08,
-                        'sponsor_percent' : 0,
-                        'limited_partner_percent' : 1},
-                        type: "",
-            id: 0       },
-            {
-                value: {'hurdle' : .12,
-                        'sponsor_percent' : .15,
-                        'limited_partner_percent' : .85},
-                        type: "",
-            id: 1       },
-        
-            {
-                value: {'hurdle' : 0,
-                        'sponsor_percent' : .25,
-                        'limited_partner_percent' : .75},
-                        type: "",
-            id: 2       }
-        
-          ];
-          let inv = [
-            {value :{},
-        id: 0},]
-        let fee = [
-            {
-                value: {},
-                type: "",
-            id: 0       },]
-        setProfit(prof)
-        setArr(inp);
-
-        setIRRPariPassu(false)
-        setPayGPPrincipal(true)
-        setPayGPPrefered(true)
-        setTypeOfSplit("straight")
-        setCapitalParriPasu(true)
-        setTypeOfHurdle("paydown_capital_paydown_irr")
-        setWayInWhichToSplit("investor_on_top_of_irr")
-        setPrincipalAfterPreffered(true)
-        seYrStartCapitalPayback(3)
-        setCostOfProperty(100000)
-        setBankLoanAmount(90000)
-        setLPAmount(8000)
-        setGPAmount(2000)
-        setInvestmentName('PrefferedNonIRRpari')
-        setInvestmentType('real estate')
-        setInvestorA(inv)
-        setFee(fee)
-
-      
-        // SendApi()
-    }
-    const SendApi = (e) => {
+      const saveInfogeneralwaterfall = (e) => {
       let info = [{
           "investment_info": {"name": investment_name,
           "investment_type": investment_type,
@@ -585,67 +138,53 @@ const SendCatchUp = (e) => {
            "amount_gp_invested": gp_amount,
            "amount_lp_invested": lp_amount,
            "fees": fee,
-          "investors": investora,
+          "investors": subInvestorA,
           "investment_frequency": profitFrequency,
           }]
           }  ]
+          // setWaterfallInfo(in)
           parentList.push(info)
-          console.log(parentList)
-
-      // let backend = 'http://127.0.0.1:5000'
-      let backend = 'http://waterfall-env.eba-a4a3q6d3.ap-northeast-1.elasticbeanstalk.com/'
-      // let backend = 'https://d30c84rzmrhbgy.cloudfront.net'
-      // let address = `/waterfall_calc`
-      let address = `/investment_calc`
-      console.log(pay_gp_principal)
-      const requestOptions = {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(info)
-      };
-      fetch(`${backend}${address}`, requestOptions)
-          .then(async response => {
-              const isJson = response.headers.get('content-type')?.includes('application/json');
-              const data = isJson && await response.json();
-              // console.error('There was a response!', response);
-              // check for error response
-              if (!response.ok) {
-                  // get error message from body or default to response status
-                  const error = (data && data.message) || response.status;
-                  return Promise.reject(error);
-              }
-  
-              // console.error('There was data!', data);
-              setResp(data.profits)
-              setRespectiveReturns(data.respective_returns)
-              setCapByYr(data.total_capital_returned_by_year)
-              setInvestorReturns(data.investor_returns)
-              setTotalReturned(data.total_returned)
-              setNewLLcProfits(data.new_llc_profits)
-              setNewSplits(data.new_splits)
-              setIsPending(false)
-              setError(null)
-      return  data 
-          })
-          .catch(error => {
-              console.error('There was an error!', error);
-              setIsPending(false)
-              setError(error.message)    
-          }); 
+          console.log(`test${parentList}`)
   
       e.preventDefault();
-
       
-      }    
-    const downloadcsv = (e) => {
-        let info = {
+      
+      } 
+        // const handleWaterfallChange = e => {
+        //   e.preventDefault();
+        //   let index = e.target.id;
+        //   if (e.target.id > 0){
+        //       index = e.target.id
+        //   }else{
+        //       index = 0
+        //   }
+
+        //   setParentList(s => {
+        //     const parentList = s.slice();
+        //     parentList[pageID] = e.target.value;
+      
+        //     return parentList;
+        //   });
+        // }; 
+      useEffect(() => {
+        // if(parentList.length > amountOfWaterfalls.length){
+        //   parentList.length=0
+        // }
+        if (buttonClick) {
+          
+          // console.log(`amountOfWaterfalls ${amountOfWaterfalls.length} parentList ${parentList.length}`)
+          
+          // console.log()
+          let investers=[{
+            "investors": investorA,
+          }]
+          let info = [{
             "investment_info": {"name": investment_name,
             "investment_type": investment_type,
             "cost": cost_of_property,
             // "mortgage_amount": bank_loan_amount,
-            "investment_return": profit,
-
+            "investment_return": profit
+  
             },
              "llcs": [{"name": "Gary's LLC",
              "waterfall_preferences": {'irr_parri_passu': irr_parri_passu,
@@ -662,373 +201,69 @@ const SendCatchUp = (e) => {
              "amount_gp_invested": gp_amount,
              "amount_lp_invested": lp_amount,
              "fees": fee,
-            "investors": investora,
+            "investors": subInvestorA,
             "investment_frequency": profitFrequency,
+            "subWaterfall": [subwtrfall]
+            
             }]
-            }  
-
-        let backend = 'http://127.0.0.1:5000'
-        // let backend = 'http://waterfall-env.eba-a4a3q6d3.ap-northeast-1.elasticbeanstalk.com/'
-        // let backend = 'https://d30c84rzmrhbgy.cloudfront.net'
-        // let address = `/waterfall_calc`
-        let address = `/downloadcsv`
-        const requestOptions = {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(info)
-        };
-        fetch(`${backend}${address}`, requestOptions)
-            .then((response) => {
-              response.blob().then((blob) => {
-                 saveBlob(blob, 'waterfallDistribution');
+            }  ]
+            if(wtrfall){
+              setWtrfall(s => {
+                const wtrfall = s.slice();
+                wtrfall[pageID] = info
+                // console.log(wtrfall)
+                return wtrfall;
               });
-        });
-
-        e.preventDefault();
-        }    
-
-        function saveBlob(blob, filename) {
-          const url = URL.createObjectURL(blob);
-          const a = document.createElement('a');
-          a.href = url;
-          a.download = filename;
-          a.click(); 
+            }else{
+              wtrfall=[info]
+            }
+              if(subwtrfall){
+              setSubwtrfall(s => {
+                const wtrfall = s.slice();
+                wtrfall[pageID] = info
+                // console.log(subwtrfall)
+                return wtrfall;
+              });
+             }else{
+              subwtrfall=[info]
+            }
+            console.log(investorA)
+            let sendApi={"investors":investers,"waterfalls":wtrfall}
+            console.log(sendApi)
+            setButtonClick(false)
+          console.log("Button clicked!");
+          // if (parentList.length){
+          // setButtonClick(false)}
         }
-      const SendInvestmentApi = (e) => {
-            const prof = [
-                {
-                    value: {'profit' : 8000},
-                            type: "",
-                id: 0       },
-                {
-                    value: {'profit' :2500},
-                            type: "",
-                id: 1       },
-                {
-                    value: {'profit' : 1040},
-                            type: "",
-                id: 2},
-                {
-                    value: {'profit' :2000},
-                            type: "",
-                id: 3       },
-                {
-                    value: {'profit' : 10340},
-                            type: "",
-                id: 4}
-              ];
-             
-              const inp= [
-                {
-                    value: {'hurdle' : .08,
-                            'sponsor_percent' : 0,
-                            'limited_partner_percent' : 1},
-                            type: "",
-                id: 0       },
-                {
-                    value: {'hurdle' : .12,
-                            'sponsor_percent' : .25,
-                            'limited_partner_percent' : .75},
-                            type: "",
-                id: 1       },
-            
-                {
-                    value: {'hurdle' : 0,
-                            'sponsor_percent' : .4,
-                            'limited_partner_percent' : .6},
-                            type: "",
-                id: 2       }
-            
-              ];
-            let inv = [
-                {value :{'name': "gary",
-            "email": "yahoo@all.com",
-            "country_of_origin": "US",
-            "tax_percentage_withheld": .06,
-            "amount_invested": 400,
-            "year_bought_in": 1},
-            id: 0},
-            {value :{'name': "bary",
-            "email": "yahoo@all.com",
-            "country_of_origin": "US",
-            "tax_percentage_withheld": .07,
-            "amount_invested": 800,
-            "year_bought_in": 1},
-            id: 1},
-            {value :{'name': "cary",
-            "email": "yahoo@all.com",
-            "country_of_origin": "US",
-            "tax_percentage_withheld": .08,
-            "amount_invested": 1200,
-            "year_bought_in": 1},
-            id: 2},
-            {value :{'name': "lary",
-            "email": "yahoo@all.com",
-            "country_of_origin": "US",
-            "tax_percentage_withheld": .09,
-            "amount_invested": 1600,
-            "year_bought_in": 1},
-            id: 3},
-            {value :{'name': "dary",
-            "email": "yahoo@all.com",
-            "country_of_origin": "US",
-            "tax_percentage_withheld": .1,
-            "amount_invested": 2000,
-            "year_bought_in": 1,
-            id: 4}},
-            {value :{'name': "Joe",
-            "email": "yahoo@all.com",
-            "country_of_origin": "US",
-            "tax_percentage_withheld": .1,
-            "amount_invested": 2000,
-            "year_bought_in": 1,
-            id: 5}},
-            {value :{'name': "Ben",
-            "email": "yahoo@all.com",
-            "country_of_origin": "US",
-            "tax_percentage_withheld": .1,
-            "amount_invested": 1000,
-            "year_bought_in": 1,
-            id: 6}}]
-            setProfit(prof)
-            setArr(inp);
-            setIRRPariPassu(true)
-            setPayGPPrincipal(true)
-            setTypeOfSplit("split_percentage_of_owned")
-            setCapitalParriPasu(false)
-            setTypeOfHurdle("non_yearly_compund")
-            setWayInWhichToSplit("investor_in_the_irr")
-            setPrincipalAfterPreffered(false)
-            seYrStartCapitalPayback(0)
-            setCostOfProperty(100000)
-            // setBankLoanPercentage(.9)
-            setInvestorA(inv)
-          
-            setBankLoanAmount(90000)
-            setLPAmount(9000)
-            setGPAmount(1000)
-            setInvestmentName('PrefferedNonIRRpari')
-            setInvestmentType('real estate')
+        console.log(wtrfall)
+        console.log(buttonClick)
+      }, [buttonClick]);   
     
-            
-            }    
             function addWaterfall() {
-              console.log(amountOfWaterfalls.length)
-              setAmountOfWaterfalls([...amountOfWaterfalls, amountOfWaterfalls.length ]);
-              console.log(amountOfWaterfalls.length)
+              console.log(subwtrfall.length)
+              setSubwtrfall([...subwtrfall, subwtrfall]);
+              console.log(subwtrfall.length)
             }
        
             return ( 
+              <Accordion defaultActiveKey="0">
+              <Accordion.Item eventKey={pageID}>
+                <Accordion.Header>Waterfall {pageID+1}</Accordion.Header>
+                <Accordion.Body>
         <div> 
          
                 <>
                 <br></br>
                 <div>
                   <p>{pageID}</p>
-                <button onClick={addWaterfall}>Add Waterfall</button>
                 </div>
-                <br></br>
-                <Row>
-      <Col md={{ span: 2, offset: 3 }}>   
-      <Button variant="info" onClick={handleShow}  >
-        See current inputs
-      </Button>
-
       
-      </Col>  <Col md={{ span: 2, offset: 2 }}>   
-      <Button variant="info" onClick={handleSho}>
-        Sample inputs
-      </Button>
 
-    </Col>  
-               </Row>
-               
-      
-      <Button variant="info" onClick={handleShowSave} className="me-2">
-        Save Info
-      </Button>
-
-      <Offcanvas show={showSave} onHide={handleCloseSave} placement="end">
-        <Offcanvas.Header closeButton>
-          <Offcanvas.Title>Saved Data</Offcanvas.Title>
-        </Offcanvas.Header>
-        <Offcanvas.Body>
-          To save time click the button bellow. Save the code somewhere safe for later.
-           Whenever you come back take the code you saved and place it in the text box bellow. All of your information and preferences will return
-          <br></br>
-          <Button variant="info" onClick={saveInfo}>
-        Show me what to save
-      </Button>
-      <br>
-      
-      </br>
-      <ListGroup>
-      <ListGroup.Item disabled>Take this info and put it somewhere safe</ListGroup.Item>
-      <ListGroup.Item>{savedInfo}</ListGroup.Item>
-    </ListGroup>
-    <Form>
-     
-      <Form.Group className="mb-3"  onChange={inputSavedData}>
-        <Form.Label>Input Saved Data Here.</Form.Label>
-        <Form.Control as="textarea" rows={3} />
-      </Form.Group>
-    </Form>
-        </Offcanvas.Body>
-      </Offcanvas>
     
-      <Offcanvas show={sho} onHide={handleClos} scroll={true} backdrop={true}>
-        <Offcanvas.Header closeButton>
-          <Offcanvas.Title>Sample Inputs</Offcanvas.Title>
-        </Offcanvas.Header>
-        <Offcanvas.Body>
-        <ListGroup>
-      <ListGroup.Item> An classic American waterfall. Where you start paying back your capital during the last year of investment.
-        <br></br>
-      <Button variant="primary" onClick={SendAmerican}>
-        Create American Waterfall
-      </Button></ListGroup.Item>
-      <ListGroup.Item>An classic European waterfall. Where you start paying back your capital from the first dollor paid back.
-        <br></br>
-        <Button variant="primary" onClick={SendEuropean}>
-        Create European Waterfall
-      </Button>
-        </ListGroup.Item>
-      <ListGroup.Item>Another classic  waterfall. Where you start paying back your capital after the preferred return is paid back.
-        <br></br>
-        <Button variant="primary" onClick={SendAfterPreffered}>
-        Create after preferred Waterfall
-      </Button>
-        </ListGroup.Item>
-      <ListGroup.Item>A classic Cashflow waterfall with a catchup, so the GP can get a cut after LP gets their prefered and capital.
-        <br></br>
-        <Button variant="primary" onClick={SendCatchUp}>
-      SendCatchUp
-      </Button>
-        </ListGroup.Item>
-      <ListGroup.Item>A classic European waterfall with Investors added in to show you how its divied up.
-      <br></br>
-      <Button variant="primary" onClick={SendInvestmentApi}>
-      Sendinvestmentapi
-      </Button>
-      </ListGroup.Item>
-    </ListGroup>
-        </Offcanvas.Body>
-      </Offcanvas>
-      <Modal show={show} onHide={handleClose}>
-        <Modal.Header closeButton>
-          <Modal.Title>Inputs</Modal.Title>
-        </Modal.Header>
-        <Modal.Body> 
-        irr_parri_passu: {irr_parri_passu && 'true'} {!irr_parri_passu && 'false'},
-        <br></br>
-        pay_gp_principal: {pay_gp_principal && 'true'} {!pay_gp_principal && 'false'},
-        <br></br>
-        pay_gp_prefered: {pay_gp_prefered && 'true'} {!pay_gp_prefered && 'false'},
-        <br></br>
-        type_of_split: {type_of_split },
-        <br></br>
-        capital_parri_passu: {capital_parri_passu && 'true'} {!capital_parri_passu && 'false'},
-        <br></br>
-        type_of_hurdle: {type_of_hurdle},
-        <br></br>
-        way_in_which_to_split: {way_in_which_to_split},
-        <br></br>
-        principal_after_preferred: {principal_after_preffered && 'true'} {!principal_after_preffered && 'false'},
-        <br></br>
-        yr_strt_capital_payback: {yr_strt_capital_payback },
-        <br></br>
-        amount_gp_invested: {gp_amount },
-        <br></br>
-        amount_lp_invested: {lp_amount },
-        <br></br>
-        <br></br>
-        {/* gp_percentage_of_cash_needed: {gp_percentage_of_cash_needed }, */}
-        <br></br>
-        {arr.map((item, i) => {
-                    return (
-                        
-        <div>
-         Split {i + 1}: LP: {item.value.limited_partner_percent} / GP: {item.value.sponsor_percent} :  Hurdle: {item.value.hurdle} 
-         <br></br>
-
-      </div>
-                    )
-                    })}
-        {profit.map((prof, i) => {
-                        return (
-                            
-            <div>
-             Year {i + 1}: profit ${prof.value.profit}  
-             <br></br>
-    
-          </div>
-                        )
-                        })}
-                         
-                          {fee[0].value.percentage_or_cash && fee.map((fee, i) => {
-                        return (
-                            
-            <div>
-             Fee {i + 1}:to Whom:{fee.value.type_of_fee} amount {fee.value.percentage_or_cash}  {fee.value.type_transaction}to whom: {fee.value.who_gets_this_fee}  yr:{fee.value.year} hurdle:{fee.value.before_what_hurdle} 
-             <br></br>
-    
-          </div>
-                        )
-                        })}
-                        <br></br>
-            {investora[0].value.name && investora.map((investor, i) => {
-                        return (
-                          // {'name': "gary",
-                          // "email": "yahoo@all.com",
-                          // "country_of_origin": "US",
-                          // "tax_percentage_withheld": .06,
-                          // "amount_invested": 100,
-                          // "year_bought_in": 1},   
-            <div>
-             Investor {i + 1}: Name: {investor.value.name}, Amount invested: ${investor.value.amount_invested}, Country: {investor.value.country_of_origin}, Tax percentage withheld: {investor.value.tax_percentage_withheld}
-             <br></br>
-    
-          </div>
-                        )
-                        })}
-    
-  </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            Close
-          </Button>
-          
-        </Modal.Footer>
-      </Modal>
     </>  
           <p>Add the Investment information so you can check the numbers and see if it is a good deal for you!</p>     
           <h3>Investment information</h3>     
-          {/* <Row>
-        <Col></Col>
-        <Col xs={9}>   */}
-      
-              
-      {/* <Row className="mb-3">
-      <Form.Group as={Col} controlId="formGridEmail">
-          <Form.Label>Investment Name</Form.Label>
-          <Form.Control  placeholder={investment_name} onChange={(e) => setInvestmentName(e.target.value)} />
-        </Form.Group>
-        <Form.Group as={Col} controlId="formGridEmail">
-          <Form.Label>Investment type</Form.Label>
-          <Form.Control  placeholder={investment_type} onChange={(e) => setInvestmentType(e.target.value)} />
-        </Form.Group>
-        <Form.Group as={Col} controlId="formGridEmail">
-          <Form.Label>Investment Cost</Form.Label>
-          <Form.Control  placeholder={cost_of_property} onChange={(e) => setCostOfProperty(e.target.value)} />
-        </Form.Group>
-         <Form.Group as={Col} controlId="formGridEmail">
-          <Form.Label>Amount loan from bank</Form.Label>
-          <Form.Control  placeholder={bank_loan_amount} onChange={(e) => setBankLoanAmount(e.target.value)} />
-        </Form.Group>
-    
-
-      </Row> */}
+         
       <Accordion defaultActiveKey="0" flush>
       <Accordion.Item eventKey="0">
         <Accordion.Header>Years Of Profit</Accordion.Header>
@@ -1053,10 +288,6 @@ const SendCatchUp = (e) => {
    
       <Row className="mb-3">
         
-      {/* <Form.Group as={Col} controlId="formGridEmail">
-          <Form.Label>% owned by this waterfall</Form.Label>
-          <Form.Control  placeholder={percentage_investment_owned} onChange={(e) => setPercentageInvestmentOwned(e.target.value)} />
-        </Form.Group>         */}
         <Form.Group as={Col} controlId="formGridEmail">
           <Form.Label>GP amount sponsered</Form.Label>
           <Form.Control  placeholder={gp_amount} onChange={(e) => setGPAmount(e.target.value)} />
@@ -1164,10 +395,12 @@ const SendCatchUp = (e) => {
     <Fee fee={fee} setFee={setFee}></Fee>
               </Accordion.Body>
       </Accordion.Item>     <Accordion.Item eventKey="4">
-        <Accordion.Header>Add Investors (optional)</Accordion.Header>
+        <Accordion.Header>Add Investors or waterfall (optional)</Accordion.Header>
         <Accordion.Body>
-          <Investor investora={investora} setInvestorA={setInvestorA}></Investor>
-
+          <Investor investorA={investorA} setInvestorA={setInvestorA}></Investor>
+         {subwtrfall.map((arr,i) => <NewCalculator key={arr} pageID={i} subwtrfall={subwtrfall} setSubwtrfall={setSubwtrfall} parentList={parentList} setButtonClick={setButtonClick} buttonClick={buttonClick} subInvestorA={subInvestorA} setSubInvestorA={setSubInvestorA}/>)}
+         <button onClick={addWaterfall}>Add Waterfall</button>
+          {/* <Calculator/> */}
               </Accordion.Body>
       </Accordion.Item>
     </Accordion>
@@ -1177,8 +410,16 @@ const SendCatchUp = (e) => {
 <br></br>
       
       
-      </div>   
+      </div> 
+        </Accordion.Body>
+      </Accordion.Item>  
+      </Accordion>
     )
 }
- 
+
+
 export default Calculator;
+// export { SendApi };
+// module.exports = {
+//   // SendApi
+// }

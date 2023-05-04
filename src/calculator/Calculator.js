@@ -12,7 +12,7 @@ import Accordion from 'react-bootstrap/Accordion';
 import Offcanvas from 'react-bootstrap/Offcanvas';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Alert from 'react-bootstrap/Alert';
-import Profit from '../calculator/Profit';
+import Profit from './Profit';
 import Hurdle from '../calculator/Hurdle';
 import Fee from '../calculator/Fee';
 import Investor from '../calculator/Investor';
@@ -594,8 +594,8 @@ const SendCatchUp = (e) => {
           }]
           }  
 
-      let backend = 'http://127.0.0.1:5000'
-      // let backend = 'http://waterfall-env.eba-a4a3q6d3.ap-northeast-1.elasticbeanstalk.com/'
+      // let backend = 'http://127.0.0.1:5000'
+      let backend = 'http://waterfall-env.eba-a4a3q6d3.ap-northeast-1.elasticbeanstalk.com/'
       // let backend = 'https://d30c84rzmrhbgy.cloudfront.net'
       // let address = `/waterfall_calc`
       let address = `/investment_calc`
