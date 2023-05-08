@@ -29,7 +29,7 @@ const Hurdle = ({arr, setArr}) => {
             {
                 value: {'limited_partner_percent' : 0,
                         'sponsor_percent' : 1,
-                    'hurdle' : .8},
+                    'hurdle' : 0.0},
                     type: ""
             }
           ];
@@ -100,16 +100,16 @@ const Hurdle = ({arr, setArr}) => {
                   <Row className="mb-3">
                   {i != 0 && <>   <Form.Group as={Col}  >
               <Form.Label>LP's take of the cut </Form.Label >
-              <Form.Control  placeholder={item.value.limited_partner_percent} id={i}  onChange={handleLPChange}/>
+              <Form.Control  value={item.value.limited_partner_percent} id={i}  onChange={handleLPChange}/>
             </Form.Group>
             <Form.Group as={Col}>
               <Form.Label>GP's take of the cut (Promote amount)</Form.Label>
-              <Form.Control  placeholder={item.value.sponsor_percent}  id={i} onChange={handleGPChange}/>
+              <Form.Control  value={item.value.sponsor_percent}  id={i} onChange={handleGPChange}/>
             </Form.Group></>}
            
             <Form.Group as={Col} >
               <Form.Label>Hurdle top amount</Form.Label>
-              <Form.Control  placeholder={item.value.hurdle} id={i} onChange={handleIRRChange} />
+              <Form.Control  value={item.value.hurdle} id={i} onChange={handleIRRChange} />
             </Form.Group>
             </Row>
       </div>

@@ -10,7 +10,10 @@ import Navbar from './Navbar';
 import Footer from './Footer';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Definitions from './Definitions';
-
+import MortgageCalculator from './mortgageCaluclator/MortgageCalculator';
+import DynamicMortgage from './mortgageCaluclator/DynamicMortgage';
+import Disclaimer from './Disclaimer';
+import ParentCalculator from './mortgageCaluclator/ParentMortgage';
 function App() {
 
   return (
@@ -27,6 +30,10 @@ function App() {
             <Route path="/about" element={<About />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/comingsoon" element={<ComingSoon />} />
+            <Route path="/mortgagecalculator" element={<MortgageCalculator />} />
+            <Route path="/dynamicmortgage" element={<DynamicMortgage />} />
+            <Route path="/multimortgage" element={<ParentCalculator />} />
+            <Route path="/disclaimer" element={<Disclaimer />} />
             <Route path="*" element={<NotFound />} />
 
           </Routes>

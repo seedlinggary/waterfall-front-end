@@ -94,9 +94,9 @@ const Home = () => {
         <Col></Col>
         <Col xs={9}>    <Card className="text-center" bg="dark"key="Info" text="white">
       <Card.Body>
-        <Card.Title><h2>Welcome To The Calculator</h2></Card.Title>
+        <Card.Title><h2>Welcome To Distribution Resolution</h2></Card.Title>
         <Card.Text>
-         This calculator helps you build waterfall distributions instantaneously.
+         We help you calculate distributions to your investors.
         </Card.Text>
         <Button variant="outline-primary" onClick={() => handleClick("calculator")}>Calculator</Button>
       </Card.Body>

@@ -29,12 +29,12 @@ const Definitions = () => {
         <h3> Here are the definitions and explinations for all of the potential inputs:</h3>
              
 
-             <h5> Note: ALWAYS SET THE PREFERRED RETURN TO 1.0/ 0.0 and hurdle amount</h5>
+             {/* <h5> Note: ALWAYS SET THE PREFERRED RETURN TO 1.0/ 0.0 and hurdle amount</h5> */}
             
 
              <h5> Note: some inputs are reliable on other inputs</h5>
-             <h5> Note: if irr_pari_passu is false, 99% of time you want GP's cut over the whole</h5>
-             <h5> Note: Similarly iff irr_pari_passu is True, 99% of time you want GP's apart the whole</h5>
+             <h5> Note: if irr_pari_passu is false, 99% of time you want Hurdle Bar IRR return for LP</h5>
+             <h5> Note: Similarly iff irr_pari_passu is True, 99% of time you want Hurdle Bar IRR return for total Invested</h5>
              <h5> Note: Similarly iff irr_pari_passu is False, You can choose to pay the GP capital and GP Princial</h5>
            
 
@@ -92,13 +92,15 @@ const Definitions = () => {
             <Tab.Pane eventKey="second">
       
                 <h6>Please input for each year the amount of profit you have made.</h6>
+                <h6>Input how frequently you will be paying ditributions</h6>
+                <h6>You may also add many years at the same time with increments for both time and money.</h6>
              
                 
             </Tab.Pane>
             <Tab.Pane eventKey="third">
             
             <h5> General information about the waterfall</h5>
-            <h6>Note: percentage of ownership goes coresponding to how much cash was invested respectively.</h6>
+            {/* <h6>Note: percentage of ownership goes coresponding to how much cash was invested respectively.</h6> */}
             <h7>GP amount sponsored: How much cash did the GP invest for this waterfall distribution.</h7>
              <br></br>
 
@@ -121,13 +123,13 @@ const Definitions = () => {
 
              <h6>Way in which to split: Once you have calculated the actual split, how do you calculate how it is split</h6>
 
-             <h7>GP apart of the whole: split the combined amount in thus hurdle according to the split, ex: if you set up a split of 80/20 for 200$ then the split is 160/40</h7>
+             <h7>Hurdle Bar IRR return for total Invested: split the combined amount in thus hurdle according to the split, ex: if you set up a split of 80/20 for 200$ then the split is 160/40</h7>
              <br></br>
 
-             <h7>GP Cut over the whole: The LP gets the whole amount and the GP gets his percentage on top of his cut and the LP's amount, ex:  if you set up a split of 80/20 for 100$ then the lp gets 100 while the GP gets 25$. 25 is 20% of 125.</h7>
+             <h7>Hurdle Bar IRR return for LP: The LP gets the whole amount and the GP gets his percentage on top of his cut and the LP's amount, ex:  if you set up a split of 80/20 for 100$ then the lp gets 100 while the GP gets 25$. 25 is 20% of 125.</h7>
              <br></br>
              <br></br>
-             <h6>Type of Split: Typle of Hurdle</h6>
+             <h6>Typle of Hurdle: How will we be doing the math for the hurdle</h6>
              
 
              <h7>Non Yearly Compound:  the hurdle rate is the same every year no compounding interest </h7>
@@ -136,7 +138,7 @@ const Definitions = () => {
              <h7>IRR Yearly Compund: The hurdle compounds interest every year for every hurdle. It will always pay off everything but the capital amount invested then go to the next hurdle.</h7>
              <br></br>
 
-             <h7>Pay Down Capital Paydown IRR: The hurdle compounds interest every year for every hurdle. It will always pay off everything. Once the capital amount invested is changed it will affect nect years hurdle.</h7>
+             <h7>Pay Down Capital Paydown IRR: The hurdle compounds interest every year for every hurdle. It will always pay off everything. Once the capital amount invested is changed (by being payed off) it will affect nect years hurdle.</h7>
              <br></br>
 
              <h7>IRR Parris Passu: Would you like the GP/Sponosor to get his share of the preferred return? IF True it will change given IRR for not only the lp put for the GP as well (NOTE: this has major affects and would love to hear your feedback a: if this is needed b: if this should be split into 2 different catagories)</h7>

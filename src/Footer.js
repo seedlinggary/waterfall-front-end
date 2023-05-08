@@ -32,11 +32,13 @@ const Footer = () => {
             <Heading>About Us</Heading>
             <FooterLink href="#" onClick={() => handleClick("contact")}>Contact Us</FooterLink>
             <FooterLink href="#" onClick={() => handleClick("about")}>About Us</FooterLink>
+            <FooterLink href="#" onClick={() => handleClick("disclaimer")}>Terms and conditions</FooterLink>
 
           </Column>
           <Column>
             <Heading>Services</Heading>
             <FooterLink href="#" onClick={() => handleClick("calculator")}>Waterfall Calculator</FooterLink>
+            <FooterLink href="#" onClick={() => handleClick("mortgagecalculator")}>Mortgage Calculator</FooterLink>
             <FooterLink href="#" onClick={() => handleClick("comingsoon")}>Coming Soon</FooterLink>
           </Column>
           <Column>

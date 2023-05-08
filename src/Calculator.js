@@ -94,7 +94,6 @@ const Calculator = () => {
       e.preventDefault();
       var savedData = JSON.parse(e.target.value);
       setProfit(savedData.investment_info.investment_return)
-      console.log(savedData.investment_info.investment_return)
       
       setIRRPariPassu(savedData.llcs[0].waterfall_preferences.irr_parri_passu)
       setPayGPPrincipal(savedData.llcs[0].waterfall_preferences.pay_gp_principal)
@@ -150,7 +149,6 @@ const Calculator = () => {
         }
         setArr(s => {
           const newArr = s.slice();
-          console.log(newArr[index])
           newArr[index].value.limited_partner_percent = e.target.value;
     
           return newArr;
@@ -184,7 +182,6 @@ const Calculator = () => {
         setArr(s => {
           const newArr = s.slice();
           newArr[index].value['hurdle'] = e.target.value;
-          console.log(newArr[index])
 
           return newArr;
         });
@@ -232,7 +229,6 @@ const Calculator = () => {
         }
         setFee(s => {
           const newFee = s.slice();
-          console.log(newFee[index])
           newFee[index].value.year = e.target.value;
     
           return newFee;
@@ -248,7 +244,6 @@ const Calculator = () => {
         }
         setFee(s => {
           const newFee = s.slice();
-          console.log(newFee[index])
           newFee[index].value.before_what_hurdle = e.target.value;
     
           return newFee;
@@ -264,7 +259,6 @@ const Calculator = () => {
         }
         setFee(s => {
           const newFee = s.slice();
-          console.log(newFee[index])
           newFee[index].value.who_gets_this_fee = e.target.value;
     
           return newFee;
@@ -280,7 +274,6 @@ const Calculator = () => {
         }
         setFee(s => {
           const newFee = s.slice();
-          console.log(newFee[index])
           newFee[index].value.percentage_or_cash = e.target.value;
     
           return newFee;
@@ -296,7 +289,6 @@ const Calculator = () => {
         }
         setFee(s => {
           const newFee = s.slice();
-          console.log(newFee[index])
           newFee[index].value.type_transaction = e.target.value;
     
           return newFee;
@@ -312,7 +304,6 @@ const Calculator = () => {
         }
         setFee(s => {
           const newFee = s.slice();
-          console.log(newFee[index])
           newFee[index].value.type_of_fee = e.target.value;
     
           return newFee;
@@ -350,19 +341,7 @@ id: 3       },
       }else{
           index = 0
       }
-      console.log(index)
-      console.log(e.target.value)
-      console.log(profit[index])
-      // profit.splice(index, 1)
       setProfit(profits=> profits.filter((s,i)=>(i != e.target.id)))
-      // setProfit(s => {
-      //   const removed = s.splice(index-1, 1)
-      //   console.log(s)
-      //   console.log(removed)
-      //   // newProfit[index].value.profit = e.target.value;
-  
-      //   return s;
-      // });
         }
     const addProfit = () => {
         setProfit(s => {
@@ -386,10 +365,8 @@ id: 3       },
         }else{
             index = 0
         }
-        console.log(profit)
         setProfit(s => {
           const newProfit = s.slice();
-          console.log(newProfit[index])
           newProfit[index].value.profit = e.target.value;
     
           return newProfit;
@@ -433,7 +410,6 @@ id: 3       },
         }
         setInvestorA(s => {
           const newArr = s.slice();
-          console.log(newArr[index])
           newArr[index].value.name = e.target.value;
           newArr[index].value.email = e.target.value;
     
@@ -449,7 +425,6 @@ id: 3       },
         }
         setInvestorA(s => {
           const newArr = s.slice();
-          console.log(newArr[index])
           newArr[index].value.email = e.target.value;
     
           return newArr;
@@ -464,7 +439,6 @@ id: 3       },
         }
         setInvestorA(s => {
           const newArr = s.slice();
-          console.log(newArr[index])
           newArr[index].value.country_of_origin = e.target.value;
     
           return newArr;
@@ -479,7 +453,6 @@ id: 3       },
         }
         setInvestorA(s => {
           const newArr = s.slice();
-          console.log(newArr[index])
           newArr[index].value.tax_percentage_withheld = e.target.value;
     
           return newArr;
@@ -494,7 +467,6 @@ id: 3       },
         }
         setInvestorA(s => {
           const newArr = s.slice();
-          console.log(newArr[index])
           newArr[index].value.amount_invested = e.target.value;
     
           return newArr;

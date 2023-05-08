@@ -27,7 +27,7 @@ const User = () => {
     </Figure>
         {/* <Card.Img variant="top" src={require('./pictures/ben-spray-gEvMA8O6Et4-unsplash.jpg')} /> */}
         
-        <h3>Here at Waterfall Distribution, we are all about making your life easier. We take complex problems and give you answers. We streamline productivity to save you time and money. When someone has all of their data in one place, not only does it streamline productivity, it creates the ability for smarter decision making.</h3>
+        <h3>Here at Distribution Resolution, we are all about making your life easier. We take complex problems and give you answers. We streamline productivity to save you time and money. When someone has all of their data in one place, not only does it streamline productivity, it creates the ability for smarter decision making.</h3>
      
 </Col>
         <Col></Col>

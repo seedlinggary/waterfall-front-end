@@ -77,7 +77,7 @@ const Workflow = () => {
         <Row>
         <Col md={{ span: 1, offset: 8 }} style={numstyle}>3</Col>
       </Row> 
-      <h3>Now we will go over to the calculator and start with the years of profit. Add in the profit amount. To add a year, press the blue button. </h3>
+      <h3>Now we will go over to the calculator and start with the years of profit. Add in the profit amount. To add a year, press the blue button. You can also add in many years at one time with incremental increases to both the amount and time.</h3>
 </Col>
         <Col xs={{ span: 3, offset: 2 }}>   <img
           className="d-block w-100"
@@ -161,7 +161,7 @@ const Workflow = () => {
         <Row>
         <Col md={{ span: 1, offset: 8 }} style={numstyle}>9</Col>
       </Row> 
-       <h3>Lastly, hit the green button to create your distribution. If you added Investors, a seperate tab will appear with their distributions.</h3>
+       <h3>Lastly, agree to the terms and conditions and hit the green button to create your distribution. If you added Investors, a seperate tab will appear with their distributions.</h3>
        </Col>
         <Col xs={{ span: 3, offset: 2 }}>   <img
           className="d-block w-100"

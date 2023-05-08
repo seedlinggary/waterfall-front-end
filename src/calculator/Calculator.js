@@ -44,6 +44,8 @@ const Calculator = () => {
     const [new_splits,setNewSplits] = useState(null)
     const [isPending, setIsPending] = useState(true)
     const [error, setError] = useState(null)
+    const [acceptTermsAndCondisiotns, setAcceptTermsAndCondisiotns] = useState(false)
+    const [warningTermsAndConditions, setWarningTermsAndConditions] = useState(false)
     
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
@@ -96,9 +98,7 @@ const Calculator = () => {
     }
     const inputSavedData = e => {
       e.preventDefault();
-      console.log(e.target.value)
       var savedData = JSON.parse(e.target.value);
-      console.log(savedData)
       
       const fixed_investment_return = savedData.investment_info.investment_return.map(myFunction);
       
@@ -107,10 +107,7 @@ const Calculator = () => {
         new_value.value.date = Date.parse(value.value.date)
         return new_value;
       }
-      console.log(fixed_investment_return)
-      console.log(savedData.investment_info.investment_return)
       setProfit(fixed_investment_return)
-      console.log(savedData.investment_info.investment_return)
       
       setIRRPariPassu(savedData.llcs[0].waterfall_preferences.irr_parri_passu)
       setPayGPPrincipal(savedData.llcs[0].waterfall_preferences.pay_gp_principal)
@@ -130,8 +127,6 @@ const Calculator = () => {
       setFee(savedData.llcs[0].fees)
       const new_investment_frequency  = savedData.llcs[0].investment_frequency
       new_investment_frequency.start_date = Date.parse(savedData.llcs[0].investment_frequency.start_date)
-      console.log(new_investment_frequency)
-      console.log(savedData.llcs[0].investment_frequency)
       setProfitFrequency(savedData.llcs[0].investment_frequency)
 
     }
@@ -212,26 +207,51 @@ const Calculator = () => {
   const SendEuropean = (e) => {
     const prof = [
         {
-            value: {'profit' : 8000},
+            value: {'profit' : 2000,
+            'date': today},
                     type: "",
         id: 0       },
         {
-            value: {'profit' :2500},
+            value: {'profit' :1200,
+            'date': today},
                     type: "",
         id: 1       },
         {
-            value: {'profit' : 1040},
+            value: {'profit' : 1600,
+            'date': today},
                     type: "",
         id: 2},
         {
-            value: {'profit' :2000},
+            value: {'profit' :2000,
+            'date': today},
                     type: "",
         id: 3       },
         {
-            value: {'profit' : 10340},
-                    type: "",
-        id: 4}
-      ];
+          value: {'profit' : 2400,
+          'date': today},
+                  type: "",
+      id: 4},
+      {
+        value: {'profit' : 2800,
+        'date': today},
+                type: "",
+    id: 5},
+    {
+      value: {'profit' : 3200,
+      'date': today},
+              type: "",
+  id: 6},
+  {
+    value: {'profit' : 3600,
+    'date': today},
+            type: "",
+id: 7},
+{
+  value: {'profit' : 15632,
+  'date': today},
+          type: "",
+id: 8}
+];
      
       const inp= [
         {
@@ -274,29 +294,54 @@ const Calculator = () => {
 
 }
 const SendCatchUp = (e) => {
-        const prof = [
-            {
-                value: {'profit' : 8000},
-                        type: "",
-            id: 0       },
-            {
-                value: {'profit' :2500},
-                        type: "",
-            id: 1       },
-            {
-                value: {'profit' : 1040},
-                        type: "",
-            id: 2},
-            {
-                value: {'profit' :2000},
-                        type: "",
-            id: 3       },
-            {
-                value: {'profit' : 10340},
-                        type: "",
-            id: 4}
-          ];
-         
+  const prof = [
+    {
+        value: {'profit' : 2000,
+        'date': today},
+                type: "",
+    id: 0       },
+    {
+        value: {'profit' :1200,
+        'date': today},
+                type: "",
+    id: 1       },
+    {
+        value: {'profit' : 1600,
+        'date': today},
+                type: "",
+    id: 2},
+    {
+        value: {'profit' :2000,
+        'date': today},
+                type: "",
+    id: 3       },
+    {
+      value: {'profit' : 2400,
+      'date': today},
+              type: "",
+  id: 4},
+  {
+    value: {'profit' : 2800,
+    'date': today},
+            type: "",
+id: 5},
+{
+  value: {'profit' : 3200,
+  'date': today},
+          type: "",
+id: 6},
+{
+value: {'profit' : 3600,
+'date': today},
+        type: "",
+id: 7},
+{
+value: {'profit' : 15632,
+'date': today},
+      type: "",
+id: 8}
+];
+     
           const inp= [
             {
                 value: {'hurdle' : .08,
@@ -353,21 +398,24 @@ const SendCatchUp = (e) => {
         const SendAmerican = (e) => {
         const prof = [
             {
-                value: {'profit' : 3185},
+                value: {'profit' : 580,
+                        'date': today},
                         type: "",
             id: 0       },
             {
-                value: {'profit' :5000},
+                value: {'profit' :650,
+                'date': today},
                         type: "",
             id: 1       },
             {
-                value: {'profit' : 303400},
+                value: {'profit' : 23454,
+                'date': today},
                         type: "",
             id: 2}
           ];
           const inp = [
             {
-                value: {'hurdle' : .02,
+                value: {'hurdle' : .06,
                         'sponsor_percent' : 0,
                         'limited_partner_percent' : 1},
                         type: "",
@@ -392,6 +440,7 @@ const SendCatchUp = (e) => {
 
         setIRRPariPassu(false)
         setPayGPPrincipal(true)
+        setPayGPPrefered(true)
         setTypeOfSplit("split_plus_percentage")
         setCapitalParriPasu(false)
         setTypeOfHurdle("irr_yearly_compund")
@@ -410,27 +459,33 @@ const SendCatchUp = (e) => {
     const SendAfterPreffered = (e) => {
         const prof = [
             {
-                value: {'profit' : 500000},
+                value: {'profit' : 500000,
+                'date': today},
                         type: "",
             id: 0       },
             {
-                value: {'profit' :500000},
+                value: {'profit' :500000,
+                'date': today},
                         type: "",
             id: 1       },
             {
-                value: {'profit' : 750000},
+                value: {'profit' : 750000,
+                'date': today},
                         type: "",
             id: 2},
             {
-                value: {'profit' : 750000},
+                value: {'profit' : 750000,
+                'date': today},
                         type: "",
             id: 3},
             {
-                value: {'profit' :1000000},
+                value: {'profit' :1000000,
+                'date': today},
                         type: "",
             id: 4       },
             {
-                value: {'profit' : 25000000},
+                value: {'profit' : 25000000,
+                'date': today},
                         type: "",
             id: 5}
           ];
@@ -494,75 +549,6 @@ const SendCatchUp = (e) => {
       
         // SendApi()
     }
-    const SendPrefferedNonIRRpari = (e) => {
-        const prof = [
-            {
-                value: {'profit' : 300},
-                        type: "",
-            id: 0       },
-            {
-                value: {'profit' :3000},
-                        type: "",
-            id: 1       },
-            {
-                value: {'profit' : 10000},
-                        type: "",
-            id: 2}
-          ];
-          const inp = [
-            {
-                value: {'hurdle' : .08,
-                        'sponsor_percent' : 0,
-                        'limited_partner_percent' : 1},
-                        type: "",
-            id: 0       },
-            {
-                value: {'hurdle' : .12,
-                        'sponsor_percent' : .15,
-                        'limited_partner_percent' : .85},
-                        type: "",
-            id: 1       },
-        
-            {
-                value: {'hurdle' : 0,
-                        'sponsor_percent' : .25,
-                        'limited_partner_percent' : .75},
-                        type: "",
-            id: 2       }
-        
-          ];
-          let inv = [
-            {value :{},
-        id: 0},]
-        let fee = [
-            {
-                value: {},
-                type: "",
-            id: 0       },]
-        setProfit(prof)
-        setArr(inp);
-
-        setIRRPariPassu(false)
-        setPayGPPrincipal(true)
-        setPayGPPrefered(true)
-        setTypeOfSplit("straight")
-        setCapitalParriPasu(true)
-        setTypeOfHurdle("paydown_capital_paydown_irr")
-        setWayInWhichToSplit("investor_on_top_of_irr")
-        setPrincipalAfterPreffered(true)
-        seYrStartCapitalPayback(3)
-        setCostOfProperty(100000)
-        setBankLoanAmount(90000)
-        setLPAmount(8000)
-        setGPAmount(2000)
-        setInvestmentName('PrefferedNonIRRpari')
-        setInvestmentType('real estate')
-        setInvestorA(inv)
-        setFee(fee)
-
-      
-        // SendApi()
-    }
     const SendApi = (e) => {
       let info = {
           "investment_info": {"name": investment_name,
@@ -591,13 +577,17 @@ const SendCatchUp = (e) => {
           "investment_frequency": profitFrequency,
           }]
           }  
-
-      let backend = 'http://127.0.0.1:5000'
+      if (!acceptTermsAndCondisiotns){
+        setWarningTermsAndConditions(true)
+        return
+      }
+      setWarningTermsAndConditions(false)
+      // let backend = 'http://127.0.0.1:5000'
+      let backend = 'https://distributionresolutionapi.com'
       // let backend = 'http://waterfall-env.eba-a4a3q6d3.ap-northeast-1.elasticbeanstalk.com/'
       // let backend = 'https://d30c84rzmrhbgy.cloudfront.net'
       // let address = `/waterfall_calc`
       let address = `/investment_calc`
-      console.log(pay_gp_principal)
       const requestOptions = {
           method: 'POST',
           headers: { 'Content-Type': 'application/json',
@@ -666,8 +656,14 @@ const SendCatchUp = (e) => {
             "investment_frequency": profitFrequency,
             }]
             }  
+            if (!acceptTermsAndCondisiotns){
+              setWarningTermsAndConditions(true)
+              return
+            }
+            setWarningTermsAndConditions(false)
+        // let backend = 'http://127.0.0.1:5000'
+        let backend = 'https://distributionresolutionapi.com'
 
-        let backend = 'http://127.0.0.1:5000'
         // let backend = 'http://waterfall-env.eba-a4a3q6d3.ap-northeast-1.elasticbeanstalk.com/'
         // let backend = 'https://d30c84rzmrhbgy.cloudfront.net'
         // let address = `/waterfall_calc`
@@ -698,23 +694,28 @@ const SendCatchUp = (e) => {
       const SendInvestmentApi = (e) => {
             const prof = [
                 {
-                    value: {'profit' : 8000},
+                    value: {'profit' : 8000,
+                    'date': today},
                             type: "",
                 id: 0       },
                 {
-                    value: {'profit' :2500},
+                    value: {'profit' :2500,
+                    'date': today},
                             type: "",
                 id: 1       },
                 {
-                    value: {'profit' : 1040},
+                    value: {'profit' : 1040,
+                    'date': today},
                             type: "",
                 id: 2},
                 {
-                    value: {'profit' :2000},
+                    value: {'profit' :2000,
+                    'date': today},
                             type: "",
                 id: 3       },
                 {
-                    value: {'profit' : 10340},
+                    value: {'profit' : 10340,
+                    'date': today},
                             type: "",
                 id: 4}
               ];
@@ -816,10 +817,10 @@ const SendCatchUp = (e) => {
        
             return ( 
         <div > 
-          {showError &&  <Alert variant="danger" onClose={() => setShowError(false)} dismissible>
+          {warningTermsAndConditions &&  <Alert variant="danger" onClose={() => setWarningTermsAndConditions(false)} dismissible>
         <Alert.Heading>Warning!</Alert.Heading>
         <p>
-          This website does not take responsibility for any information given or provided. Please compare your waterfall results against your own information for accurecy.
+          This website does not take responsibility for any information given or provided. Please compare your waterfall results against your own information for accurecy. Please check terms and condition box.
         </p>
       </Alert>}
          
@@ -1091,8 +1092,8 @@ const SendCatchUp = (e) => {
         <Form.Label>Way In which to split</Form.Label>
         <Form.Select aria-label="Default select example" onChange={(e) => setWayInWhichToSplit(e.target.value)}>
               <option value={way_in_which_to_split}>{way_in_which_to_split}</option>
-              <option value="investor_in_the_irr">GP apart of the whole</option>
-              <option value="investor_on_top_of_irr">GP's cut over the whole (gemara style)</option>
+              <option value="investor_in_the_irr">Hurdle Bar IRR return for total invested</option>
+              <option value="investor_on_top_of_irr">Hurdle Bar IRR return for LP</option>
           </Form.Select>
           </Form.Group>
           <Form.Group as={Col} controlId="formGridEmail">
@@ -1169,7 +1170,24 @@ const SendCatchUp = (e) => {
     </Accordion>
 
     <br></br>
-       
+    <Row>
+      <Col md={{ span: 3, offset: 5 }}>   
+      <Form.Group as={Col} controlId="formGridEmail">
+          <Form.Check 
+          type="switch"
+          id="custom-switch"
+          label= {
+            <span>
+              I agree to the <a href="/disclaimer">terms and conditions</a>
+            </span>
+          }
+          checked={acceptTermsAndCondisiotns}
+  
+          onChange={(e) => acceptTermsAndCondisiotns ? setAcceptTermsAndCondisiotns(false) : setAcceptTermsAndCondisiotns(true)}
+        />        </Form.Group>
+
+    </Col>  
+               </Row>
 <br></br>
       
       <Row>
@@ -1444,7 +1462,7 @@ const SendCatchUp = (e) => {
                             <td>{inf.lp_share.toLocaleString()}</td>
                             </tr>
                             <tr>
-                            <td>{inf.hurdle_top_amount}</td>
+                            <td>{inf.hurdle_top_amount || 0}</td>
                             </tr>
                             <tr>
                             <td>{inf.money_left_to_distribute_after_hurdle.toLocaleString()}</td>

@@ -40,9 +40,9 @@ const User = () => {
     </Card></Col>  <Col md={{ span: 2, offset: 1 }}>    <Card>
       <Card.Img variant="top"  src={require('./pictures/robert-linder-kcX1lHlPyfM-unsplash.jpg')} />
       <Card.Body>
-        <Card.Title>IRR for different dates</Card.Title>
+        <Card.Title>Profit and Losses</Card.Title>
         <Card.Text>
-          Now we only can handle IRR on a yearly period, soon we will be able to handle different time intervals.
+          Keep track of all your expenses and earnings. Organize them into different catagories over different periods of times.
         </Card.Text>
       </Card.Body>
 
@@ -50,7 +50,7 @@ const User = () => {
     </Card></Col>  <Col md={{ span: 2, offset: 1 }}>    <Card >
       <Card.Img variant="top"  src={require('./pictures/sebastian-pandelache-kcSqfuUyIBo-unsplash.jpg')} />
       <Card.Body>
-        <Card.Title>Capital Calls</Card.Title>
+        <Card.Title>Capital Calls for Investors</Card.Title>
         <Card.Text>
           No one likes capital calls. Soon you will be able to add capital calls to the investment so you can see a real picture of where your investment is standing.
         </Card.Text>

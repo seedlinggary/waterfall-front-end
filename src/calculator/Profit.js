@@ -34,7 +34,7 @@ const Profit = ({ profit, setProfit,profitFrequency, setProfitFrequency}) => {
   }
     const addMultiYears = e =>{
       let sumTotal = startingAmount
-      let datesumTotal = addDateMultiplication(profitFrequency.start_date)
+      let datesumTotal = new Date(profitFrequency.start_date.setFullYear(profitFrequency.start_date.getFullYear() + 0))
 
       let newProfit = [
         {
@@ -91,24 +91,7 @@ const Profit = ({ profit, setProfit,profitFrequency, setProfitFrequency}) => {
           return newProfit;
         });
       }; 
-      // const handleDateChange = e => {
-      //   // e.preventDefault();
-      //   console.log(e)
-
-      //   let index = e.target.id;
-      //   if (e.target.id > 0){
-      //       index = e.target.id
-      //   }else{
-      //       index = 0
-      //   }
-
-      //   setProfit(s => {
-      //     const newProfit = s.slice();
-      //     newProfit[index].value.date = e;
-    
-      //     return newProfit;
-      //   });
-      // };
+ 
       function handleDateChange(date, index) {
         setProfit(s => {
               const newProfit = s.slice();
@@ -125,19 +108,16 @@ const Profit = ({ profit, setProfit,profitFrequency, setProfitFrequency}) => {
           setRate(e.target.value)
           return newProfit;
         });
-        console.log(profitFrequency)
 
       };
       const handleStartDateChange = e => {
  
         setProfitFrequency(s => {
           const newProfit = s;
-          console.log(e)
           newProfit.start_date = e;
           setStartDate(e)
           return newProfit;
         });
-        console.log(profitFrequency)
       };
          
         
@@ -163,26 +143,26 @@ const Profit = ({ profit, setProfit,profitFrequency, setProfitFrequency}) => {
           }      
         </Row> 
        
- 
         <Row className="mb-3">
-        
+        <hr></hr>
         {/* <Form.Group as={Col} controlId="formGridEmail">
             <Form.Label>% owned by this waterfall</Form.Label>
-            <Form.Control  placeholder={percentage_investment_owned} onChange={(e) => setPercentageInvestmentOwned(e.target.value)} />
+            <Form.Control  value={percentage_investment_owned} onChange={(e) => setPercentageInvestmentOwned(e.target.value)} />
           </Form.Group>         */}
           <Form.Group as={Col} controlId="formGridEmail">
             <Form.Label>{profitFrequency.rate }s would like to add</Form.Label>
-            <Form.Control  placeholder={years} onChange={(e) => setYears(e.target.value)} />
+            <Form.Control  value={years} onChange={(e) => setYears(e.target.value)} />
           </Form.Group>        
           <Form.Group as={Col} controlId="formGridEmail">
             <Form.Label>First {profitFrequency.rate }s worth of profit</Form.Label>
-            <Form.Control  placeholder={startingAmount} onChange={(e) => setStartingAmount(e.target.value)} />
+            <Form.Control  value={startingAmount} onChange={(e) => setStartingAmount(e.target.value)} />
           </Form.Group>
           <Form.Group as={Col} controlId="formGridEmail">
             <Form.Label>Profit percentage increase per {profitFrequency.rate }</Form.Label>
-            <Form.Control  placeholder={mulitplicationAmount} onChange={(e) => setMulitplicationAmount(e.target.value)} />
+            <Form.Control  value={mulitplicationAmount} onChange={(e) => setMulitplicationAmount(e.target.value)} />
           </Form.Group>  
         </Row>
+        {profitFrequency.rate  == 'Personalize' &&
         <Row className="mb-3">
 
         <Form.Group as={Col} >
@@ -198,12 +178,14 @@ const Profit = ({ profit, setProfit,profitFrequency, setProfitFrequency}) => {
 
           <Form.Group as={Col} controlId="formGridEmail">
             <Form.Label>How many {typeDateMultiplicationAMount}s between each profit?</Form.Label>
-            <Form.Control  placeholder={dateMulitplicationAmount} onChange={(e) => setDateMulitplicationAmount(e.target.value)} />
-          </Form.Group>  
+            <Form.Control  value={dateMulitplicationAmount} onChange={(e) => setDateMulitplicationAmount(e.target.value)} />
+          </Form.Group> 
+          
         </Row>
-        
+}
         <Button  variant="outline-primary" onClick={addMultiYears}>add multiple {profitFrequency.rate }s</Button>
-
+        <p></p> 
+          <hr></hr>
       {profit.map((item, i) => {
                     return (
                         
@@ -213,7 +195,7 @@ const Profit = ({ profit, setProfit,profitFrequency, setProfitFrequency}) => {
               <Form.Label>{profitFrequency.rate } {i + 1}'s worth of profit: {profit.length > 1 &&<Button variant="danger" id={i} onClick={deleteYear}>
             Delete {profitFrequency.rate }
           </Button> } </Form.Label >
-              <Form.Control  placeholder={item.value.profit} id={i}  onChange={handleProfitChange}/>
+              <Form.Control  value={item.value.profit} id={i}  onChange={handleProfitChange}/>
             </Form.Group>
             {profitFrequency.rate == 'Personalize' && 
             <Form.Group as={Col} controlId="formGridEmail" >

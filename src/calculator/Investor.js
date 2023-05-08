@@ -33,7 +33,6 @@ const Investor = ({investora, setInvestorA}) => {
         }
         setInvestorA(s => {
           const newArr = s.slice();
-          console.log(newArr[index])
           newArr[index].value.name = e.target.value;
           newArr[index].value.email = e.target.value;
     
@@ -49,7 +48,6 @@ const Investor = ({investora, setInvestorA}) => {
         }
         setInvestorA(s => {
           const newArr = s.slice();
-          console.log(newArr[index])
           newArr[index].value.email = e.target.value;
     
           return newArr;
@@ -64,7 +62,6 @@ const Investor = ({investora, setInvestorA}) => {
         }
         setInvestorA(s => {
           const newArr = s.slice();
-          console.log(newArr[index])
           newArr[index].value.country_of_origin = e.target.value;
     
           return newArr;
@@ -79,7 +76,6 @@ const Investor = ({investora, setInvestorA}) => {
         }
         setInvestorA(s => {
           const newArr = s.slice();
-          console.log(newArr[index])
           newArr[index].value.tax_percentage_withheld = e.target.value;
     
           return newArr;
@@ -94,7 +90,6 @@ const Investor = ({investora, setInvestorA}) => {
         }
         setInvestorA(s => {
           const newArr = s.slice();
-          console.log(newArr[index])
           newArr[index].value.amount_invested = e.target.value;
     
           return newArr;
