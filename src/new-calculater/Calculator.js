@@ -16,9 +16,10 @@ import Fee from '../calculator/Fee';
 import Investor from '../new-calculater/Investor';
 import {parentList} from './GrabFresh'
 
-const Calculator = ({pageID, wtrfall, setWtrfall,buttonClick, setButtonClick ,investorA ,setInvestorA}) => {
+const Calculator = ({pageID, wtrfall, setWtrfall,buttonClick, setButtonClick ,investorA ,setInvestorA, subInvestorA ,setSubInvestorA }) => {
     const navigate = useNavigate()
     // const [waterfallInfo ,setWaterfallInfo] = useState[]
+    const [parentArr, setParentArr]= useState({})
     const [irr_parri_passu, setIRRPariPassu] = useState(true)
     const [pay_gp_principal, setPayGPPrincipal] = useState(false)
     const [pay_gp_prefered, setPayGPPrefered] = useState(false)
@@ -28,7 +29,7 @@ const Calculator = ({pageID, wtrfall, setWtrfall,buttonClick, setButtonClick ,in
     const [way_in_which_to_split, setWayInWhichToSplit] = useState("investor_in_the_irr")
     const [principal_after_preffered, setPrincipalAfterPreffered] = useState(false)
     const [yr_strt_capital_payback, seYrStartCapitalPayback] = useState(10000)
-    const [cost_of_property, setCostOfProperty] = useState(10000)
+    // const [cost_of_property, setCostOfProperty] = useState(10000)
     const [bank_loan_amount, setBankLoanAmount] = useState(0)
     const [investment_name, setInvestmentName] = useState('Money Maker')
     const [investment_type, setInvestmentType] = useState('Real Estate')
@@ -90,7 +91,8 @@ const Calculator = ({pageID, wtrfall, setWtrfall,buttonClick, setButtonClick ,in
     const [subwtrfall, setSubwtrfall]= useState([])
 
     // const [investora, setInvestorA] = useState(investorArr);
-    const [subInvestorA,setSubInvestorA]=useState(investorArr)
+    // const [subInvestorA,setSubInvestorA]=useState(investorArr)
+    // console.log({setSubInvestorA})
 
       const SendPromoteWaterfall = (e) => {
 
@@ -115,15 +117,7 @@ const Calculator = ({pageID, wtrfall, setWtrfall,buttonClick, setButtonClick ,in
 
   }
       const saveInfogeneralwaterfall = (e) => {
-      let info = [{
-          "investment_info": {"name": investment_name,
-          "investment_type": investment_type,
-          "cost": cost_of_property,
-          // "mortgage_amount": bank_loan_amount,
-          "investment_return": profit
-
-          },
-           "llcs": [{"name": "Gary's LLC",
+      let aWaterfall = {"name": "Gary's LLC",
            "waterfall_preferences": {'irr_parri_passu': irr_parri_passu,
            'pay_gp_principal': pay_gp_principal,
            'pay_gp_prefered': pay_gp_prefered,
@@ -140,16 +134,18 @@ const Calculator = ({pageID, wtrfall, setWtrfall,buttonClick, setButtonClick ,in
            "fees": fee,
           "investors": subInvestorA,
           "investment_frequency": profitFrequency,
-          }]
-          }  ]
+          'subWaterfall':[]
+          
+          }
           // setWaterfallInfo(in)
-          parentList.push(info)
+          parentList.push(aWaterfall)
           console.log(`test${parentList}`)
   
       e.preventDefault();
       
       
       } 
+      
         // const handleWaterfallChange = e => {
         //   e.preventDefault();
         //   let index = e.target.id;
@@ -173,77 +169,123 @@ const Calculator = ({pageID, wtrfall, setWtrfall,buttonClick, setButtonClick ,in
         if (buttonClick) {
           
           // console.log(`amountOfWaterfalls ${amountOfWaterfalls.length} parentList ${parentList.length}`)
-          
+          if(wtrfall){
+            setWtrfall(s => {
+              const wtrfall = s.slice();
+              wtrfall[pageID] = aWaterfall
+              // console.log(wtrfall)
+              return wtrfall;
+            });
+          }else{
+            wtrfall=aWaterfall
+          }
+           
+          //  if(subwtrfall){
+          //       setSubwtrfall(s => {
+          //         const wtrfall = s.slice();
+          //         wtrfall[pageID] = info
+          //         // console.log(subwtrfall)
+          //         return wtrfall;
+          //       });
+          //     }else{
+          //       subwtrfall=[info]
+          //     }
+              
           // console.log()
           let investers=[{
             "investors": investorA,
           }]
-          let info = [{
-            "investment_info": {"name": investment_name,
-            "investment_type": investment_type,
-            "cost": cost_of_property,
-            // "mortgage_amount": bank_loan_amount,
-            "investment_return": profit
-  
-            },
-             "llcs": [{"name": "Gary's LLC",
-             "waterfall_preferences": {'irr_parri_passu': irr_parri_passu,
-             'pay_gp_principal': pay_gp_principal,
-             'pay_gp_prefered': pay_gp_prefered,
-             'type_of_split': type_of_split,
-             'capital_parri_passu': capital_parri_passu,
-             'type_of_hurdle': type_of_hurdle,
-             'way_in_which_to_split' : way_in_which_to_split,
-             'principal_after_preffered': principal_after_preffered,
-             'yr_strt_capital_payback': (yr_strt_capital_payback - 1)},
-             "splits": arr,
-             "percentage_investment_owned": percentage_investment_owned,
-             "amount_gp_invested": gp_amount,
-             "amount_lp_invested": lp_amount,
-             "fees": fee,
-            "investors": subInvestorA,
-            "investment_frequency": profitFrequency,
-            "subWaterfall": [subwtrfall]
-            
-            }]
-            }  ]
-            if(wtrfall){
-              setWtrfall(s => {
-                const wtrfall = s.slice();
-                wtrfall[pageID] = info
-                // console.log(wtrfall)
-                return wtrfall;
-              });
-            }else{
-              wtrfall=[info]
-            }
-              if(subwtrfall){
-              setSubwtrfall(s => {
-                const wtrfall = s.slice();
-                wtrfall[pageID] = info
-                // console.log(subwtrfall)
-                return wtrfall;
-              });
-             }else{
-              subwtrfall=[info]
-            }
+          let aWaterfall = {"name": "Gary's LLC",
+          "waterfall_preferences": {'irr_parri_passu': irr_parri_passu,
+          'pay_gp_principal': pay_gp_principal,
+          'pay_gp_prefered': pay_gp_prefered,
+          'type_of_split': type_of_split,
+          'capital_parri_passu': capital_parri_passu,
+          'type_of_hurdle': type_of_hurdle,
+          'way_in_which_to_split' : way_in_which_to_split,
+          'principal_after_preffered': principal_after_preffered,
+          'yr_strt_capital_payback': (yr_strt_capital_payback - 1)},
+          // "splits": arr,
+          "percentage_investment_owned": percentage_investment_owned,
+          "amount_gp_invested": gp_amount,
+          "amount_lp_invested": lp_amount,
+          "fees": fee,
+         "investors": subInvestorA,
+         "investment_frequency": profitFrequency,
+         'subWaterfall':[]
+         
+         }
+              
+              // if (wtrfall) {
+              //   const updatedSubWaterfall = wtrfall.slice();
+              //   updatedSubWaterfall[pageID] = info;
+              //   wtrfall[pageID].llcs[0].subWaterfall = updatedSubWaterfall;
+              //   setSubwtrfall(updatedSubWaterfall);
+              // } else {
+              //   setSubwtrfall(info);
+              // }
+              
+
             console.log(investorA)
-            let sendApi={"investors":investers,"waterfalls":wtrfall}
-            console.log(sendApi)
+            var holder={"investors":investers,"waterfalls":wtrfall}
+            // console.log(wtrfall)
             setButtonClick(false)
           console.log("Button clicked!");
           // if (parentList.length){
           // setButtonClick(false)}
         }
-        console.log(wtrfall)
+        let investers=[{
+          "investors": investorA,
+        }]
+        setParentArr(holder)
+        console.log(parentArr)
         console.log(buttonClick)
       }, [buttonClick]);   
     
             function addWaterfall() {
-              console.log(subwtrfall.length)
-              setSubwtrfall([...subwtrfall, subwtrfall]);
-              console.log(subwtrfall.length)
+              console.log(wtrfall)
+              setWtrfall(s => {
+                const addwaterfall = s.slice();
+                addwaterfall[pageID].push([''])
+          
+                return addwaterfall;
+              });
+             
+             
             }
+            let aWaterfall = {"name": "Gary's LLC",
+          "waterfall_preferences": {'irr_parri_passu': irr_parri_passu,
+          'pay_gp_principal': pay_gp_principal,
+          'pay_gp_prefered': pay_gp_prefered,
+          'type_of_split': type_of_split,
+          'capital_parri_passu': capital_parri_passu,
+          'type_of_hurdle': type_of_hurdle,
+          'way_in_which_to_split' : way_in_which_to_split,
+          'principal_after_preffered': principal_after_preffered,
+          'yr_strt_capital_payback': (yr_strt_capital_payback - 1)},
+          "splits": arr,
+          "percentage_investment_owned": percentage_investment_owned,
+          "amount_gp_invested": gp_amount,
+          "amount_lp_invested": lp_amount,
+          "fees": fee,
+         "investors": subInvestorA,
+         "investment_frequency": profitFrequency,
+         'subWaterfall':[]
+         
+         }
+    // setParentArr(s => {
+    //   console.log(parentArr)
+    //   if(parentArr){
+    //     const waterfall = s.slice();
+    //     waterfall[pageID] = aWaterfall;
+        
+    //     console.log(parentArr)
+    //     return waterfall;
+    //   }
+    //   else{
+    //     return aWaterfall
+    //   }})
+    // setParentArr([aWaterfall])
        
             return ( 
               <Accordion defaultActiveKey="0">
@@ -397,8 +439,8 @@ const Calculator = ({pageID, wtrfall, setWtrfall,buttonClick, setButtonClick ,in
       </Accordion.Item>     <Accordion.Item eventKey="4">
         <Accordion.Header>Add Investors or waterfall (optional)</Accordion.Header>
         <Accordion.Body>
-          <Investor investorA={investorA} setInvestorA={setInvestorA}></Investor>
-         {subwtrfall.map((arr,i) => <NewCalculator key={arr} pageID={i} subwtrfall={subwtrfall} setSubwtrfall={setSubwtrfall} parentList={parentList} setButtonClick={setButtonClick} buttonClick={buttonClick} subInvestorA={subInvestorA} setSubInvestorA={setSubInvestorA}/>)}
+          <Investor subInvestorA={subInvestorA} setSubInvestorA={setSubInvestorA}></Investor>
+         {wtrfall[pageID].subWaterfall && wtrfall[pageID].subWaterfall?.map((arr,i=100) => <NewCalculator key={`sub${arr}`} pageID={i} subwtrfall={subwtrfall} setSubwtrfall={setSubwtrfall} parentList={parentList} setButtonClick={setButtonClick} buttonClick={buttonClick} subInvestorA={subInvestorA} setSubInvestorA={setSubInvestorA}/>)}
          <button onClick={addWaterfall}>Add Waterfall</button>
           {/* <Calculator/> */}
               </Accordion.Body>

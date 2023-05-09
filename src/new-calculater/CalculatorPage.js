@@ -28,8 +28,9 @@ function CalculatorPage (){
     
       ];
     const [investorA, setInvestorA] = useState(investorArr);
+    const [subInvestorA,setSubInvestorA]=useState(investorArr)
     // const [amountOfWaterfalls, setAmountOfWaterfalls] = useState([0])
-    console.log(parentList)
+    // console.log(parentList)
     function addWaterfall() {
         console.log(wtrfall.length)
         setWtrfall([...wtrfall, wtrfall]);
@@ -49,7 +50,7 @@ function CalculatorPage (){
         </div>
           <Investor investorA={investorA} setInvestorA={setInvestorA} buttonClick={buttonClick} />
         {/* <button onClick={addInvestor}>Add Investor</button> */}
-         {wtrfall.map((arr,i) => <NewCalculator key={arr} pageID={i} wtrfall={wtrfall} setWtrfall={setWtrfall} parentList={parentList} setButtonClick={setButtonClick} buttonClick={buttonClick}/>)}
+         {wtrfall && wtrfall.map((arr,i) => <NewCalculator key={arr} pageID={i} wtrfall={wtrfall} setWtrfall={setWtrfall} parentList={parentList} setButtonClick={setButtonClick} buttonClick={buttonClick} subInvestorA={subInvestorA} setSubInvestorA={setSubInvestorA}/>)}
         <button onClick={addWaterfall}>Add Waterfall</button>
          {/* {investorList.map((arr,i) => <Investor key={arr} pageID={i} investorList={investorList} setInvestorList={setInvestorList} investora={investora} setInvestorA={setInvestorA} buttonClick={buttonClick} />)} */}
          <Row>

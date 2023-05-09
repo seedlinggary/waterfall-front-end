@@ -5,13 +5,14 @@ import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import Accordion from 'react-bootstrap/Accordion';
 const Investor = ({investorA, setInvestorA,subInvestorA,setSubInvestorA}) => {
-  const investersList= subInvestorA ? subInvestorA :investorA
-  const setInvestersList= setSubInvestorA ? setSubInvestorA :setInvestorA
+  const investersList= subInvestorA ||investorA
+  const setInvestersList= setSubInvestorA||setInvestorA
 
 
     const addInvestorInput = () => {
+      // console.log({setSubInvestorA})
       
-      setSubInvestorA(s => {
+      setInvestersList(s => {
           const lastId = s[s.length - 1].id;
           return [
             ...s,
