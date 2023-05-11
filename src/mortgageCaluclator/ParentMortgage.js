@@ -24,7 +24,7 @@ const ParentCalculator = () => {
             'res_payment_list' : null,
             'mortgage_type': 'Standard',
             'balloon_due_date': 24,
-            'mortgage_resp': null
+            'mortgage_resp': null,
                 
                 })
       

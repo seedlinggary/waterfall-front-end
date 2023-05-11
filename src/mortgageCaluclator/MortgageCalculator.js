@@ -132,7 +132,7 @@ const MortgageCalculator = () => {
               <option value="Standard">Standard</option>
               <option value="Balloon">Balloon</option>
               <option value="Interest_only">Interest_only</option>
-              <option value="No_monthly_payments">No_monthly_payments (incrued interest)</option>
+              <option value="No_monthly_payments">No_monthly_payments (accrued interest)</option>
           </Form.Select>
           </Form.Group>
           {mortgage_type === 'Balloon' && 

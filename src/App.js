@@ -14,6 +14,8 @@ import MortgageCalculator from './mortgageCaluclator/MortgageCalculator';
 import DynamicMortgage from './mortgageCaluclator/DynamicMortgage';
 import Disclaimer from './Disclaimer';
 import ParentCalculator from './mortgageCaluclator/ParentMortgage';
+import ParentPandL from './profitlosses/ParentPandL';
+import FamilyTree from './multiwaterfall/FamilyTree';
 function App() {
 
   return (
@@ -33,6 +35,8 @@ function App() {
             <Route path="/mortgagecalculator" element={<MortgageCalculator />} />
             <Route path="/dynamicmortgage" element={<DynamicMortgage />} />
             <Route path="/multimortgage" element={<ParentCalculator />} />
+            <Route path="/pandl" element={<ParentPandL />} />
+            <Route path="/famtree" element={<FamilyTree />} />
             <Route path="/disclaimer" element={<Disclaimer />} />
             <Route path="*" element={<NotFound />} />
 

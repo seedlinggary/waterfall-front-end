@@ -15,8 +15,10 @@ function ColorSchemesExample() {
           <Nav className="me-auto">
             <Nav.Link href="/">Home</Nav.Link>
             <Nav.Link href="/calculator">Waterfall Calculator</Nav.Link>
+            <Nav.Link href="/famtree">Family Tree</Nav.Link>
             {/* <Nav.Link href="/multimortgage">NEW NEW Mortgage Calculator</Nav.Link> */}
             <Nav.Link href="/mortgagecalculator">Mortgage Calculator</Nav.Link>
+            <Nav.Link href="/pandl">Profit and Losses</Nav.Link>
             <Nav.Link href="/workflow">Workflow</Nav.Link>
             <Nav.Link href="/definitions">Definitions</Nav.Link>
             <Nav.Link href="/comingsoon">Coming Soon</Nav.Link>

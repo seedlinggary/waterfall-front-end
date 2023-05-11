@@ -145,10 +145,7 @@ const Profit = ({ profit, setProfit,profitFrequency, setProfitFrequency}) => {
        
         <Row className="mb-3">
         <hr></hr>
-        {/* <Form.Group as={Col} controlId="formGridEmail">
-            <Form.Label>% owned by this waterfall</Form.Label>
-            <Form.Control  value={percentage_investment_owned} onChange={(e) => setPercentageInvestmentOwned(e.target.value)} />
-          </Form.Group>         */}
+
           <Form.Group as={Col} controlId="formGridEmail">
             <Form.Label>{profitFrequency.rate }s would like to add</Form.Label>
             <Form.Control  value={years} onChange={(e) => setYears(e.target.value)} />
