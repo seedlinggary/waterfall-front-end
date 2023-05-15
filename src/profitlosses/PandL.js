@@ -140,11 +140,14 @@ const PandL = ({pAndLs,setPandLs, PandLID}) => {
         <Form.Label>Type of hurdle</Form.Label>
         <Form.Select aria-label="Default select example"  onChange={(e) => handlePandLInfoChange(e.target.value,'transaction_type')}>
               <option value={pAndLs[PandLID].transaction_type}>{pAndLs[PandLID].transaction_type}</option>
-              <option value="Standard">Standard</option>
-              <option value="Balloon">Balloon</option>
-              <option value="Interest_only">Interest_only</option>
-              <option value="No_monthly_payments">No_monthly_payments</option>
-          </Form.Select>
+              <option value="soft_costs">Soft Costs </option>
+            <option value="hard_costs">Hard Costs</option>
+            <option value="marketing">Marketing Costs</option>
+            <option value="g_a">G&A</option>
+            <option value="closing_costs">Closing Costs</option>
+            <option value="recurring_costs">Recurring Costs</option>
+            <option value="miscellaneous">Miscellaneous Costs</option>
+            <option value="income">Income</option>          </Form.Select>
           </Form.Group>
           <br></br>
 
@@ -168,7 +171,7 @@ const PandL = ({pAndLs,setPandLs, PandLID}) => {
           </Form.Group>        
           <Form.Group as={Col} controlId="formGridEmail">
             <Form.Label>First {typeDateMultiplicationAMount }s amount</Form.Label>
-            <Form.Control  value={startingAmount} onChange={(e) => setStartingAmount(e.target.value)} />
+            <Form.Control  value={startingAmount.toLocaleString()} onChange={(e) => setStartingAmount(e.target.value)} />
           </Form.Group>
            
         </Row>
@@ -222,7 +225,7 @@ const PandL = ({pAndLs,setPandLs, PandLID}) => {
               <Form.Label> {i + 1}'s worth : <Button variant="danger" id={i} onClick={deleteYear}>
             Delete {typeDateMultiplicationAMount }
           </Button> </Form.Label >
-              <Form.Control  value={transaction.amount.toString()} id={i}  onChange={(e) => handleTransactionChange(e.target.value, i,'amount')}/>
+              <Form.Control  value={transaction.amount.toLocaleString()} id={i}  onChange={(e) => handleTransactionChange(e.target.value, i,'amount')}/>
             </Form.Group>
             
             <Form.Group as={Col} controlId="formGridEmail" >

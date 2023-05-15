@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Calculator from './Calculator';
 
 function FamilyTree() {
 
@@ -97,6 +98,7 @@ function FamilyTree() {
       <div>
         <button onClick={() => addPerson(null)}>Add First Person</button>
         {rootPerson && renderPerson(rootPerson)}
+        <Calculator></Calculator>
       </div>
     );
 }

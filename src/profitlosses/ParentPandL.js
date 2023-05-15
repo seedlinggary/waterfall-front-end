@@ -38,7 +38,7 @@ const ParentPandL = () => {
         setPandLs(s => {
             const newMortgage = s.slice();
             newMortgage.push({ 'transaction_name' : 'legal fee',
-            'transaction_type': 'soft costs',
+            'transaction_type': 'soft_costs',
             'transactions': [],
                 })
       
