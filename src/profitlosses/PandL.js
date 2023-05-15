@@ -139,7 +139,6 @@ const PandL = ({pAndLs,setPandLs, PandLID}) => {
           <Form.Group as={Col} controlId="formGridEmail">
         <Form.Label>Type of hurdle</Form.Label>
         <Form.Select aria-label="Default select example"  onChange={(e) => handlePandLInfoChange(e.target.value,'transaction_type')}>
-              <option value={pAndLs[PandLID].transaction_type}>{pAndLs[PandLID].transaction_type}</option>
               <option value="soft_costs">Soft Costs </option>
             <option value="hard_costs">Hard Costs</option>
             <option value="marketing">Marketing Costs</option>
@@ -184,7 +183,6 @@ const PandL = ({pAndLs,setPandLs, PandLID}) => {
         <Form.Group as={Col} >
       <Form.Label>How often should profit be given</Form.Label>
       <Form.Select aria-label="Default select example"   onChange={(e) => setTypeDateMulitplicationAmount(e.target.value)}>
-            <option value={typeDateMultiplicationAMount}>{typeDateMultiplicationAMount } </option>
             <option value="year">Year </option>
             <option value="month">Month</option>
             <option value="quater">Quater</option>

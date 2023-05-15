@@ -1,18 +1,10 @@
 import React, { useState } from 'react'
-import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
-import { useNavigate } from "react-router-dom";
-import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
-import Popover from 'react-bootstrap/Popover';
-import Container from 'react-bootstrap/Container';
-import PandL from './PandL';
-import Accordion from 'react-bootstrap/Accordion';
 import DatePicker from 'react-datepicker';
 
 const DealInfo = ({dealInfo, setDealInfo}) => {
-  const navigate = useNavigate()
   function handleDealInfoChange(data, mortgageInfoType) {
     let keyvalue = mortgageInfoType.toString()
       setDealInfo(prevState => ({
@@ -39,7 +31,6 @@ const DealInfo = ({dealInfo, setDealInfo}) => {
         <Form.Group as={Col} controlId="formGridEmail">
       <Form.Label>Type of Deal</Form.Label>
       <Form.Select aria-label="Default select example"  onChange={(e) => handleDealInfoChange(e.target.value,'investment_type')}>
-            <option value={dealInfo.investment_type}>{dealInfo.investment_type}</option>
             <option value="multi_family">Multi Family</option>
             <option value="flip">Flip</option>
             <option value="rv">RV Park</option>
@@ -61,26 +52,20 @@ const DealInfo = ({dealInfo, setDealInfo}) => {
         </Form.Group>        
 
         <Form.Group as={Col} controlId="formGridEmail">
-          <Form.Label>unit_amount?</Form.Label>
+          <Form.Label>How many units?</Form.Label>
           <Form.Control  value={dealInfo.unit_amount.toLocaleString()} onChange={(e) => handleDealInfoChange(e.target.value,'unit_amount')} />
         </Form.Group>        
         <Form.Group as={Col} controlId="formGridEmail">
-          <Form.Label>avg_unit_sizee?</Form.Label>
+          <Form.Label>Avg size of unit?</Form.Label>
           <Form.Control  value={dealInfo.avg_unit_size.toLocaleString()} onChange={(e) => handleDealInfoChange(e.target.value,'avg_unit_size')} />
         </Form.Group>        
 
         <Form.Group as={Col} controlId="formGridEmail">
-          <Form.Label>purchase_price?</Form.Label>
+          <Form.Label>Purchase price?</Form.Label>
           <Form.Control  value={dealInfo.purchase_price.toLocaleString()} onChange={(e) => handleDealInfoChange(e.target.value,'purchase_price')} />
         </Form.Group>        
 
-   
- 
-
 </Row>
-
-
-
 
             </>
   )

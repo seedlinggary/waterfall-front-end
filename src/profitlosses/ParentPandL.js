@@ -1,12 +1,5 @@
 import React, { useState } from 'react'
 import Button from 'react-bootstrap/Button';
-import Col from 'react-bootstrap/Col';
-import Form from 'react-bootstrap/Form';
-import Row from 'react-bootstrap/Row';
-import { useNavigate } from "react-router-dom";
-import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
-import Popover from 'react-bootstrap/Popover';
-import Container from 'react-bootstrap/Container';
 import PandL from './PandL';
 import Accordion from 'react-bootstrap/Accordion';
 import DealInfo from './DealInfo';
@@ -15,16 +8,17 @@ import Tabs from 'react-bootstrap/Tabs';
 import Table from 'react-bootstrap/Table';
 
 const ParentPandL = () => {
-    const navigate = useNavigate()
     const timeElapsed = Date.now();
     const today = new Date(timeElapsed);
     const [respCatagories, setRespCatagories] = useState(true)
     const [respMonth, setRespMonth] = useState(true)
     const [respYear, setRespYear] = useState(true)
+    const [respMonthTotal, setRespMonthTotal] = useState(true)
+    const [respYearTotal, setRespYearTotal] = useState(true)
     const [isPending, setIsPending] = useState(true)
     const [error, setError] = useState(null)
 
-    const [dealInfo, setDealInfo] = useState({ 'name' : 'legal fee',
+    const [dealInfo, setDealInfo] = useState({ 'name' : 'Money Maker',
     'address': '123 Sesame street',
     'sqr_footage': 50000,
     'investment_type': 'multi_family',
@@ -79,6 +73,8 @@ const ParentPandL = () => {
                     console.log(data['catagories'])
                     setRespMonth(data.month)
                     setRespYear(data.year)
+                    setRespMonthTotal(data.month_totals)
+                    setRespYearTotal(data.year_totals)
                     setIsPending(false)
                     setError(null)
             return  data 
@@ -154,9 +150,9 @@ const ParentPandL = () => {
       {Object.entries(value['seperate_costs']).map( ([key2, value2],index) => {
           return (
             <tr>
-            <td>{index}</td>
+            <td>{index + 1}</td>
             <td>{value2['name']}</td>
-            <td>{value2['total_amount']}</td>
+            <td>{value2['total_amount'].toLocaleString()}</td>
           
           </tr>
         )
@@ -165,7 +161,7 @@ const ParentPandL = () => {
         <tr>
           <td>Total</td>
           <td>-</td>
-          <td>{value['totals']}</td>
+          <td>{value['totals'].toLocaleString()}</td>
         </tr>
        
       </tbody>
@@ -179,20 +175,9 @@ const ParentPandL = () => {
    
     
 
-      {respCatagories && Object.entries(respCatagories).map( ([key, value]) => {
-          return (
-    <div>
-
-        HELLLO
-        <h3>{value['totals']}</h3> 
-        <h3>HELLLO</h3> 
-   {/* {console.log(value['totals'])} */}
-    </div>
-   )
-  } )}
 
       </Tab>
-      <Tab eventKey="Month" title="Month">
+      <Tab eventKey="Month" title="Month-all">
       {respMonth && Object.entries(respMonth).map( ([k, v],index) => {
           return (
             <div>
@@ -215,9 +200,9 @@ const ParentPandL = () => {
                 {Object.entries(value['seperate_costs']).map( ([key2, value2],index) => {
                     return (
                       <tr>
-                      <td>{index}</td>
+                      <td>{index + 1}</td>
                       <td>{value2['name']}</td>
-                      <td>{value2['amount']}</td>
+                      <td>{value2['amount'].toLocaleString()}</td>
                       <td>{value2['date']}</td>
                     
                     </tr>
@@ -227,7 +212,7 @@ const ParentPandL = () => {
                   <tr>
                     <td>Total</td>
                     <td>-</td>
-                    <td>{value['totals']}</td>
+                    <td>{value['totals'].toLocaleString()}</td>
                   </tr>
                  
                 </tbody>
@@ -241,7 +226,7 @@ const ParentPandL = () => {
         })}
 
         </Tab>
-      <Tab eventKey="Year" title="Year" >
+      <Tab eventKey="Year" title="Year-All" >
 
       {respYear && Object.entries(respYear).map( ([k, v],index) => {
           return (
@@ -265,9 +250,9 @@ const ParentPandL = () => {
                 {Object.entries(value['seperate_costs']).map( ([key2, value2],index) => {
                     return (
                       <tr>
-                      <td>{index}</td>
+                      <td>{index + 1}</td>
                       <td>{value2['name']}</td>
-                      <td>{value2['amount']}</td>
+                      <td>{value2['amount'].toLocaleString()}</td>
                       <td>{value2['date']}</td>
                     
                     </tr>
@@ -277,7 +262,7 @@ const ParentPandL = () => {
                   <tr>
                     <td>Total</td>
                     <td>-</td>
-                    <td>{value['totals']}</td>
+                    <td>{value['totals'].toLocaleString()}</td>
                   </tr>
                  
                 </tbody>
