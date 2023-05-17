@@ -3,11 +3,11 @@ import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
-const Investor = ({waterfall_info, setWaterfallInfo}) => {
+const Investor = ({waterfall, setwaterfall,personId}) => {
   const addInvestor = () => {
 
     const newInvestor =  
-    [... waterfall_info.investors,
+    [... waterfall[personId].investors,
       {'name': "gary",
                 "email": "yahoo@all.com",
                 "country_of_origin": "US",
@@ -15,7 +15,7 @@ const Investor = ({waterfall_info, setWaterfallInfo}) => {
                 "amount_invested": 100,
                 "year_bought_in": 1}
 ]
-setWaterfallInfo(prevState => ({
+setwaterfall(prevState => ({
   ...prevState,
   ['investors'] : newInvestor
 }))
@@ -23,9 +23,9 @@ setWaterfallInfo(prevState => ({
 
 
   const deleteInvestor = e => {
-      const newInvestors =  waterfall_info.investors.filter((s,i)=>(i != e.target.id))
+      const newInvestors =  waterfall[personId].investors.filter((s,i)=>(i != e.target.id))
       
-      setWaterfallInfo(prevState => ({
+      setwaterfall(prevState => ({
         ...prevState,
         ['investors'] : newInvestors
       }))
@@ -40,14 +40,14 @@ setWaterfallInfo(prevState => ({
             index = 0
         }
       let keyvalue = mortgageInfoType.toString()
-      let updatedList = waterfall_info.investors.map((item, i) => 
+      let updatedList = waterfall[personId].investors.map((item, i) => 
         {
           if (i == index){
             return {...item, [`${keyvalue}`]: e.target.value}; //gets everything that was already in item, and updates "done"
           }
           return item; // else return unmodified item 
         });
-        setWaterfallInfo(prevState => ({
+        setwaterfall(prevState => ({
           ...prevState,
           ['investors'] : updatedList
         }))
@@ -55,7 +55,7 @@ setWaterfallInfo(prevState => ({
             return ( 
         <div > 
     <Button  variant="primary" onClick={addInvestor}>Add more Investors (advanced)</Button>
-      {waterfall_info.investors.map((item, i) => {
+      {waterfall[personId].investors.map((item, i) => {
                     return (
                         
         <div>

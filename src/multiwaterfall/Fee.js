@@ -4,12 +4,12 @@ import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 
-const Fee = ({waterfall_info, setWaterfallInfo}) => {
+const Fee = ({waterfall, setwaterfall,personId}) => {
 
   const addFee = () => {
 
     const newfee =  
-    [... waterfall_info.fees,
+    [... waterfall[personId].fees,
       {'year' : 1000,
                 'before_what_hurdle' : 1,
                 'who_gets_this_fee' : 'NEED AN INPUT',
@@ -17,7 +17,7 @@ const Fee = ({waterfall_info, setWaterfallInfo}) => {
                 'type_transaction' : 'cash',
                 'type_of_fee' : 'hurdle'}
 ]
-setWaterfallInfo(prevState => ({
+setwaterfall(prevState => ({
   ...prevState,
   ['fees'] : newfee
 }))
@@ -25,9 +25,9 @@ setWaterfallInfo(prevState => ({
 
 
   const deletefee = e => {
-      const newFee =  waterfall_info.fees.filter((s,i)=>(i != e.target.id))
+      const newFee =  waterfall[personId].fees.filter((s,i)=>(i != e.target.id))
       
-      setWaterfallInfo(prevState => ({
+      setwaterfall(prevState => ({
         ...prevState,
         ['fees'] : newFee
       }))
@@ -42,14 +42,14 @@ setWaterfallInfo(prevState => ({
             index = 0
         }
       let keyvalue = mortgageInfoType.toString()
-      let updatedList = waterfall_info.fees.map((item, i) => 
+      let updatedList = waterfall[personId].fees.map((item, i) => 
         {
           if (i == index){
             return {...item, [`${keyvalue}`]: e.target.value}; //gets everything that was already in item, and updates "done"
           }
           return item; // else return unmodified item 
         });
-        setWaterfallInfo(prevState => ({
+        setwaterfall(prevState => ({
           ...prevState,
           ['fees'] : updatedList
         }))
@@ -60,7 +60,7 @@ setWaterfallInfo(prevState => ({
 
     
     <Button  variant="primary" onClick={addFee}>Add more Fees (advanced)</Button>
-      {waterfall_info.fees.map((item, i) => {
+      {waterfall[personId].fees.map((item, i) => {
                     return (
                     
         <div>

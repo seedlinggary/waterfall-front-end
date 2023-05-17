@@ -3,18 +3,18 @@ import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
-const Hurdle = ({waterfall_info, setWaterfallInfo}) => {
+const Hurdle = ({waterfall, setwaterfall ,personId}) => {
 
   const addHurdle = () => {
 
     const newHurdle =  
-    [... waterfall_info.splits,
+    [... waterfall[personId].splits,
       {'limited_partner_percent' : 0,
       'sponsor_percent' : 1,
   'hurdle' : 0.0}
 ]
 console.log(newHurdle)
-setWaterfallInfo(prevState => ({
+setwaterfall(prevState => ({
   ...prevState,
   ['splits'] : newHurdle
 }))
@@ -22,9 +22,9 @@ setWaterfallInfo(prevState => ({
 
 
   const deleteHurdle = e => {
-      const newHurdle =  waterfall_info.splits.filter((s,i)=>(i != e.target.id))
+      const newHurdle =  waterfall[personId].splits.filter((s,i)=>(i != e.target.id))
       
-      setWaterfallInfo(prevState => ({
+      setwaterfall(prevState => ({
         ...prevState,
         ['splits'] : newHurdle
       }))
@@ -40,14 +40,14 @@ setWaterfallInfo(prevState => ({
         }
       let keyvalue = mortgageInfoType.toString()
       console.log(keyvalue)
-      let updatedList = waterfall_info.splits.map((item, i) => 
+      let updatedList = waterfall[personId].splits.map((item, i) => 
         {
           if (i == index){
             return {...item, [`${keyvalue}`]: e.target.value}; //gets everything that was already in item, and updates "done"
           }
           return item; // else return unmodified item 
         });
-        setWaterfallInfo(prevState => ({
+        setwaterfall(prevState => ({
           ...prevState,
           ['splits'] : updatedList
         }))
@@ -60,7 +60,7 @@ setWaterfallInfo(prevState => ({
 
     <Button  variant="primary" onClick={addHurdle}>add more  hurdles</Button>
     <p> The first hurdle will be the preferred return.</p>
-      {waterfall_info.splits.map((item, i) => {
+      {waterfall[personId].splits.map((item, i) => {
                     return (
                         
         <div>
