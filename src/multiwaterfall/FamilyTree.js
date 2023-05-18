@@ -8,6 +8,7 @@ function FamilyTree() {
     const [tree, setTree] = useState({});
     const [names, setNames] = useState({});
     const [waterfall, setWaterfall] = useState({});
+    
     // const [waterfall_info, setWaterfallInfo] = useState()
     const formatTree = (tree, parentId = null) => {
         const parent = tree[parentId];
@@ -150,13 +151,13 @@ function FamilyTree() {
     };
   
     const renderPerson = (person) => {
-      const personId=person.id
-      const test = 'test'
-      console.log(personId)
+      // const personId=person.id
+      // const test = 'test'
+      // console.log(personId)
       return (
         <div key={person.id}>
           {/* {console.log(person.id)} */}
-          <Calculator waterfall={waterfall}  setWaterfall={setWaterfall} personId={personId} test={test}  />
+          <Calculator waterfall={waterfall}  setWaterfall={setWaterfall} personId={person.id}  />
           {/* <input
             type="text"
             value={names[waterfall.id]}

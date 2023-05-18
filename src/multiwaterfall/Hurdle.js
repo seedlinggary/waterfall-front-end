@@ -3,7 +3,7 @@ import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
-const Hurdle = ({waterfall, setwaterfall ,personId}) => {
+const Hurdle = ({waterfall, setWaterfall ,personId}) => {
 
   const addHurdle = () => {
 
@@ -14,9 +14,11 @@ const Hurdle = ({waterfall, setwaterfall ,personId}) => {
   'hurdle' : 0.0}
 ]
 console.log(newHurdle)
-setwaterfall(prevState => ({
+
+const newWaterfall= Object.assign(waterfall[personId],{splits:newHurdle})
+setWaterfall(prevState => ({
   ...prevState,
-  ['splits'] : newHurdle
+  [`${personId}`]: newWaterfall
 }))
 };
 
@@ -24,11 +26,12 @@ setwaterfall(prevState => ({
   const deleteHurdle = e => {
       const newHurdle =  waterfall[personId].splits.filter((s,i)=>(i != e.target.id))
       
-      setwaterfall(prevState => ({
-        ...prevState,
-        ['splits'] : newHurdle
-      }))
-        }
+      const newWaterfall= Object.assign(waterfall[personId],{splits:newHurdle})
+    setWaterfall(prevState => ({
+      ...prevState,
+      [`${personId}`]: newWaterfall
+    }))
+    };
 
 
     function handleHurdleChange(e, mortgageInfoType) {
@@ -47,11 +50,11 @@ setwaterfall(prevState => ({
           }
           return item; // else return unmodified item 
         });
-        setwaterfall(prevState => ({
-          ...prevState,
-          ['splits'] : updatedList
-        }))
-        
+        const newWaterfall= Object.assign(waterfall[personId],{splits:updatedList})
+setWaterfall(prevState => ({
+  ...prevState,
+  [`${personId}`]: newWaterfall
+}))
     }
               
             return ( 

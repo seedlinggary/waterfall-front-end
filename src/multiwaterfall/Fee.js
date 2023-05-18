@@ -4,7 +4,7 @@ import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 
-const Fee = ({waterfall, setwaterfall,personId}) => {
+const Fee = ({waterfall, setWaterfall,personId}) => {
 
   const addFee = () => {
 
@@ -17,9 +17,10 @@ const Fee = ({waterfall, setwaterfall,personId}) => {
                 'type_transaction' : 'cash',
                 'type_of_fee' : 'hurdle'}
 ]
-setwaterfall(prevState => ({
+const newWaterfall= Object.assign(waterfall[personId],{fees:newfee})
+setWaterfall(prevState => ({
   ...prevState,
-  ['fees'] : newfee
+  [`${personId}`]: newWaterfall
 }))
 };
 
@@ -27,11 +28,12 @@ setwaterfall(prevState => ({
   const deletefee = e => {
       const newFee =  waterfall[personId].fees.filter((s,i)=>(i != e.target.id))
       
-      setwaterfall(prevState => ({
-        ...prevState,
-        ['fees'] : newFee
-      }))
-        }
+      const newWaterfall= Object.assign(waterfall[personId],{fees:newFee})
+    setWaterfall(prevState => ({
+      ...prevState,
+      [`${personId}`]: newWaterfall
+    }))
+    };
 
 
     function handleFeeChange(e, mortgageInfoType) {
@@ -49,11 +51,12 @@ setwaterfall(prevState => ({
           }
           return item; // else return unmodified item 
         });
-        setwaterfall(prevState => ({
+        const newWaterfall= Object.assign(waterfall[personId],{fees:updatedList})
+        setWaterfall(prevState => ({
           ...prevState,
-          ['fees'] : updatedList
+          [`${personId}`]: newWaterfall
         }))
-    }
+        };
        
             return ( 
         <div > 

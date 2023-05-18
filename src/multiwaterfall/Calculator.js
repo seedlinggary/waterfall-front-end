@@ -7,16 +7,21 @@ import Accordion from 'react-bootstrap/Accordion';
 import Hurdle from './Hurdle';
 import Fee from './Fee';
 import Investor from './Investor';
-const Calculator = ({waterfall, setWaterfall, personId ,test}) => {
+const Calculator = ({waterfall, setWaterfall, personId }) => {
     
-  console.log(personId)
-  console.log(test)
+  // console.log(personId)
+  // console.log(test)
     function handlewaterfallChange(data, mortgageInfoType) {
       let keyvalue = mortgageInfoType.toString()
+      console.log(keyvalue)
+      console.log(data)
+      const newWaterfall= Object.assign(waterfall[personId],{[`${keyvalue}`]:data})
+      console.log(newWaterfall)
       setWaterfall(prevState => ({
           ...prevState,
-          [`${keyvalue}`]: data
+          [`${personId}`]: newWaterfall
       }));
+      
     }
 
       
