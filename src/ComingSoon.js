@@ -40,9 +40,9 @@ const User = () => {
     </Card></Col>  <Col md={{ span: 2, offset: 1 }}>    <Card>
       <Card.Img variant="top"  src={require('./pictures/robert-linder-kcX1lHlPyfM-unsplash.jpg')} />
       <Card.Body>
-        <Card.Title>Profit and Losses</Card.Title>
+        <Card.Title>Comprehensive Overview</Card.Title>
         <Card.Text>
-          Keep track of all your expenses and earnings. Organize them into different catagories over different periods of times.
+          Now that we can manage Waterfalls, Investors, Mortgages, Expenses, and Earnings. Lets put all of these aspects under one roof to see all aspects of your investment over it's lifetime. 
         </Card.Text>
       </Card.Body>
 

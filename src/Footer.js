@@ -39,8 +39,10 @@ const Footer = () => {
             <Heading>Services</Heading>
             <FooterLink href="#" onClick={() => handleClick("calculator")}>Waterfall Calculator</FooterLink>
             <FooterLink href="#" onClick={() => handleClick("mortgagecalculator")}>Mortgage Calculator</FooterLink>
+            <FooterLink href="#" onClick={() => handleClick("pandl")}>Profit and Losses</FooterLink>
             <FooterLink href="#" onClick={() => handleClick("comingsoon")}>Coming Soon</FooterLink>
           </Column>
+
           <Column>
             <Heading>Learning</Heading>
             <FooterLink href="#"onClick={() => handleClick("workflow")}>Work Flow</FooterLink>

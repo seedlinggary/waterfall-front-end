@@ -10,10 +10,10 @@ import Container from 'react-bootstrap/Container';
 import ThirdMortgageCalculator from './ThirdMortgage';
 
 
-const ParentCalculator = () => {
+const ParentMortgage = ({mortgages, setMortgages}) => {
     const navigate = useNavigate()
     
-    const [mortgages, setMortgages] = useState([])
+    // const [mortgages, setMortgages] = useState([])
     const addMortgage = e => {
         e.preventDefault();
         setMortgages(s => {
@@ -58,4 +58,4 @@ const ParentCalculator = () => {
     )
 }
  
-export default ParentCalculator;
+export default ParentMortgage;

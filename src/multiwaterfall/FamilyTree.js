@@ -62,6 +62,7 @@ function FamilyTree() {
           return { ...prevTree, [newId]: newPerson };
         }
       });
+      console.log(names)
       console.log(tree)
       console.log(formatTree(tree,pId))
       console.log(unformatTree(formatTree(tree,pId)))

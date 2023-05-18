@@ -16,6 +16,7 @@ import Disclaimer from './Disclaimer';
 import ParentCalculator from './mortgageCaluclator/ParentMortgage';
 import ParentPandL from './profitlosses/ParentPandL';
 import FamilyTree from './multiwaterfall/FamilyTree';
+import ParentCombined from './combined/ParentCombined';
 function App() {
 
   return (
@@ -33,10 +34,11 @@ function App() {
             <Route path="/contact" element={<Contact />} />
             <Route path="/comingsoon" element={<ComingSoon />} />
             <Route path="/mortgagecalculator" element={<MortgageCalculator />} />
-            <Route path="/dynamicmortgage" element={<DynamicMortgage />} />
+            {/* <Route path="/dynamicmortgage" element={<DynamicMortgage />} /> */}
             <Route path="/multimortgage" element={<ParentCalculator />} />
             <Route path="/pandl" element={<ParentPandL />} />
             <Route path="/famtree" element={<FamilyTree />} />
+            <Route path="/parentcombined" element={<ParentCombined />} />
             <Route path="/disclaimer" element={<Disclaimer />} />
             <Route path="*" element={<NotFound />} />
 

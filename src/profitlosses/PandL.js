@@ -32,7 +32,7 @@ const PandL = ({pAndLs,setPandLs, PandLID}) => {
     function addDateMultiplication(datesumTotal) {
         if (typeDateMultiplicationAMount == 'year'){
           var newdatesumTotal  = new Date(datesumTotal.setFullYear(datesumTotal.getFullYear() + dateMulitplicationAmount));
-       } else if(typeDateMultiplicationAMount == 'quater') {
+       } else if(typeDateMultiplicationAMount == 'quarter') {
         var newdatesumTotal  = new Date(datesumTotal.setMonth(datesumTotal.getMonth() + (dateMulitplicationAmount * 3)));
        } else if(typeDateMultiplicationAMount == 'month') {
         var newdatesumTotal  = new Date(datesumTotal.setMonth(datesumTotal.getMonth() + dateMulitplicationAmount));
@@ -165,7 +165,7 @@ const PandL = ({pAndLs,setPandLs, PandLID}) => {
              <DatePicker selected={startDate}  onChange={(e) => setStartDate(e)}  />
           </Form.Group> 
           <Form.Group as={Col} controlId="formGridEmail">
-            <Form.Label>{typeDateMultiplicationAMount}s would like to add</Form.Label>
+            <Form.Label>Number of {typeDateMultiplicationAMount}s would like to add</Form.Label>
             <Form.Control  value={years} onChange={(e) => setYears(e.target.value)} />
           </Form.Group>        
           <Form.Group as={Col} controlId="formGridEmail">
@@ -185,13 +185,13 @@ const PandL = ({pAndLs,setPandLs, PandLID}) => {
       <Form.Select aria-label="Default select example"   onChange={(e) => setTypeDateMulitplicationAmount(e.target.value)}>
             <option value="year">Year </option>
             <option value="month">Month</option>
-            <option value="quater">Quater</option>
+            <option value="quarter">Quarter</option>
             <option value="day">Days</option>
         </Form.Select>
         </Form.Group>
 
           <Form.Group as={Col} controlId="formGridEmail">
-            <Form.Label>How many {typeDateMultiplicationAMount}s between each transaction?</Form.Label>
+            <Form.Label>Amount of {typeDateMultiplicationAMount}s between each transaction</Form.Label>
             <Form.Control  value={dateMulitplicationAmount} onChange={(e) => setDateMulitplicationAmount(e.target.value)} />
           </Form.Group> 
           
@@ -200,17 +200,17 @@ const PandL = ({pAndLs,setPandLs, PandLID}) => {
 
         <Row>
       <Col md={{ span: 2, offset: 3 }}>   
-      <Button  variant="outline-primary" onClick={addMultiYears}>add multiple {typeDateMultiplicationAMount }s</Button>
+      <Button  variant="outline-primary" onClick={addMultiYears}>Add multiple {typeDateMultiplicationAMount }s</Button>
 
 
       
       </Col>  <Col md={{ span: 2, offset: 2 }}>   
-      <Button  variant="outline-primary" onClick={addTransaction}>add one more transaction</Button>
+      <Button  variant="outline-primary" onClick={addTransaction}>Add one more transaction</Button>
 
     </Col>  
                </Row>
-   
-
+   <br></br>
+<p></p>
 
 
 
