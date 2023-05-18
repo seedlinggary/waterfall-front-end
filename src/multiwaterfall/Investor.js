@@ -3,11 +3,11 @@ import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
-const Investor = ({waterfall, setwaterfall,personId}) => {
+const Investor = ({waterfall, setWaterfall,personId}) => {
   const addInvestor = () => {
 
     const newInvestor =  
-    [... waterfall[personId].investors,
+    [...waterfall[personId].investors,
       {'name': "gary",
                 "email": "yahoo@all.com",
                 "country_of_origin": "US",
@@ -15,19 +15,23 @@ const Investor = ({waterfall, setwaterfall,personId}) => {
                 "amount_invested": 100,
                 "year_bought_in": 1}
 ]
-setwaterfall(prevState => ({
+const newWaterfall= Object.assign(waterfall[personId],{investors:newInvestor})
+console.log(newWaterfall)
+console.log(waterfall[personId].investors)
+setWaterfall(prevState => ({
   ...prevState,
-  ['investors'] : newInvestor
+  [`${personId}`]: newWaterfall
 }))
+console.log(waterfall)
 };
 
 
   const deleteInvestor = e => {
       const newInvestors =  waterfall[personId].investors.filter((s,i)=>(i != e.target.id))
-      
-      setwaterfall(prevState => ({
+      const newWaterfall= Object.assign(waterfall[personId],{investors:newInvestors})
+      setWaterfall(prevState => ({
         ...prevState,
-        ['investors'] : newInvestors
+        [`${personId}`]: newWaterfall
       }))
         }
 
@@ -47,9 +51,10 @@ setwaterfall(prevState => ({
           }
           return item; // else return unmodified item 
         });
-        setwaterfall(prevState => ({
+        const newWaterfall= Object.assign(waterfall[personId],{investors:updatedList})
+        setWaterfall(prevState => ({
           ...prevState,
-          ['investors'] : updatedList
+           [`${personId}`]: newWaterfall
         }))
     }
             return ( 
