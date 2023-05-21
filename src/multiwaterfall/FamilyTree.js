@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Calculator from './Calculator';
+import Accordion from 'react-bootstrap/Accordion';
 
 function FamilyTree() {
 
@@ -156,6 +157,11 @@ function FamilyTree() {
       return (
         <div key={person.id}>
           {/* {console.log(person.id)} */}
+          <Accordion defaultActiveKey="0" flush>
+
+      <Accordion.Item eventKey="0">
+        <Accordion.Header>Waterfall Information</Accordion.Header>
+        <Accordion.Body>
           <Calculator waterfall={waterfall}  setWaterfall={setWaterfall} personId={person.id}  />
           {/* <input
             type="text"
@@ -171,6 +177,9 @@ function FamilyTree() {
               ))}
             </ul>
           )}
+          </Accordion.Body>
+      </Accordion.Item>
+    </Accordion>
         </div>
       );
     };
