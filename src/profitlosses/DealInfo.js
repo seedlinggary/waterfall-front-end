@@ -47,19 +47,19 @@ const DealInfo = ({dealInfo, setDealInfo}) => {
                       <Row className="mb-3">
       
                       <Form.Group as={Col} controlId="formGridEmail">
-          <Form.Label>Square footage?</Form.Label>
-          <Form.Control  value={dealInfo.sqr_footage.toLocaleString()} onChange={(e) => handleDealInfoChange(e.target.value,'sqr_footage')} />
+          <Form.Label>GSF?</Form.Label>
+          <Form.Control  value={dealInfo.gross_sqr_footage.toLocaleString()} onChange={(e) => handleDealInfoChange(e.target.value,'gross_sqr_footage')} />
+        </Form.Group>        
+
+        <Form.Group as={Col} controlId="formGridEmail">
+          <Form.Label>NSF?</Form.Label>
+          <Form.Control  value={dealInfo.net_sqr_footage.toLocaleString()} onChange={(e) => handleDealInfoChange(e.target.value,'net_sqr_footage')} />
         </Form.Group>        
 
         <Form.Group as={Col} controlId="formGridEmail">
           <Form.Label>How many units?</Form.Label>
           <Form.Control  value={dealInfo.unit_amount.toLocaleString()} onChange={(e) => handleDealInfoChange(e.target.value,'unit_amount')} />
         </Form.Group>        
-        <Form.Group as={Col} controlId="formGridEmail">
-          <Form.Label>Avg size of unit?</Form.Label>
-          <Form.Control  value={dealInfo.avg_unit_size.toLocaleString()} onChange={(e) => handleDealInfoChange(e.target.value,'avg_unit_size')} />
-        </Form.Group>        
-
         <Form.Group as={Col} controlId="formGridEmail">
           <Form.Label>Purchase price?</Form.Label>
           <Form.Control  value={dealInfo.purchase_price.toLocaleString()} onChange={(e) => handleDealInfoChange(e.target.value,'purchase_price')} />
