@@ -6,17 +6,12 @@ import Row from 'react-bootstrap/Row';
 import Accordion from 'react-bootstrap/Accordion';
 import Hurdle from './Hurdle';
 import Fee from './Fee';
-import Investor from './Investor';
+
 const Calculator = ({waterfall, setWaterfall, personId }) => {
     
-  // console.log(personId)
-  // console.log(test)
     function handlewaterfallChange(data, mortgageInfoType) {
       let keyvalue = mortgageInfoType.toString()
-      console.log(keyvalue)
-      console.log(data)
       const newWaterfall= Object.assign(waterfall[personId],{[`${keyvalue}`]:data})
-      console.log(newWaterfall)
       setWaterfall(prevState => ({
           ...prevState,
           [`${personId}`]: newWaterfall
@@ -74,16 +69,19 @@ const Calculator = ({waterfall, setWaterfall, personId }) => {
       <Button variant="primary" onClick={SendCashFlowWaterfall}>
       Create CashFlowWaterfall
       </Button>
-   
+      <Form.Group as={Col} controlId="formGridEmail">
+          <Form.Label>Name of waterfall</Form.Label>
+          <Form.Control  value={waterfall[personId].name} onChange={(e) => handlewaterfallChange(e.target.value,'name')} />
+        </Form.Group>  
       <Row className="mb-3">
         
         <Form.Group as={Col} controlId="formGridEmail">
-          <Form.Label>GP amount sponsered</Form.Label>
-          <Form.Control  placeholder={waterfall[personId].amount_gp_invested} onChange={(e) => handlewaterfallChange(e.target.value,'amount_gp_invested')} />
+          <Form.Label>Total GP amount sponsered</Form.Label>
+          <Form.Control  value={waterfall[personId].amount_gp_invested} onChange={(e) => handlewaterfallChange(e.target.value,'amount_gp_invested')} />
         </Form.Group>        
         <Form.Group as={Col} controlId="formGridEmail">
-          <Form.Label>LP amount sponsored (optional if no input of investers)</Form.Label>
-          <Form.Control  placeholder={waterfall[personId].amount_lp_invested} onChange={(e) => handlewaterfallChange(e.target.value,'amount_lp_invested')} />
+          <Form.Label>Total LP amount sponsored </Form.Label>
+          <Form.Control  value={waterfall[personId].amount_lp_invested} onChange={(e) => handlewaterfallChange(e.target.value,'amount_lp_invested')} />
         </Form.Group>
         
         <Form.Group as={Col} controlId="formGridEmail">
@@ -97,6 +95,10 @@ const Calculator = ({waterfall, setWaterfall, personId }) => {
         <Form.Group as={Col} controlId="formGridEmail">
         <Form.Label>Year start paying back principal</Form.Label>
         <Form.Control  placeholder={waterfall[personId].yr_strt_capital_payback} onChange={(e) => handlewaterfallChange(e.target.value,'yr_strt_capital_payback')} />
+    </Form.Group>
+    <Form.Group as={Col} controlId="formGridEmail">
+        <Form.Label>Year Bought in</Form.Label>
+        <Form.Control  placeholder={waterfall[personId].year_bought_in} onChange={(e) => handlewaterfallChange(e.target.value,'year_bought_in')} />
     </Form.Group>
 
       </Row>
@@ -183,23 +185,12 @@ const Calculator = ({waterfall, setWaterfall, personId }) => {
         <Accordion.Body>
     <Fee waterfall={waterfall} setWaterfall={setWaterfall} personId={personId}></Fee>
               </Accordion.Body>
-      </Accordion.Item>     <Accordion.Item eventKey="4">
-        <Accordion.Header>Add Investors (optional)</Accordion.Header>
-        <Accordion.Body>
-          <Investor waterfall={waterfall} setWaterfall={setWaterfall} personId={personId}></Investor>
-
-              </Accordion.Body>
-      </Accordion.Item>
+      </Accordion.Item>  
     </Accordion>
-
-
-      
-
       </Col>
 
 </Row>
 
-<button onClick={() => console.log(waterfall)}>check Info</button>
       
       
       </div>   

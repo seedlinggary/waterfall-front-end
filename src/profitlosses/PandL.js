@@ -74,12 +74,6 @@ const PandL = ({pAndLs,setPandLs, PandLID}) => {
           });
   
             }
-    
-
-
-
-
-
 
     function handlePandLInfoChange(data, mortgageInfoType) {
         let keyvalue = mortgageInfoType.toString()
@@ -149,12 +143,6 @@ const PandL = ({pAndLs,setPandLs, PandLID}) => {
             <option value="income">Income</option>          </Form.Select>
           </Form.Group>
           <br></br>
-
-
-
-
-
-
 
           <hr></hr>
           <p>Add in multiple transactions at once</p>

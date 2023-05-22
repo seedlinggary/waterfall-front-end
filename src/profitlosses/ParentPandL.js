@@ -42,53 +42,53 @@ const ParentPandL = () => {
       const deleteYear = e => {
         setPandLs(profits=> profits.filter((s,i)=>(i != e.target.id)))
           }
-          const SendApi = (e) => {
-     
+        const SendApi = (e) => {
+    
 
-            let backend = 'http://127.0.0.1:5000'
-            // let backend = 'https://distributionresolutionapi.com'
-            // let address = `/waterfall_calc`
-            let address = `/pandl_calc`
-            const requestOptions = {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({'deal_info' : dealInfo,
-              'pandls' : pAndLs })
-            };
-            fetch(`${backend}${address}`, requestOptions)
-                .then(async response => {
-                    const isJson = response.headers.get('content-type')?.includes('application/json');
-                    const data = isJson && await response.json();
-                    // console.error('There was a response!', response);
-                    // check for error response
-                    if (!response.ok) {
-                        // get error message from body or default to response status
-                        const error = (data && data.message) || response.status;
-                        return Promise.reject(error);
-                    }
-        
-                    console.log(data)
-                    setRespCatagories(data['catagories'])
-                    console.log(data['catagories'])
-                    setRespMonth(data.month)
-                    setRespYear(data.year)
-                    setRespMonthTotal(data.month_totals)
-                    setRespYearTotal(data.year_totals)
-                    setIsPending(false)
-                    setError(null)
-            return  data 
-                })
-                .catch(error => {
-                    console.error('There was an error!', error);
-                    setIsPending(false)
-                    setError(error.message)    
-                }); 
-        
-            e.preventDefault();
+          let backend = 'http://127.0.0.1:5000'
+          // let backend = 'https://distributionresolutionapi.com'
+          // let address = `/waterfall_calc`
+          let address = `/pandl_calc`
+          const requestOptions = {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({'deal_info' : dealInfo,
+            'pandls' : pAndLs })
+          };
+          fetch(`${backend}${address}`, requestOptions)
+              .then(async response => {
+                  const isJson = response.headers.get('content-type')?.includes('application/json');
+                  const data = isJson && await response.json();
+                  // console.error('There was a response!', response);
+                  // check for error response
+                  if (!response.ok) {
+                      // get error message from body or default to response status
+                      const error = (data && data.message) || response.status;
+                      return Promise.reject(error);
+                  }
       
-            
-            }    
+                  console.log(data)
+                  setRespCatagories(data['catagories'])
+                  console.log(data['catagories'])
+                  setRespMonth(data.month)
+                  setRespYear(data.year)
+                  setRespMonthTotal(data.month_totals)
+                  setRespYearTotal(data.year_totals)
+                  setIsPending(false)
+                  setError(null)
+          return  data 
+              })
+              .catch(error => {
+                  console.error('There was an error!', error);
+                  setIsPending(false)
+                  setError(error.message)    
+              }); 
+      
+          e.preventDefault();
+    
+          
+          }    
       
             return ( 
                 <> 
