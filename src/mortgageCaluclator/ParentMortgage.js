@@ -12,7 +12,9 @@ import ThirdMortgageCalculator from './ThirdMortgage';
 
 const ParentMortgage = ({mortgages, setMortgages}) => {
     const navigate = useNavigate()
-    
+    const timeElapsed = Date.now();
+    const today = new Date(timeElapsed);
+  
     // const [mortgages, setMortgages] = useState([])
     const addMortgage = e => {
         e.preventDefault();
@@ -25,6 +27,8 @@ const ParentMortgage = ({mortgages, setMortgages}) => {
             'mortgage_type': 'Standard',
             'balloon_due_date': 24,
             'mortgage_resp': null,
+            'start_date': today,
+            'name': 'my mortgage',
                 
                 })
       

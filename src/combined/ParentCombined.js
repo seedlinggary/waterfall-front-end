@@ -6,6 +6,11 @@ import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import Button from 'react-bootstrap/Button';
+import FamilyTree from '../multiwaterfall/FamilyTree';
+import PNLSetInfo from '../profitlosses/PNLSetInfo'
+import Tabs from 'react-bootstrap/Tabs';
+import Table from 'react-bootstrap/Table';
+import Tab from 'react-bootstrap/Tab';
 
 const ParentCombined = () => {
     const [isPending, setIsPending] = useState(true)
@@ -27,6 +32,38 @@ const ParentCombined = () => {
       
     const [mortgages, setMortgages] = useState([])
 
+    const [pId, setParentId] = useState(null);
+    const [tree, setTree] = useState({});
+    const [waterfall, setWaterfall] = useState({});
+    const [lp, setLP] = useState({});
+    const [gp, setGP] = useState({});
+    const [payoutFrequency, setPayoutFrequency] = useState({ 'start_date' : today,
+    'payout_frequency': 'day',
+    'transactions': [],
+        })
+
+
+
+        const [respCatagories, setRespCatagories] = useState(true)
+        const [respMonth, setRespMonth] = useState(true)
+        const [respYear, setRespYear] = useState(true)
+        const [respMonthTotal, setRespMonthTotal] = useState(true)
+        const [respYearTotal, setRespYearTotal] = useState(true)
+        const [respCatagoriesTotal, setRespcatagoriesTotal] = useState()
+
+
+
+        function createMortgageResp(data) {
+          let updatedList = mortgages.map((item, i) => 
+          {
+             return {...item, mortgage_resp: data[i][0], res_payment_list:  data[i][1] }; // else return unmodified item 
+          });
+          console.log(updatedList)
+          setMortgages(updatedList)
+        }
+
+
+
     const SendApi = (e) => {
      
         // if (!acceptTermsAndCondisiotns){
@@ -35,10 +72,10 @@ const ParentCombined = () => {
         //  }
         //  setWarningTermsAndConditions(false)
 
-        // let backend = 'http://127.0.0.1:5000'
-        let backend = 'https://distributionresolutionapi.com'
+        let backend = 'http://127.0.0.1:5000'
+        // let backend = 'https://distributionresolutionapi.com'
         // let address = `/waterfall_calc`
-        let address = `/pandl_calc`
+        let address = `/all_as_one`
         const requestOptions = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json',
@@ -59,17 +96,19 @@ const ParentCombined = () => {
                     return Promise.reject(error);
                 }
     
-                // console.log(data)
-                // setRespCatagories(data['catagories'])
-                // console.log(data['catagories'])
-                // setRespMonth(data.month)
-                // setRespYear(data.year)
-                // setRespMonthTotal(data.month_totals)
-                // setRespYearTotal(data.year_totals)
-                // setRespcatagoriesTotal(data.catagories_totals)
-                // setIsPending(false)
-                // setError(null)
-        return  data 
+                console.log(data)
+                console.log(mortgages)
+                createMortgageResp(data.mortgage_info)
+
+                setRespCatagories(data['catagories'])
+                console.log(data['catagories'])
+                setRespMonth(data.month)
+                setRespYear(data.year)
+                setRespMonthTotal(data.month_totals)
+                setRespYearTotal(data.year_totals)
+                setRespcatagoriesTotal(data.catagories_totals)
+
+                return  data 
             })
             .catch(error => {
                 console.error('There was an error!', error);
@@ -101,6 +140,12 @@ const ParentCombined = () => {
         <ParentMortgage mortgages={mortgages} setMortgages={setMortgages}></ParentMortgage>
         </Accordion.Body>
       </Accordion.Item>
+      <Accordion.Item eventKey="2">
+        <Accordion.Header>Investors</Accordion.Header>
+        <Accordion.Body>
+        <FamilyTree pId={pId} setParentId={setParentId} tree={tree} setTree={setTree} waterfall={waterfall} setWaterfall={setWaterfall} lp={lp} setLP={setLP} gp={gp} setGP={setGP}payoutFrequency={payoutFrequency} setPayoutFrequency={setPayoutFrequency}></FamilyTree>
+        </Accordion.Body>
+      </Accordion.Item>
     </Accordion>
     </Col>
     </Row>
@@ -111,13 +156,348 @@ const ParentCombined = () => {
 
       
       </Col>  
-      {/* <Col md={{ span: 2, offset: 2 }}>   
+      <Col md={{ span: 2, offset: 2 }}>   
       <PNLSetInfo setDealInfo={setDealInfo} setPandLs={setPandLs}></PNLSetInfo>
 
-    </Col>   */}
+    </Col>  
                </Row>
    <br></br>
+   <Tabs
+      defaultActiveKey="Catagories"
+      id="uncontrolled-tab-example"
+      transition={false}
+      className="mb-3"
+    >
+      <Tab eventKey="Catagories" title="Categories">
+      
+      <Table striped bordered hover>
+      <tbody>
+      <th>
+        {respCatagories && Object.entries(respCatagories).map( ([key, value],i) => {
+          return (
+    <div>
+      <Table striped bordered hover>
+<thead>
+        <tr>
+        
+        <th>{key}</th>
+        <th>Name</th>
+        <th>Amount</th>
+        <th>Gross sqr footage</th>
+        <th>Net sqr footage</th>
+        <th>Unit amount</th>
+      
+      </tr>
+      </thead>
+      <tbody>
+      {Object.entries(value['seperate_costs']).map( ([key2, value2],index) => {
+          return (
+            <tr>
+            <td>{index + 1}</td>
+            <td>{value2['name']}</td>
+            <td>{value2['total_amount'].toLocaleString()}</td>
+            <td>{value2['gross_sqr_footage'].toLocaleString()}</td>
+            <td>{value2['net_sqr_footage'].toLocaleString()}</td>
+            <td>{value2['unit_amount'].toLocaleString()}</td>
+          
+          </tr>
+        )
+        })}
+      
+        <tr>
+          <td>Total</td>
+          <td>-</td>
+          <td>{value['totals'].toLocaleString()}</td>
+          <td>{value['gross_sqr_footage'].toLocaleString()}</td>
+          <td>{value['net_sqr_footage'].toLocaleString()}</td>
+          <td>{value['unit_amount'].toLocaleString()}</td>
+        </tr>
+       
+      </tbody>
+      </Table>
+      <hr></hr>
+    </div>
+   )
+  } )}
+  </th>
+   </tbody>
+          </Table>
+          {respCatagoriesTotal && <div>
+          <h4>Totals</h4>
+                    <Table striped bordered hover>
+          <thead>
+                  <tr>
+                  
+                  <th>#</th>
+                  <th>Type</th>
+                  <th>Amount</th>
+                  <th>Gross sqr footage</th>
+                  <th>Net sqr footage</th>
+                  <th>Unit amount</th>
+                </tr>
+                </thead>
+                <tbody>
+                  
+          { Object.entries(respCatagoriesTotal['communal_totals']).map( ([key3, value3],index) => {
+                    return (
+                      <tr>
+                      <td>{index + 1}</td>
+                      <td>{key3}</td>
+                      <td>{value3['totals'].toLocaleString()}</td>
+                      <td>{value3['gross_sqr_footage'].toLocaleString()}</td>
+                      <td>{value3['net_sqr_footage'].toLocaleString()}</td>
+                      <td>{value3['unit_amount'].toLocaleString()}</td>
+                    </tr>
+                  )
+                  })}
+                
+                <tr>
+                    <td>Total</td>
+                    <td>-</td>
+                    <td>{respCatagoriesTotal['totals'].toLocaleString()}</td>
+                    <td>{respCatagoriesTotal['gross_sqr_footage'].toLocaleString()}</td>
+                    <td>{respCatagoriesTotal['net_sqr_footage'].toLocaleString()}</td>
+                    <td>{respCatagoriesTotal['unit_amount'].toLocaleString()}</td>
+                  </tr>
+                 
+                </tbody>
+                </Table>
+                </div>}
 
+
+      </Tab>
+      <Tab eventKey="Month" title="Month">
+<hr></hr>
+
+      <Tabs
+      id="uncontrolled-tab-example"
+      className="mb-3"
+    >
+
+   
+      {respMonth && Object.entries(respMonth).map( ([k, v],index) => {
+          return (
+            <Tab eventKey={k} title={k}>
+              {/* <Tab eventKey="home" title="Home">
+                HI
+      </Tab> */}
+         <h3>Year-Month {k}</h3>
+                  { Object.entries(v).map( ([key, value],i) => {
+                    return (
+              <div>
+                <Table striped bordered hover>
+          <thead>
+          <tr>         
+                  <th colSpan={4}>{key}</th>           
+                </tr>    
+
+                  <tr>
+                  
+                  <th>#</th>
+                  <th>Name</th>
+                  <th>Amount</th>
+                  <th>Gross sqr footage</th>
+                  <th>Net sqr footage</th>
+                  <th>Unit amount</th>
+                  <th>Date</th>
+                </tr>
+                </thead>
+                <tbody>
+                {Object.entries(value['seperate_costs']).map( ([key2, value2],index) => {
+                    return (
+                      <tr>
+                      <td>{index + 1}</td>
+                      <td>{value2['name']}</td>
+                      <td>{value2['amount'].toLocaleString()}</td>
+                      <td>{value2['gross_sqr_footage'].toLocaleString()}</td>
+                      <td>{value2['net_sqr_footage'].toLocaleString()}</td>
+                      <td>{value2['unit_amount'].toLocaleString()}</td>
+                      <td>{value2['date']}</td>
+                    
+                    </tr>
+                  )
+                  })}
+                
+                  <tr>
+                    <td>Total</td>
+                    <td>-</td>
+                    <td>{value['totals'].toLocaleString()}</td>
+                    <td>{value['gross_sqr_footage'].toLocaleString()}</td>
+                    <td>{value['net_sqr_footage'].toLocaleString()}</td>
+                    <td>{value['unit_amount'].toLocaleString()}</td>
+                  </tr>
+                 
+                </tbody>
+                </Table>
+              </div>
+             )
+            } )}
+                      <h4>Totals</h4>
+                    <Table striped bordered hover>
+          <thead>
+                  <tr>
+
+                  <th>#</th>
+                  <th>Type</th>
+                  <th>Amount</th>
+                  <th>Gross sqr footage</th>
+                  <th>Net sqr footage</th>
+                  <th>Unit amount</th>
+                                  </tr>
+                </thead>
+                <tbody>
+          {Object.entries(respMonthTotal[k]['communal_totals']).map( ([key3, value3],index) => {
+                    return (
+                      <tr>
+                      <td>{index + 1}</td>
+                      <td>{key3}</td>
+                      <td>{value3['totals'].toLocaleString()}</td>
+                      <td>{value3['gross_sqr_footage'].toLocaleString()}</td>
+                      <td>{value3['net_sqr_footage'].toLocaleString()}</td>
+                      <td>{value3['unit_amount'].toLocaleString()}</td>
+                    
+                    </tr>
+                  )
+                  })}
+                
+                <tr>
+                    <td>Total</td>
+                    <td>-</td>
+                    <td>{respMonthTotal[k]['totals'].toLocaleString()}</td>
+                    <td>{respMonthTotal[k]['gross_sqr_footage'].toLocaleString()}</td>
+                    <td>{respMonthTotal[k]['net_sqr_footage'].toLocaleString()}</td>
+                    <td>{respMonthTotal[k]['unit_amount'].toLocaleString()}</td>
+
+                  </tr>
+                 
+                </tbody>
+                </Table>
+                <hr></hr>
+
+         </Tab>
+        )
+        })}
+
+</Tabs>
+
+
+
+        </Tab>
+      <Tab eventKey="Year" title="Year" >
+        <hr></hr>
+      <Tabs
+      id="uncontrolled-tab-example"
+      className="mb-3"
+    >
+
+      {respYear && Object.entries(respYear).map( ([k, v],index) => {
+          return (
+            <Tab eventKey={k} title={k}>
+         <h3>Year {k}</h3>
+                  { Object.entries(v).map( ([key, value],i) => {
+                    return (
+                      <div>
+                <h4></h4>
+                <Table striped bordered hover>
+          <thead>
+          <tr>         
+                  <th colSpan={4}>{key}</th>           
+                </tr>    
+                              <tr>
+                  
+                  <th>#</th>
+                  <th>Name</th>
+                  <th>Amount</th>
+                  <th>Gross sqr footage</th>
+                  <th>Net sqr footage</th>
+                  <th>Unit amount</th>
+                  <th>Date</th>
+                
+                </tr>
+                </thead>
+                <tbody>
+                {Object.entries(value['seperate_costs']).map( ([key2, value2],index) => {
+                    return (
+                      <tr>
+                      <td>{index + 1}</td>
+                      <td>{value2['name']}</td>
+                      <td>{value2['amount'].toLocaleString()}</td>
+                      <td>{value2['gross_sqr_footage'].toLocaleString()}</td>
+                      <td>{value2['net_sqr_footage'].toLocaleString()}</td>
+                      <td>{value2['unit_amount'].toLocaleString()}</td>
+                      <td>{value2['date']}</td>
+                    
+                    </tr>
+                  )
+                  })}
+                
+                  <tr>
+                    <td>Total</td>
+                    <td>-</td>
+                    <td>{value['totals'].toLocaleString()}</td>
+                    <td>{value['gross_sqr_footage'].toLocaleString()}</td>
+                    <td>{value['net_sqr_footage'].toLocaleString()}</td>
+                    <td>{value['unit_amount'].toLocaleString()}</td>
+
+                  </tr>
+                 
+                </tbody>
+                </Table>
+              </div>
+             )
+            } )}
+            <h4>Totals</h4>
+                    <Table striped bordered hover>
+          <thead>
+                  <tr>
+
+                  <th>#</th>
+                  <th>Type</th>
+                  <th>Amount</th>
+                  <th>Gross sqr footage</th>
+                  <th>Net sqr footage</th>
+                  <th>Unit amount</th>
+                                  </tr>
+                </thead>
+                <tbody>
+          {Object.entries(respYearTotal[k]['communal_totals']).map( ([key3, value3],index) => {
+                    return (
+                      <tr>
+                      <td>{index + 1}</td>
+                      <td>{key3}</td>
+                      <td>{value3['totals'].toLocaleString()}</td>
+                      <td>{value3['gross_sqr_footage'].toLocaleString()}</td>
+                      <td>{value3['net_sqr_footage'].toLocaleString()}</td>
+                      <td>{value3['unit_amount'].toLocaleString()}</td>
+                    </tr>
+                  )
+                  })}
+                
+                <tr>
+                    <td>Total</td>
+                    <td>-</td>
+                    <td>{respYearTotal[k]['totals'].toLocaleString()}</td>
+                    <td>{respYearTotal[k]['gross_sqr_footage'].toLocaleString()}</td>
+                    <td>{respYearTotal[k]['net_sqr_footage'].toLocaleString()}</td>
+                    <td>{respYearTotal[k]['unit_amount'].toLocaleString()}</td>
+                  </tr>
+                 
+                </tbody>
+                </Table>
+
+
+                <hr></hr>
+
+
+
+
+         </Tab>
+        )
+        })}
+                 </Tabs>
+
+      </Tab>
+    </Tabs>
               </>
     )
 }

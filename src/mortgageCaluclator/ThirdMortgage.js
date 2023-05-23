@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Popover from 'react-bootstrap/Popover';
 import Container from 'react-bootstrap/Container';
+import DatePicker from 'react-datepicker';
 
 
 const ThirdMortgageCalculator = ({mortgages,setMortgages, mortgageID}) => {
@@ -43,15 +44,22 @@ const ThirdMortgageCalculator = ({mortgages,setMortgages, mortgageID}) => {
     }; 
     
     function handleMortgageInfoChange(data, mortgageInfoType) {
-        let keyvalue = mortgageInfoType.toString()
-          setMortgages(s => {
-            const newMortgages = s.slice();
-            newMortgages[mortgageID][`${keyvalue}`] = data;
-      
-            return newMortgages;
-          });
+      let keyvalue = mortgageInfoType.toString()
+        setMortgages(s => {
+          const newMortgages = s.slice();
+          newMortgages[mortgageID][`${keyvalue}`] = data;
+    
+          return newMortgages;
+        });
 
-      }
+    } 
+    
+    function changeDate(data) {
+      var today2 = new Date(data);
+
+      let newDate = new Date(data);
+      return newDate
+    }
     const SendApi = (e) => {
      
 
@@ -82,6 +90,10 @@ const ThirdMortgageCalculator = ({mortgages,setMortgages, mortgageID}) => {
             //     ['mortgage_resp'] :  data[0],
             //     ['res_payment_list'] :  data[1]
             // }))
+            console.log(data[0])
+            console.log(data[1])
+            // let new_resp_list = CreateNewList(data[1])
+            console.log(data[1])
             setMortgages(s => {
                 const newMortgages = s.slice();
                 newMortgages[mortgageID].mortgage_resp = data[0];
@@ -107,11 +119,19 @@ const ThirdMortgageCalculator = ({mortgages,setMortgages, mortgageID}) => {
                 <> 
                         <Row className="mb-3">
         <hr></hr>
-        
+        <Form.Group as={Col} controlId="formGridEmail">
+            <Form.Label>Mortgage name</Form.Label>
+            <Form.Control  value={mortgages[mortgageID].name} onChange={(e) => handleMortgageInfoChange(e.target.value,'name')} />
+          </Form.Group>        
+
+        <Form.Group as={Col} controlId="formGridEmail">
+            <Form.Label>Start Date of mortgage</Form.Label>
+             <DatePicker selected={mortgages[mortgageID].start_date}  onChange={(e) => handleMortgageInfoChange(e,'start_date')}  />
+          </Form.Group> 
+
           <Form.Group as={Col} controlId="formGridEmail">
             <Form.Label>How many Years will this mortgage be?</Form.Label>
             <Form.Control  value={mortgages[mortgageID].mortgage_length} onChange={(e) => handleMortgageInfoChange(e.target.value,'mortgage_length')} />
-            {/* <Form.Control  value={mortgage_length} onChange={(e) => setMortgageLength(e.target.value)} /> */}
           </Form.Group>        
           <Form.Group as={Col} controlId="formGridEmail">
             <Form.Label>What will the intererst rate be?</Form.Label>
@@ -183,11 +203,11 @@ const ThirdMortgageCalculator = ({mortgages,setMortgages, mortgageID}) => {
             </Popover>
           }
         >
-            <Form.Label>Payment Month {i+1}</Form.Label>
+            <Form.Label>Payment Month {i+1} <DatePicker selected={changeDate(item.payment_date)}   /></Form.Label>
           </OverlayTrigger>
             <Form.Control id={i} value={item.mortgage_payment}  onChange={handleMortgageChange} />
           </Form.Group> 
- 
+<hr></hr>
       </div>
                     )
       })} 

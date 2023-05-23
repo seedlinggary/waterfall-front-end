@@ -7,23 +7,22 @@ import Row from 'react-bootstrap/Row';
 import Accordion from 'react-bootstrap/Accordion';
 import PayoutFrequency from './PayoutFrequency';
 
-function FamilyTree() {
+function FamilyTree({pId, setParentId,tree, setTree,waterfall, setWaterfall,lp, setLP, gp, setGP,payoutFrequency, setPayoutFrequency}) {
 
   const timeElapsed = Date.now();
   const today = new Date(timeElapsed);
 
-    const [pId, setParentId] = useState(null);
-    const [tree, setTree] = useState({});
-    const [names, setNames] = useState({});
-    const [waterfall, setWaterfall] = useState({});
-    const [lp, setLP] = useState({});
-    const [gp, setGP] = useState({});
+    // const [pId, setParentId] = useState(null);
+    // const [tree, setTree] = useState({});
+    // const [waterfall, setWaterfall] = useState({});
+    // const [lp, setLP] = useState({});
+    // const [gp, setGP] = useState({});
     const [isPending, setIsPending] = useState(true)
     const [error, setError] = useState(null)
-    const [payoutFrequency, setPayoutFrequency] = useState({ 'start_date' : today,
-    'payout_frequency': 'day',
-    'transactions': [],
-        })
+    // const [payoutFrequency, setPayoutFrequency] = useState({ 'start_date' : today,
+    // 'payout_frequency': 'day',
+    // 'transactions': [],
+    //     })
     
     
     // const [waterfall_info, setWaterfallInfo] = useState()
@@ -37,7 +36,6 @@ function FamilyTree() {
       
         return {
           id: parent.id,
-          name: names[parent.id],
           waterfall: waterfall[parent.id] ? waterfall[parent.id] : null ,
           lp: lp[parent.id] ? lp[parent.id] : null ,
           gp: gp[parent.id] ? gp[parent.id] : null,
@@ -90,7 +88,6 @@ function FamilyTree() {
         if (parentId === null) {
           // If there is no parent, set the new person as the root of the tree
           setParentId(newId)
-          setNames((prevNames) => ({ ...prevNames, [newId]: "" }));
           setLP((prevNames) => ({ ...prevNames, [newId]: "" }));
           return { [newId]: newPerson };
         } else {
@@ -99,7 +96,6 @@ function FamilyTree() {
           const newChildren = [...parent.children, newId];
           const updatedParent = { ...parent, children: newChildren };
           setTree((prevTree) => ({ ...prevTree, [parentId]: updatedParent }));
-          setNames((prevNames) => ({ ...prevNames, [newId]: "" }));
           if (investor_type == 'lp'){
             setLP((prevNames) => ({ ...prevNames, [newId]: {'name': "bary",
             "email": "yahoo@all.com",
@@ -156,12 +152,7 @@ function FamilyTree() {
       });
     };
   
-    const editName = (id, name) => {
-      setNames((prevNames) => ({ ...prevNames, [id]: name }));
-    };
     const SendApi = (e) => {
-    
-
       let backend = 'http://127.0.0.1:5000'
       // let backend = 'https://distributionresolutionapi.com'
       // let address = `/waterfall_calc`
@@ -253,7 +244,7 @@ function FamilyTree() {
     return (
       <div>
         <PayoutFrequency payoutFrequency={payoutFrequency} setPayoutFrequency={setPayoutFrequency}/>
-        <Button onClick={() => addPerson(null)}>Add First Person</Button>
+        <Button onClick={() => addPerson(null)}>Create New Tree</Button>
         <hr></hr>
         {rootPerson && renderPerson(rootPerson)}
         <hr></hr>
