@@ -11,6 +11,7 @@ import PNLSetInfo from '../profitlosses/PNLSetInfo'
 import Tabs from 'react-bootstrap/Tabs';
 import Table from 'react-bootstrap/Table';
 import Tab from 'react-bootstrap/Tab';
+// import displayTree from '../displayTree/DisplayTree';
 
 const ParentCombined = () => {
     const [isPending, setIsPending] = useState(true)
@@ -65,15 +66,15 @@ const ParentCombined = () => {
 
 
     const SendApi = (e) => {
-     
+     console.log(tree)
         // if (!acceptTermsAndCondisiotns){
         //    setWarningTermsAndConditions(true)
         //    return
         //  }
         //  setWarningTermsAndConditions(false)
 
-        let backend = 'http://127.0.0.1:5000'
-        // let backend = 'https://distributionresolutionapi.com'
+        // let backend = 'http://127.0.0.1:5000'
+        let backend = 'https://distributionresolutionapi.com'
         // let address = `/waterfall_calc`
         let address = `/all_as_one`
         const requestOptions = {
@@ -498,6 +499,7 @@ const ParentCombined = () => {
 
       </Tab>
     </Tabs>
+    {/* <displayTree tree={tree}/> */}
               </>
     )
 }

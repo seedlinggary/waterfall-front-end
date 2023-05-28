@@ -6,12 +6,13 @@ import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import Accordion from 'react-bootstrap/Accordion';
 import PayoutFrequency from './PayoutFrequency';
+import DisplayTree from '../displayTree/DisplayTree';
 
 function FamilyTree({pId, setParentId,tree, setTree,waterfall, setWaterfall,lp, setLP, gp, setGP,payoutFrequency, setPayoutFrequency}) {
 
   const timeElapsed = Date.now();
   const today = new Date(timeElapsed);
-
+  
     // const [pId, setParentId] = useState(null);
     // const [tree, setTree] = useState({});
     // const [waterfall, setWaterfall] = useState({});
@@ -33,15 +34,34 @@ function FamilyTree({pId, setParentId,tree, setTree,waterfall, setWaterfall,lp, 
         const formattedChildren = parent.children.map((childId) =>
           formatTree(tree, childId)
         );
+        let name="tree";
+        let attributes=""
+        if (waterfall[parent.id]) {
+          name = 'waterfall';
+          // attributes = waterfall[parent.id];
+        }
+      
+        if (lp[parent.id]) {
+          name = 'LP';
+          // attributes = lp[parent.id];
+        }
+      
+        if (gp[parent.id]) {
+          name = 'gp';
+          // attributes = gp[parent.id];
+        }
       
         return {
           id: parent.id,
+          name:name,
+          // attributes:attributes,
           waterfall: waterfall[parent.id] ? waterfall[parent.id] : null ,
-          lp: lp[parent.id] ? lp[parent.id] : null ,
+          lp: lp[parent.id] ? lp[parent.id]  : null ,
           gp: gp[parent.id] ? gp[parent.id] : null,
           children: formattedChildren.length ? formattedChildren : null,
         };
       };
+      const [graphTree, setGraphTree] =useState(formatTree(tree,pId))
       const unformatTree = (tree) => {
         const flatTree = {};
        
@@ -101,7 +121,7 @@ function FamilyTree({pId, setParentId,tree, setTree,waterfall, setWaterfall,lp, 
             "email": "yahoo@all.com",
             "country_of_origin": "US",
             "tax_percentage_withheld": .07,
-            "amount_invested": '',
+            "amount_invested": '5',
             "year_bought_in": 1} }));
 
           } else if (investor_type == 'gp'){
@@ -109,7 +129,7 @@ function FamilyTree({pId, setParentId,tree, setTree,waterfall, setWaterfall,lp, 
             "email": "yahoo@all.com",
             "country_of_origin": "US",
             "tax_percentage_withheld": .07,
-            "amount_invested": '',
+            "amount_invested": '5',
             "year_bought_in": 1} }));
           }else if (investor_type == 'waterfall'){
             setWaterfall((prevNames) => ({ ...prevNames, [newId]: {"name": "Gary's LLC",
@@ -131,8 +151,8 @@ function FamilyTree({pId, setParentId,tree, setTree,waterfall, setWaterfall,lp, 
          
          
            ],
-            "amount_gp_invested": '',
-            "amount_lp_invested": '',
+            "amount_gp_invested": '5',
+            "amount_lp_invested": '5',
             "fees": [
              {
                  'year' : 1000,
@@ -153,8 +173,9 @@ function FamilyTree({pId, setParentId,tree, setTree,waterfall, setWaterfall,lp, 
     };
   
     const SendApi = (e) => {
-      let backend = 'http://127.0.0.1:5000'
-      // let backend = 'https://distributionresolutionapi.com'
+      setGraphTree(formatTree(tree,pId))
+      // let backend = 'http://127.0.0.1:5000'
+      let backend = 'https://distributionresolutionapi.com'
       // let address = `/waterfall_calc`
       let address = `/family_tree`
       const requestOptions = {
@@ -255,6 +276,8 @@ function FamilyTree({pId, setParentId,tree, setTree,waterfall, setWaterfall,lp, 
                 console.log(unformatTree(formatTree(tree,pId)))
                 console.log(formatTree(unformatTree(formatTree(tree,pId)),pId))
     }}>See info</Button>
+    <DisplayTree tree={graphTree}/>
+    
       </div>
     );
 }
