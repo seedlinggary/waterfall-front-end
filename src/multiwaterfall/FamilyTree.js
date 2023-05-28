@@ -34,33 +34,44 @@ function FamilyTree({pId, setParentId,tree, setTree,waterfall, setWaterfall,lp, 
         const formattedChildren = parent.children.map((childId) =>
           formatTree(tree, childId)
         );
+        
         let name="tree";
-        let attributes=""
+        let attributes={tset:"test"}
+        let colorClass = "default-color";
         if (waterfall[parent.id]) {
           name = 'waterfall';
-          // attributes = waterfall[parent.id];
+          attributes = waterfall[parent.id].amount_gp_invested;
+          colorClass = 'waterfall-color';
         }
       
         if (lp[parent.id]) {
           name = 'LP';
-          // attributes = lp[parent.id];
+          attributes = lp[parent.id];
+          colorClass = 'lp-color';
+          
         }
       
         if (gp[parent.id]) {
           name = 'gp';
-          // attributes = gp[parent.id];
+          attributes = gp[parent.id];
+          colorClass = 'gp-color';
+          // [parent.id].selectAll
+     
         }
-      
+       
+        
         return {
           id: parent.id,
           name:name,
-          // attributes:attributes,
+          attributes,
+          // colorClass: colorClass,
           waterfall: waterfall[parent.id] ? waterfall[parent.id] : null ,
           lp: lp[parent.id] ? lp[parent.id]  : null ,
           gp: gp[parent.id] ? gp[parent.id] : null,
           children: formattedChildren.length ? formattedChildren : null,
         };
       };
+
       const [graphTree, setGraphTree] =useState(formatTree(tree,pId))
       const unformatTree = (tree) => {
         const flatTree = {};
@@ -174,6 +185,7 @@ function FamilyTree({pId, setParentId,tree, setTree,waterfall, setWaterfall,lp, 
   
     const SendApi = (e) => {
       setGraphTree(formatTree(tree,pId))
+      
       // let backend = 'http://127.0.0.1:5000'
       let backend = 'https://distributionresolutionapi.com'
       // let address = `/waterfall_calc`
