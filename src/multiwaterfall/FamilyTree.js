@@ -7,6 +7,8 @@ import Row from 'react-bootstrap/Row';
 import Accordion from 'react-bootstrap/Accordion';
 import PayoutFrequency from './PayoutFrequency';
 import DisplayTree from '../displayTree/DisplayTree';
+// import Button from 'react-bootstrap/Button';
+import Modal from 'react-bootstrap/Modal';
 
 function FamilyTree({pId, setParentId,tree, setTree,waterfall, setWaterfall,lp, setLP, gp, setGP,payoutFrequency, setPayoutFrequency}) {
 
@@ -20,6 +22,10 @@ function FamilyTree({pId, setParentId,tree, setTree,waterfall, setWaterfall,lp, 
     // const [gp, setGP] = useState({});
     const [isPending, setIsPending] = useState(true)
     const [error, setError] = useState(null)
+    const [show, setShow] = useState(false);
+
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
     // const [payoutFrequency, setPayoutFrequency] = useState({ 'start_date' : today,
     // 'payout_frequency': 'day',
     // 'transactions': [],
@@ -42,6 +48,7 @@ function FamilyTree({pId, setParentId,tree, setTree,waterfall, setWaterfall,lp, 
           name = 'waterfall';
           attributes = waterfall[parent.id].amount_gp_invested;
           colorClass = 'waterfall-color';
+          // symbolType= "diamond";
         }
       
         if (lp[parent.id]) {
@@ -282,13 +289,29 @@ function FamilyTree({pId, setParentId,tree, setTree,waterfall, setWaterfall,lp, 
         {rootPerson && renderPerson(rootPerson)}
         <hr></hr>
         <Button onClick={() => {
+          handleShow()
                 SendApi()
                 console.log(tree)
                 console.log(formatTree(tree,pId))
                 console.log(unformatTree(formatTree(tree,pId)))
                 console.log(formatTree(unformatTree(formatTree(tree,pId)),pId))
     }}>See info</Button>
-    <DisplayTree tree={graphTree}/>
+    <Modal show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Modal heading</Modal.Title>
+        </Modal.Header>
+        <Modal.Body><DisplayTree tree={graphTree}/></Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Close
+          </Button>
+          <Button variant="primary" onClick={handleClose}>
+            Save Changes
+          </Button>
+        </Modal.Footer>
+      </Modal>
+    
+    {/* <DisplayTree tree={graphTree}/> */}
     
       </div>
     );
