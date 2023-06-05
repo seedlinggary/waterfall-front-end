@@ -133,7 +133,7 @@ const PayoutFrequency = ({payoutFrequency,setPayoutFrequency}) => {
 
         <Form.Group as={Col} controlId="formGridEmail">
             <Form.Label>Start Date of given transaction</Form.Label>
-             <DatePicker selected={payoutFrequency.start_date}  onChange={(e) => handlePayoutChange(e,'start_date')}  />
+             <DatePicker selected={payoutFrequency && payoutFrequency.start_date}  onChange={(e) => handlePayoutChange(e,'start_date')}  />
           </Form.Group> 
        
 
@@ -141,7 +141,7 @@ const PayoutFrequency = ({payoutFrequency,setPayoutFrequency}) => {
       
         <Row className="mb-3">
         <Form.Group as={Col} controlId="formGridEmail">
-            <Form.Label>{payoutFrequency.payout_frequency}s would like to add</Form.Label>
+            <Form.Label>{payoutFrequency && payoutFrequency.payout_frequency}s would like to add</Form.Label>
             <Form.Control  value={years} onChange={(e) => setYears(e.target.value)} />
           </Form.Group>        
 
@@ -157,7 +157,7 @@ const PayoutFrequency = ({payoutFrequency,setPayoutFrequency}) => {
         </Form.Group>
 
           <Form.Group as={Col} controlId="formGridEmail">
-            <Form.Label>How many {payoutFrequency.payout_frequency}s between each transaction?</Form.Label>
+            <Form.Label>How many {payoutFrequency && payoutFrequency.payout_frequency}s between each transaction?</Form.Label>
             <Form.Control  value={dateMulitplicationAmount} onChange={(e) => setDateMulitplicationAmount(e.target.value)} />
           </Form.Group> 
           
@@ -166,7 +166,7 @@ const PayoutFrequency = ({payoutFrequency,setPayoutFrequency}) => {
 
         <Row>
       <Col md={{ span: 2, offset: 3 }}>   
-      <Button  variant="outline-primary" onClick={addMultiYears}>add multiple {payoutFrequency.payout_frequency }s</Button>
+      <Button  variant="outline-primary" onClick={addMultiYears}>add multiple {payoutFrequency && payoutFrequency.payout_frequency }s</Button>
 
 
       
@@ -176,7 +176,7 @@ const PayoutFrequency = ({payoutFrequency,setPayoutFrequency}) => {
 
 
 
-          {payoutFrequency.transactions && payoutFrequency.transactions.map((transaction, i) => {
+          {payoutFrequency && payoutFrequency.transactions && payoutFrequency.transactions.map((transaction, i) => {
                     return (
                         
         <div key={i}>

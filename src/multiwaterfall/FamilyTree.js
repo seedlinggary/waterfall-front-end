@@ -7,7 +7,7 @@ import Row from 'react-bootstrap/Row';
 import Accordion from 'react-bootstrap/Accordion';
 import PayoutFrequency from './PayoutFrequency';
 
-function FamilyTree({pId, setParentId,tree, setTree,waterfall, setWaterfall,lp, setLP, gp, setGP,payoutFrequency, setPayoutFrequency}) {
+function FamilyTree({pId, setParentId, tree, setTree,waterfall, setWaterfall,lp, setLP, gp, setGP,payoutFrequency, setPayoutFrequency}) {
 
   const timeElapsed = Date.now();
   const today = new Date(timeElapsed);
@@ -238,9 +238,17 @@ function FamilyTree({pId, setParentId,tree, setTree,waterfall, setWaterfall,lp, 
         </div>
       );
     };
-  
-    const rootPerson = Object.values(tree)[0];
-  
+    // if(tree)
+    const rootPerson =undefined
+    if (tree !== undefined && tree !== null && Object.values(tree)[0] !== undefined) {
+      // Rest of your code
+      const rootPerson =  Object.values(tree)[0];
+      // Rest of your code
+    }
+    // if(Object.values(tree)[0]){
+    //   console.log('test')
+    // const rootPerson =  Object.values(tree)[0];
+    // }
     return (
       <div>
         <PayoutFrequency payoutFrequency={payoutFrequency} setPayoutFrequency={setPayoutFrequency}/>

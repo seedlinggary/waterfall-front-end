@@ -115,8 +115,7 @@ const Hurdle = ({arr, setArr}) => {
       </div>
                     )
       })} 
-   
-      </div>   
+g      </div>   
     )
 }
  
