@@ -97,12 +97,13 @@ function FamilyTree({pId, setParentId,tree, setTree,waterfall, setWaterfall,lp, 
           const updatedParent = { ...parent, children: newChildren };
           setTree((prevTree) => ({ ...prevTree, [parentId]: updatedParent }));
           if (investor_type == 'lp'){
-            setLP((prevNames) => ({ ...prevNames, [newId]: {'name': "bary",
+            setLP((prevNames) => ({ ...prevNames, [newId]: {'name': "Bary",
             "email": "yahoo@all.com",
             "country_of_origin": "US",
             "tax_percentage_withheld": .07,
             "amount_invested": '',
-            "year_bought_in": 1} }));
+            "date_funds_recieved": today,
+            "year_bought_in": 0} }));
 
           } else if (investor_type == 'gp'){
             setGP((prevNames) => ({ ...prevNames, [newId]: {'name': "Gary",
@@ -110,9 +111,11 @@ function FamilyTree({pId, setParentId,tree, setTree,waterfall, setWaterfall,lp, 
             "country_of_origin": "US",
             "tax_percentage_withheld": .07,
             "amount_invested": '',
-            "year_bought_in": 1} }));
+            "date_funds_recieved": today,
+            "year_bought_in": 0} }));
           }else if (investor_type == 'waterfall'){
             setWaterfall((prevNames) => ({ ...prevNames, [newId]: {"name": "Gary's LLC",
+            "date_funds_recieved": today,
             'irr_parri_passu': true,
             'pay_gp_principal': false,
             'pay_gp_prefered': false,
@@ -122,7 +125,7 @@ function FamilyTree({pId, setParentId,tree, setTree,waterfall, setWaterfall,lp, 
             'way_in_which_to_split' : "investor_in_the_irr",
             'principal_after_preffered': false,
             'yr_strt_capital_payback': (10000 - 1),
-            'year_bought_in': 1,
+            'year_bought_in': 0,
             "splits": [
              {
                  'hurdle' : .08,
@@ -153,8 +156,8 @@ function FamilyTree({pId, setParentId,tree, setTree,waterfall, setWaterfall,lp, 
     };
   
     const SendApi = (e) => {
-      let backend = 'http://127.0.0.1:5000'
-      // let backend = 'https://distributionresolutionapi.com'
+      // let backend = 'http://127.0.0.1:5000'
+      let backend = 'https://distributionresolutionapi.com'
       // let address = `/waterfall_calc`
       let address = `/family_tree`
       const requestOptions = {
@@ -191,28 +194,93 @@ function FamilyTree({pId, setParentId,tree, setTree,waterfall, setWaterfall,lp, 
 
       
       }    
+      const handleDelete = (id) => {
+        console.log(id)
+        let newTree =[]
+        setTree((prevTree) => {
+          const treeCopy = { ...prevTree };
+         
+          const removePerson = (personId) => {
+            const children = tree[personId].children;
+            if (children){
 
-    const renderPerson = (person) => {
+              children.forEach((childId) => removePerson(childId));
+            }
+            newTree.push(personId)
+            // console.log(newTree) ;
+            Object.entries(treeCopy).map( ([k, v],index) => {
+              // v.children.map((childId) => {
+              //   delete treeCopy[childId]
+              // })
+              let newChildren = treeCopy[k].children.filter((s,i)=>(s != personId))
+              treeCopy[k].children = newChildren
+              // treeCopy.children.filter((s,i)=>(s != personId))
+
+            }) 
+            delete treeCopy[personId];
+          };
+         
+          removePerson(id);
+         
+          return treeCopy;
+        });
+        // setTree((prevTree) => {
+        //   const treeCopy = { ...prevTree };
+        //   newTree.map((childId) => (
+        //     // console.log(treeCopy[childId])
+        //     delete treeCopy[childId]
+        //   ))
+          
+        //   console.log(prevTree) ;
+        //   return treeCopy
+        // })
+      }; 
+      
+      const renderPerson = (person, parent_id) => {
       return (
         <div key={person.id}>
               <Accordion defaultActiveKey="0" flush>
       <Accordion.Item eventKey="0">
         <Accordion.Header>
 
-
         {waterfall[person.id] && waterfall[person.id]['name'] && <h3>Waterfall Name: {waterfall[person.id]['name']}</h3>  }
-          {lp[person.id] && lp[person.id]['name'] && <h3>LP name: {lp[person.id]['name']} </h3>  }
-          {gp[person.id] && gp[person.id]['name'] && <h3>GP name: {gp[person.id]['name']} </h3>  }
+          {waterfall[parent_id.id] && lp[person.id] && lp[person.id]['name'] && <h3>LP name: {lp[person.id]['name']} </h3>  }
+          {waterfall[parent_id.id] && gp[person.id] && gp[person.id]['name'] && <h3>GP name: {gp[person.id]['name']} </h3>  }
+          {!waterfall[parent_id.id] && lp[person.id] && lp[person.id]['name'] && <h3>Investor name: {lp[person.id]['name']} </h3>  }
           {waterfall[person.id] && waterfall[person.id]['percentage_ownership'] && <h3> -  Ownership %{ waterfall[person.id]['percentage_ownership'].toLocaleString()}</h3>  }
           {lp[person.id] && lp[person.id]['percentage_ownership'] && <h3> - Ownership %{lp[person.id]['percentage_ownership'].toLocaleString()}</h3>  }
           {gp[person.id] && gp[person.id]['percentage_ownership'] && <h3> - Ownership %{gp[person.id]['percentage_ownership'].toLocaleString()}</h3>  }
+          {/* {waterfall[person.id] && waterfall[person.id]['profit_recieved'] && <h3> -  { JSON.stringify(waterfall[person.id]['profit_recieved'])}</h3>  }
+          {lp[person.id] && lp[person.id]['profit_recieved'] && <h3> - {JSON.stringify(lp[person.id]['profit_recieved'])}</h3>  }
+          {gp[person.id] && gp[person.id]['profit_recieved'] && <h3> - {JSON.stringify(gp[person.id]['profit_recieved'])}</h3>  } */}
+          {person.id != 12212 && <Button variant="outline-danger" onClick={() => handleDelete(person.id)}>Delete Me
+          
+          </Button>}
+          {person.id == 12212 && <h3> Your Investment Tree</h3> }
         </Accordion.Header>
         <Accordion.Body>
-     
-          {waterfall[person.id] && <Calculator waterfall={waterfall}  setWaterfall={setWaterfall} personId={person.id}  />}
-          {lp[person.id] && <Investor investor={lp} setInvestor={setLP} personId={person.id}/>}
-          {gp[person.id] && <Investor investor={gp} setInvestor={setGP} personId={person.id}/>}
-          <Row>
+          {waterfall[person.id] && <Calculator waterfall={waterfall}  setWaterfall={setWaterfall} personId={person.id} payoutFrequency={payoutFrequency}  />}
+          {lp[person.id] && <Investor investor={lp} setInvestor={setLP} personId={person.id} payoutFrequency={payoutFrequency}/>}
+          {gp[person.id] && <Investor investor={gp} setInvestor={setGP} personId={person.id} payoutFrequency={payoutFrequency}/>}
+          {waterfall[person.id] &&           <Row>
+      <Col md={{ span: 2, offset: 3 }}>   
+      <Button onClick={() => addPerson(person.id, 'lp')}>Add LP</Button>
+      </Col>
+      <Col md={{ span: 2, offset: 2 }}>   
+      <Button onClick={() => addPerson(person.id, 'gp')}>Add GP</Button>
+
+    </Col>  
+               </Row>}
+
+               {  !waterfall[person.id]  &&           <Row>
+      <Col md={{ span: 2, offset: 3 }}>   
+      <Button onClick={() => addPerson(person.id, 'lp')}>Add Investor</Button>
+      </Col>
+    <Col md={{ span: 2, offset: 2 }}>   
+    <Button onClick={() => addPerson(person.id, 'waterfall')}>Add waterfall</Button>
+    </Col>  
+               </Row>}
+          {/* <Row>
       <Col md={{ span: 2, offset: 1 }}>   
       <Button onClick={() => addPerson(person.id, 'lp')}>Add LP</Button>
       </Col>
@@ -223,12 +291,12 @@ function FamilyTree({pId, setParentId,tree, setTree,waterfall, setWaterfall,lp, 
     <Col md={{ span: 2, offset: 2 }}>   
     <Button onClick={() => addPerson(person.id, 'waterfall')}>Add waterfall</Button>
     </Col>  
-               </Row>
+               </Row> */}
    <hr></hr>
           {person.children && person.children.length > 0 && (
             <ul>
               {person.children.map((childId) => (
-                <li key={childId}>{renderPerson(tree[childId])}</li>
+                <li key={childId}>{renderPerson(tree[childId], person)}</li>
               ))}
             </ul>
           )}
@@ -244,17 +312,13 @@ function FamilyTree({pId, setParentId,tree, setTree,waterfall, setWaterfall,lp, 
     return (
       <div>
         <PayoutFrequency payoutFrequency={payoutFrequency} setPayoutFrequency={setPayoutFrequency}/>
-        <Button onClick={() => addPerson(null)}>Create New Tree</Button>
+        {/* <Button onClick={() => addPerson(null)}>Create New Tree</Button> */}
         <hr></hr>
-        {rootPerson && renderPerson(rootPerson)}
+        {rootPerson && renderPerson(rootPerson, 0)}
         <hr></hr>
-        <Button onClick={() => {
+        {/* <Button onClick={() => {
                 SendApi()
-                console.log(tree)
-                console.log(formatTree(tree,pId))
-                console.log(unformatTree(formatTree(tree,pId)))
-                console.log(formatTree(unformatTree(formatTree(tree,pId)),pId))
-    }}>See info</Button>
+    }}>See info</Button> */}
       </div>
     );
 }

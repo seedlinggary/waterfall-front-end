@@ -98,7 +98,7 @@ const Home = () => {
         <Card.Text>
          We help you calculate distributions to your investors.
         </Card.Text>
-        <Button variant="outline-primary" onClick={() => handleClick("calculator")}>Calculator</Button>
+        <Button variant="outline-primary" onClick={() => handleClick("parentcombined")}>Profit Distributor</Button>
       </Card.Body>
      
     </Card>
@@ -124,7 +124,7 @@ const Home = () => {
       />
       
     </Figure></Col>
-        <Col sm={{ span: 6, offset: 0 }}><h2> Create and edit waterfall distributions in seconds with our templates.</h2></Col>
+        <Col sm={{ span: 6, offset: 0 }}><h4> Now that we can manage Waterfalls, Investors, Mortgages, Expenses, and Earnings. We put this under one roof to see all aspects of your investment over it's lifetime.</h4></Col>
       </Row>
       </Col>
         <Col sm={{ span: 5, offset: 1 }}> 
@@ -138,7 +138,7 @@ const Home = () => {
       />
       
     </Figure></Col>
-        <Col sm={{ span: 6, offset: 0 }}><h4> Easily understand all different types of waterfalls and how they would affect your different cash flows.</h4></Col>
+        <Col sm={{ span: 6, offset: 0 }}><h4> Create and edit waterfall distributions in seconds with our templates. </h4></Col>
       </Row>
 </Col>
       </Row>
@@ -169,7 +169,8 @@ const Home = () => {
       />
       
     </Figure></Col>
-        <Col sm={{ span: 6, offset: 0 }}><h4> A comprehessive system that has all of your data in one place.</h4></Col>
+        <Col sm={{ span: 6, offset: 0 }}><h4> Easily understand all different types of waterfalls and how they would affect your different cash flows.
+</h4></Col>
       </Row></Col>
       </Row>
       <h1></h1>

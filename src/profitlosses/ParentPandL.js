@@ -222,7 +222,7 @@ const ParentPandL = () => {
         <div key={i}>
 
 <Accordion.Item eventKey={i}>
-        <Accordion.Header>Account #{i+1}: {pAndLs[i].transaction_name}  &rarr;   <Button variant="danger" size="sm" id={i} onClick={deleteYear}>
+        <Accordion.Header>Account #{i+1}: {pAndLs[i].transaction_name}  &rarr;   <Button variant="outline-danger" size="sm" id={i} onClick={deleteYear}>
             Delete me
           </Button></Accordion.Header> 
         <Accordion.Body>

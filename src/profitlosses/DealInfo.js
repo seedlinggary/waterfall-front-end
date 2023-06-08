@@ -60,10 +60,10 @@ const DealInfo = ({dealInfo, setDealInfo}) => {
           <Form.Label>How many units?</Form.Label>
           <Form.Control  value={dealInfo.unit_amount.toLocaleString()} onChange={(e) => handleDealInfoChange(e.target.value,'unit_amount')} />
         </Form.Group>        
-        <Form.Group as={Col} controlId="formGridEmail">
+        {/* <Form.Group as={Col} controlId="formGridEmail">
           <Form.Label>Purchase price?</Form.Label>
           <Form.Control  value={dealInfo.purchase_price.toLocaleString()} onChange={(e) => handleDealInfoChange(e.target.value,'purchase_price')} />
-        </Form.Group>        
+        </Form.Group>         */}
 
 </Row>
 

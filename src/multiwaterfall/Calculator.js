@@ -6,10 +6,12 @@ import Row from 'react-bootstrap/Row';
 import Accordion from 'react-bootstrap/Accordion';
 import Hurdle from './Hurdle';
 import Fee from './Fee';
+import DatePicker from 'react-datepicker';
 
-const Calculator = ({waterfall, setWaterfall, personId }) => {
+const Calculator = ({waterfall, setWaterfall, personId, payoutFrequency }) => {
     
     function handlewaterfallChange(data, mortgageInfoType) {
+      
       let keyvalue = mortgageInfoType.toString()
       const newWaterfall= Object.assign(waterfall[personId],{[`${keyvalue}`]:data})
       setWaterfall(prevState => ({
@@ -19,22 +21,34 @@ const Calculator = ({waterfall, setWaterfall, personId }) => {
       
     }
 
-      
+    function changeDate(data) {
+      var today2 = new Date(data);
+  
+      let newDate = new Date(data);
+      return newDate
+    }
+  
+  
       const SendPromoteWaterfall = (e) => {
-        setWaterfall(prevState => ({
-          ...prevState,
+        let new_info = {
           [`irr_parri_passu`]: true,
           [`type_of_split`]: "split_percentage_of_owned",
           [`capital_parri_passu`]: true,
           [`type_of_hurdle`]: "irr_yearly_compund",
           [`way_in_which_to_split`]: "investor_in_the_irr",
           [`principal_after_preffered`]: false,
-      }));
+      }
+        const newWaterfall= Object.assign(waterfall[personId],new_info)
+        setWaterfall(prevState => ({
+            ...prevState,
+            [`${personId}`]: newWaterfall
+        }));
+        
+
 
     }
     const SendCashFlowWaterfall = (e) => {
-      setWaterfall(prevState => ({
-        ...prevState,
+      let new_info = {
         [`irr_parri_passu`]: false,
         [`pay_gp_principal`]: true,
         [`pay_gp_prefered`]: true,
@@ -43,7 +57,13 @@ const Calculator = ({waterfall, setWaterfall, personId }) => {
         [`type_of_hurdle`]: "irr_yearly_compund",
         [`way_in_which_to_split`]: "investor_on_top_of_irr",
         [`principal_after_preffered`]: false,
-    }));
+    }
+      const newWaterfall= Object.assign(waterfall[personId],new_info)
+      setWaterfall(prevState => ({
+          ...prevState,
+          [`${personId}`]: newWaterfall
+      }));
+
   }
             return ( 
         <div > 
@@ -72,7 +92,12 @@ const Calculator = ({waterfall, setWaterfall, personId }) => {
       <Form.Group as={Col} controlId="formGridEmail">
           <Form.Label>Name of waterfall</Form.Label>
           <Form.Control  value={waterfall[personId].name} onChange={(e) => handlewaterfallChange(e.target.value,'name')} />
-        </Form.Group>  
+        </Form.Group> 
+        <Form.Group as={Col} controlId="formGridEmail">
+            <Form.Label>Date Funds Recieved</Form.Label>
+             <DatePicker selected={changeDate( waterfall[personId].date_funds_recieved)}  onChange={(e) => handlewaterfallChange(e,'date_funds_recieved')}  />
+          </Form.Group> 
+ 
       <Row className="mb-3">
         
         <Form.Group as={Col} controlId="formGridEmail">
@@ -98,7 +123,15 @@ const Calculator = ({waterfall, setWaterfall, personId }) => {
     </Form.Group>
     <Form.Group as={Col} controlId="formGridEmail">
         <Form.Label>Year Bought in</Form.Label>
-        <Form.Control  placeholder={waterfall[personId].year_bought_in} onChange={(e) => handlewaterfallChange(e.target.value,'year_bought_in')} />
+        {/* <Form.Control  placeholder={waterfall[personId].year_bought_in} onChange={(e) => handlewaterfallChange(e.target.value,'year_bought_in')} /> */}
+        <Form.Select aria-label="Default select example" onChange={(e) => handlewaterfallChange(e.target.value,'year_bought_in')}>
+          {payoutFrequency.transactions && payoutFrequency.transactions.map((transaction, i) => {
+                    return (
+                      <option value={i}>{JSON.stringify(transaction.date)}</option>
+                    )
+      })} 
+        </Form.Select>
+
     </Form.Group>
 
       </Row>

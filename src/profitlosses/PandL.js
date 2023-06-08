@@ -208,7 +208,7 @@ const PandL = ({pAndLs,setPandLs, PandLID}) => {
         <div key={i}>
                   <Row className="mb-3">
               <Form.Group as={Col}  >
-              <Form.Label> {i + 1}'s worth : <Button variant="danger" id={i} onClick={deleteYear}>
+              <Form.Label> {i + 1}'s worth : <Button variant="outline-danger" id={i} onClick={deleteYear}>
             Delete {typeDateMultiplicationAMount }
           </Button> </Form.Label >
               <Form.Control  value={transaction.amount.toLocaleString()} id={i}  onChange={(e) => handleTransactionChange(e.target.value, i,'amount')}/>

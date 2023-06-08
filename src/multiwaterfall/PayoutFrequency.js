@@ -28,7 +28,7 @@ const PayoutFrequency = ({payoutFrequency,setPayoutFrequency}) => {
     function addDateMultiplication(datesumTotal) {
         if (payoutFrequency.payout_frequency == 'year'){
           var newdatesumTotal  = new Date(datesumTotal.setFullYear(datesumTotal.getFullYear() + parseInt(dateMulitplicationAmount)));
-       } else if(payoutFrequency.payout_frequency == 'quater') {
+       } else if(payoutFrequency.payout_frequency == 'quarter') {
         var newdatesumTotal  = new Date(datesumTotal.setMonth(datesumTotal.getMonth() + (parseInt(dateMulitplicationAmount) * 3)));
        } else if(payoutFrequency.payout_frequency == 'month') {
         var newdatesumTotal  = new Date(datesumTotal.setMonth(datesumTotal.getMonth() + parseInt(dateMulitplicationAmount)));
@@ -38,15 +38,21 @@ const PayoutFrequency = ({payoutFrequency,setPayoutFrequency}) => {
            return newdatesumTotal;
       }
         const addMultiYears = e =>{
+          let sumTotal = payoutFrequency.startingAmount
+
           let startingamoundate = new Date(payoutFrequency.start_date.setFullYear(payoutFrequency.start_date.getFullYear() + 0))
           let datesumTotal = new Date(payoutFrequency.start_date.setFullYear(payoutFrequency.start_date.getFullYear() + 0))
             console.log(payoutFrequency.payout_frequency)
           const newProfit =  
             [... payoutFrequency.transactions,
-            {   'date': startingamoundate}]
+            {   'date': startingamoundate,
+            'saving_amount' : 0,}]
+
           for (let i = 0; i < years  ; i++) {
             newProfit.push({
-                'date': datesumTotal})
+                'date': datesumTotal,
+                'saving_amount' : sumTotal,})
+            sumTotal = sumTotal * (Number(payoutFrequency.mulitplicationAmount) + 1)  
             datesumTotal = addDateMultiplication(datesumTotal)
             }
           let removed = newProfit.pop();
@@ -61,12 +67,10 @@ const PayoutFrequency = ({payoutFrequency,setPayoutFrequency}) => {
         const deleteYear = e => {
           const newtransactions =  payoutFrequency.transactions.filter((s,i)=>(i != e.target.id))
          
-          setPayoutFrequency(s => {
-              const newPandL = s.slice();
-              newPandL.transactions = newtransactions
-              return newPandL;
-          });
-  
+          setPayoutFrequency(prevState => ({
+            ...prevState,
+             [`transactions`]: newtransactions
+          }));  
             }
 
     function handlePandLInfoChange(data, mortgageInfoType) {
@@ -113,17 +117,28 @@ const PayoutFrequency = ({payoutFrequency,setPayoutFrequency}) => {
             }
             return item; // else return unmodified item 
           });
+          setPayoutFrequency(prevState => ({
+            ...prevState,
+             [`transactions`]: updatedList
+          }));
 
-      setPayoutFrequency(s => {
-          const newMortgages = s.slice();
-          newMortgages.transactions = updatedList;
-    
-          return newMortgages;
-        });
-        console.log(payoutFrequency)
       }; 
             return ( 
                 <> 
+
+<Row className="mb-3">
+                   <Form.Group as={Col} >
+      <Form.Label>Frequency of profit</Form.Label>
+      <Form.Select aria-label="Default select example"   onChange={(e) => handlePayoutChange(e.target.value,'payout_type')} >
+            <option value={payoutFrequency.payout_type}>{payoutFrequency.payout_type } </option>
+            <option value="Year">Year </option>
+            <option value="Month">Month</option>
+            <option value="Quarter">Quarter</option>
+            <option value="Personalize">Personalize</option>
+        </Form.Select>
+        </Form.Group>
+    
+        </Row> 
                         <Row className="mb-3">
     
 
@@ -136,6 +151,15 @@ const PayoutFrequency = ({payoutFrequency,setPayoutFrequency}) => {
              <DatePicker selected={payoutFrequency.start_date}  onChange={(e) => handlePayoutChange(e,'start_date')}  />
           </Form.Group> 
        
+          <Form.Group as={Col} controlId="formGridEmail">
+            <Form.Label>First {payoutFrequency.payout_frequency }s Savings amount.</Form.Label>
+            <Form.Control  value={payoutFrequency.startingAmount.toLocaleString()} onChange={(e) => handlePayoutChange(e.target.value, 'startingAmount')} />
+          </Form.Group>
+           
+          <Form.Group as={Col} controlId="formGridEmail">
+            <Form.Label>Amount percentage increase per {payoutFrequency.payout_frequency } for savings.</Form.Label>
+            <Form.Control  value={payoutFrequency.mulitplicationAmount.toLocaleString()} onChange={(e) => handlePayoutChange(e.target.value, 'mulitplicationAmount')} />
+          </Form.Group> 
 
         </Row>
       
@@ -151,7 +175,7 @@ const PayoutFrequency = ({payoutFrequency,setPayoutFrequency}) => {
       <Form.Select aria-label="Default select example"   onChange={(e) => handlePayoutChange(e.target.value,'payout_frequency')}>
             <option value="year">Year </option>
             <option value="month">Month</option>
-            <option value="quater">Quater</option>
+            <option value="quarter">Quarter</option>
             <option value="day">Days</option>
         </Form.Select>
         </Form.Group>
@@ -165,7 +189,7 @@ const PayoutFrequency = ({payoutFrequency,setPayoutFrequency}) => {
 
 
         <Row>
-      <Col md={{ span: 2, offset: 3 }}>   
+      <Col md={{ span: 2, offset: 5 }}>   
       <Button  variant="outline-primary" onClick={addMultiYears}>add multiple {payoutFrequency.payout_frequency }s</Button>
 
 
@@ -181,13 +205,25 @@ const PayoutFrequency = ({payoutFrequency,setPayoutFrequency}) => {
                         
         <div key={i}>
                   <Row className="mb-3">
-       
-            <h5>Return {i+ 1}</h5>
+        { i == 0 && <><h5> Start tracking Investment from this date  <Button  id={i} variant="outline-danger" onClick={deleteYear}>delete year</Button></h5>
+        
+        <Form.Group as={Col} controlId="formGridEmail" >
+            <Form.Label>Date of given return</Form.Label>
+            <DatePicker selected={transaction.date} onChange={(date) => handleTransactionChange(date, i,'date')} />
+            </Form.Group> 
+        
+         </>}
+           { i != 0 && <><h5>Return {i} <Button  id={i} variant="outline-danger" onClick={deleteYear}>delete year</Button></h5>
             <Form.Group as={Col} controlId="formGridEmail" >
             <Form.Label>Date of given return</Form.Label>
             <DatePicker selected={transaction.date} onChange={(date) => handleTransactionChange(date, i,'date')} />
-
-          </Form.Group>  
+            </Form.Group> 
+            <Form.Group as={Col}  >
+              <Form.Label> How much to save in case of emergency per {payoutFrequency.payout_frequency}. </Form.Label >
+              <Form.Control  value={transaction.saving_amount.toLocaleString()} id={i}  onChange={(e) => handleTransactionChange(e.target.value, i,'saving_amount')}/>
+            </Form.Group>
+            </>}
+          
           
             </Row>
       </div>

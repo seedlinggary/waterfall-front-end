@@ -35,16 +35,7 @@ const PnL = ({dealInfo, setDealInfo,pAndLs,setPandLs}) => {
     const [acceptTermsAndCondisiotns, setAcceptTermsAndCondisiotns] = useState(false)
     const [warningTermsAndConditions, setWarningTermsAndConditions] = useState(false)
 
-    // const [dealInfo, setDealInfo] = useState({ 'name' : 'Money Maker',
-    // 'address': '123 Sesame street',
-    // 'gross_sqr_footage': 50000,
-    // 'investment_type': 'multi_family',
-    // 'unit_amount': 5,
-    // 'net_sqr_footage': 40000,
-    // 'purchase_price': 5000000,
-    // 'purchase_date': today,
-    //     })
-    // const [pAndLs, setPandLs] = useState([])
+
     const addPandL = e => {
         setPandLs(s => {
             const newMortgage = s.slice();
@@ -108,9 +99,9 @@ const PnL = ({dealInfo, setDealInfo,pAndLs,setPandLs}) => {
           This website does not take responsibility for any information given or provided. Please compare your waterfall results against your own information for accurecy. Please check terms and condition box.
         </p>
       </Alert>}
-                     <Button variant="info" onClick={handleShowSave} className="me-2">
+                     {/* <Button variant="info" onClick={handleShowSave} className="me-2">
         Save Info
-      </Button>
+      </Button> */}
 
       <Offcanvas show={showSave} onHide={handleCloseSave} placement="end">
         <Offcanvas.Header closeButton>
@@ -151,7 +142,7 @@ const PnL = ({dealInfo, setDealInfo,pAndLs,setPandLs}) => {
         <div key={i}>
 
 <Accordion.Item eventKey={i}>
-        <Accordion.Header>Account #{i+1}: {pAndLs[i].transaction_name}  &rarr;   <Button variant="danger" size="sm" id={i} onClick={deleteYear}>
+        <Accordion.Header>Account #{i+1}: {pAndLs[i].transaction_name}  &rarr;   <Button variant="outline-danger" size="sm" id={i} onClick={deleteYear}>
             Delete me
           </Button></Accordion.Header> 
         <Accordion.Body>

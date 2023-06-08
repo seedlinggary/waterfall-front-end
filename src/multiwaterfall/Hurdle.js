@@ -42,7 +42,6 @@ setWaterfall(prevState => ({
             index = 0
         }
       let keyvalue = mortgageInfoType.toString()
-      console.log(keyvalue)
       let updatedList = waterfall[personId].splits.map((item, i) => 
         {
           if (i == index){

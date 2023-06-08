@@ -10,15 +10,14 @@ function ColorSchemesExample() {
     <>
         <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
       <Container>
-      <Navbar.Brand href="/Calculator">Distribution Resolution</Navbar.Brand>
+      <Navbar.Brand href="/parentcombined">Distribution Resolution</Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="me-auto">
-          <Nav.Link href="/parentcombined">All in One</Nav.Link>
-          <Nav.Link href="/famtree">Family Tree</Nav.Link>
-            <Nav.Link href="/multimortgage">NEW NEW Mortgage Calculator</Nav.Link>
+          <Nav.Link href="/">Home</Nav.Link>
+          <Nav.Link href="/parentcombined">Profit Distributor</Nav.Link>
             <Nav.Link href="/comingsoon">Coming Soon</Nav.Link>
-            <NavDropdown title="Dropdown" id="collasible-nav-dropdown">
+            <NavDropdown title="Services" id="collasible-nav-dropdown">
               <NavDropdown.Item href="/calculator">Waterfall Calculator</NavDropdown.Item>
               <NavDropdown.Item href="/mortgagecalculator"> Mortgage Calculator</NavDropdown.Item>
               <NavDropdown.Item href="/pandl">Profit and Losses</NavDropdown.Item>

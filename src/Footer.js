@@ -37,6 +37,7 @@ const Footer = () => {
           </Column>
           <Column>
             <Heading>Services</Heading>
+            <FooterLink href="#" onClick={() => handleClick("parentcombined")}>Profit Distributor</FooterLink>
             <FooterLink href="#" onClick={() => handleClick("calculator")}>Waterfall Calculator</FooterLink>
             <FooterLink href="#" onClick={() => handleClick("mortgagecalculator")}>Mortgage Calculator</FooterLink>
             <FooterLink href="#" onClick={() => handleClick("pandl")}>Profit and Losses</FooterLink>

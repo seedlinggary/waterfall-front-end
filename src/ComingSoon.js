@@ -30,9 +30,9 @@ const User = () => {
       <Col md={{ span: 2, offset: 2 }}>    <Card >
       <Card.Img variant="top"  src={require('./pictures/compu_work.jpg')} />
       <Card.Body>
-        <Card.Title>Multiple Waterfalls</Card.Title>
+        <Card.Title>Log In</Card.Title>
         <Card.Text>
-         Create multiple waterfalls at the exact same time, for the same deal. Have different waterfall distributions for different clientele? No worries, we got you covered.
+        Nice userfaces depending if you are an Investor or a General Partner. Have employees? limit/grant access to what they can see.
         </Card.Text>
       </Card.Body>
 
@@ -40,9 +40,9 @@ const User = () => {
     </Card></Col>  <Col md={{ span: 2, offset: 1 }}>    <Card>
       <Card.Img variant="top"  src={require('./pictures/robert-linder-kcX1lHlPyfM-unsplash.jpg')} />
       <Card.Body>
-        <Card.Title>Comprehensive Overview</Card.Title>
+        <Card.Title>Data Storage</Card.Title>
         <Card.Text>
-          Now that we can manage Waterfalls, Investors, Mortgages, Expenses, and Earnings. Lets put all of these aspects under one roof to see all aspects of your investment over it's lifetime. 
+          Its one thing to input information and get a response. It's next level when you can save all of your information in a database under one roof. You will be able to analyse, edit, and store all of your information. 
         </Card.Text>
       </Card.Body>
 

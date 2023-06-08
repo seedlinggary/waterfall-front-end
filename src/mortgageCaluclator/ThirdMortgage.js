@@ -164,9 +164,9 @@ const ThirdMortgageCalculator = ({mortgages,setMortgages, mortgageID}) => {
         </Row>
 
                 
-                     <Button variant="success" onClick={SendApi}>
+                     {/* <Button variant="success" onClick={SendApi}>
                 Create Mortgage
-              </Button>
+              </Button> */}
 
               {mortgages[mortgageID].mortgage_resp && <div> {mortgages[mortgageID].mortgage_resp}</div>}
               <Container>

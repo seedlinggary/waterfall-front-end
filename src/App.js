@@ -35,9 +35,9 @@ function App() {
             <Route path="/comingsoon" element={<ComingSoon />} />
             <Route path="/mortgagecalculator" element={<MortgageCalculator />} />
             {/* <Route path="/dynamicmortgage" element={<DynamicMortgage />} /> */}
-            <Route path="/multimortgage" element={<ParentCalculator />} />
+            {/* <Route path="/multimortgage" element={<ParentCalculator />} /> */}
             <Route path="/pandl" element={<ParentPandL />} />
-            <Route path="/famtree" element={<FamilyTree />} />
+            {/* <Route path="/famtree" element={<FamilyTree />} /> */}
             <Route path="/parentcombined" element={<ParentCombined />} />
             <Route path="/disclaimer" element={<Disclaimer />} />
             <Route path="*" element={<NotFound />} />
