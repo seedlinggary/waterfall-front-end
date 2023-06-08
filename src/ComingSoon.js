@@ -28,7 +28,7 @@ const User = () => {
         <div>
       <Row>
       <Col md={{ span: 2, offset: 2 }}>    <Card >
-      <Card.Img variant="top"  src={require('./pictures/compu_work.jpg')} />
+      <Card.Img variant="top" alt="person" src={require('./pictures/compu_work.jpg')} />
       <Card.Body>
         <Card.Title>Multiple Waterfalls</Card.Title>
         <Card.Text>
@@ -38,7 +38,7 @@ const User = () => {
 
    
     </Card></Col>  <Col md={{ span: 2, offset: 1 }}>    <Card>
-      <Card.Img variant="top"  src={require('./pictures/robert-linder-kcX1lHlPyfM-unsplash.jpg')} />
+      <Card.Img variant="top" alt="person" src={require('./pictures/robert-linder-kcX1lHlPyfM-unsplash.jpg')} />
       <Card.Body>
         <Card.Title>Comprehensive Overview</Card.Title>
         <Card.Text>
@@ -48,7 +48,7 @@ const User = () => {
 
      
     </Card></Col>  <Col md={{ span: 2, offset: 1 }}>    <Card >
-      <Card.Img variant="top"  src={require('./pictures/sebastian-pandelache-kcSqfuUyIBo-unsplash.jpg')} />
+      <Card.Img variant="top" alt="person"  src={require('./pictures/sebastian-pandelache-kcSqfuUyIBo-unsplash.jpg')} />
       <Card.Body>
         <Card.Title>Capital Calls for Investors</Card.Title>
         <Card.Text>

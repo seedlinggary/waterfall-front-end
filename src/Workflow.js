@@ -50,7 +50,7 @@ const Workflow = () => {
         <Col xs={{ span: 3, offset: 2 }}>   <img
           className="d-block w-100"
           src={require('./pictures/new-data-services-0tSiofevpUs-unsplash.jpg')}
-                    alt="Second slide"
+          alt="card"
         /></Col>
       </Row>
       <Row>
@@ -58,7 +58,7 @@ const Workflow = () => {
         <img
           className="d-block w-100"
           src={require('./pictures/afshin-t2y-9iMwtLr1WvI-unsplash.jpg')}
-                    alt="Second slide"
+                    alt="card"
         />
     </Col>
         <Col xs={{ span: 5, offset: 2 }}> 
@@ -82,7 +82,7 @@ const Workflow = () => {
         <Col xs={{ span: 3, offset: 2 }}>   <img
           className="d-block w-100"
           src={require('./pictures/kelly-sikkema-HymOWIY2o3s-unsplash.jpg')}
-                    alt="Second slide"
+          alt="card"
         /></Col>
       </Row>
       <Row>
@@ -90,7 +90,7 @@ const Workflow = () => {
         <img
           className="d-block w-100"
           src={require('./pictures/sketching.jpg')}
-                    alt="Second slide"
+          alt="card"
         />
     </Col>
         <Col xs={{ span: 5, offset: 2 }}> 
@@ -111,7 +111,7 @@ const Workflow = () => {
         <Col xs={{ span: 3, offset: 2 }}>   <img
           className="d-block w-100"
           src={require('./pictures/new-data-services-0tSiofevpUs-unsplash.jpg')}
-                    alt="Second slide"
+          alt="card"
         /></Col>
       </Row>
       <Row>
@@ -119,7 +119,7 @@ const Workflow = () => {
         <img
           className="d-block w-100"
           src={require('./pictures/afshin-t2y-9iMwtLr1WvI-unsplash.jpg')}
-                    alt="Second slide"
+          alt="card"
         />
     </Col>
         <Col xs={{ span: 5, offset: 2 }}> 
@@ -139,7 +139,7 @@ const Workflow = () => {
         <Col xs={{ span: 3, offset: 2 }}>   <img
           className="d-block w-100"
           src={require('./pictures/kelly-sikkema-HymOWIY2o3s-unsplash.jpg')}
-                    alt="Second slide"
+          alt="card"
         /></Col>
       </Row>
       <Row>
@@ -147,7 +147,7 @@ const Workflow = () => {
         <img
           className="d-block w-100"
           src={require('./pictures/sketching.jpg')}
-                    alt="Second slide"
+          alt="card"
         />
     </Col>
         <Col xs={{ span: 5, offset: 2 }}> 
@@ -166,7 +166,7 @@ const Workflow = () => {
         <Col xs={{ span: 3, offset: 2 }}>   <img
           className="d-block w-100"
           src={require('./pictures/new-data-services-0tSiofevpUs-unsplash.jpg')}
-                    alt="Second slide"
+          alt="card"
         /></Col>
       </Row>
         </div>   

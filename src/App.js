@@ -1,4 +1,5 @@
 import './App.css';
+import SitemapGenerator from './component/SitemapGenerator';
 import Home from './Home';
 import About from './About';
 import ComingSoon from './ComingSoon';
@@ -25,24 +26,7 @@ function App() {
       <div className="App">
         <Navbar />
         <div className="content">
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/calculator" element={<Calculator />} />
-            <Route path="/workflow" element={<Workflow />} />
-            <Route path="/definitions" element={<Definitions />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/contact" element={<Contact />} />
-            <Route path="/comingsoon" element={<ComingSoon />} />
-            <Route path="/mortgagecalculator" element={<MortgageCalculator />} />
-            {/* <Route path="/dynamicmortgage" element={<DynamicMortgage />} /> */}
-            <Route path="/multimortgage" element={<ParentCalculator />} />
-            <Route path="/pandl" element={<ParentPandL />} />
-            <Route path="/famtree" element={<FamilyTree />} />
-            <Route path="/parentcombined" element={<ParentCombined />} />
-            <Route path="/disclaimer" element={<Disclaimer />} />
-            <Route path="*" element={<NotFound />} />
-
-          </Routes>
+        <SitemapGenerator />
         </div>
         <Footer />
       </div>

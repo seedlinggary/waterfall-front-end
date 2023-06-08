@@ -57,7 +57,8 @@ const Home = () => {
       <Figure.Image
         width={710}
         height={200}
-        alt="171x180"
+        // alt="171x180"
+        alt='header background'
         src={require('./pictures/jason-hawke-iSmekgHuBN4-unsplash.jpg')}
       />
     </Figure>
@@ -69,7 +70,7 @@ const Home = () => {
       <Figure.Image
         width={600}
         height={200}
-        alt="171x180"
+        alt='header background'
         src={require('./pictures/samuel-jeronimo-I3itbpJLA4g-unsplash.jpg')}
       />
     
@@ -82,7 +83,7 @@ const Home = () => {
       <Figure.Image
         width={730}
         height={200}
-        alt="171x180"
+        alt='header background'
         src={require('./pictures/sam-jotham-sutharson-ZUlFdRghSz8-unsplash.jpg')}
       />
     </Figure>
@@ -119,7 +120,7 @@ const Home = () => {
       <Figure.Image
         width={1710}
         height={1800}
-        alt="171x180"
+        alt="card"
         src={require('./pictures/sketching.jpg')}
       />
       
@@ -133,7 +134,7 @@ const Home = () => {
       <Figure.Image
         width={1710}
         height={1800}
-        alt="171x180"
+        alt="card"
         src={require('./pictures/kelly-sikkema-HymOWIY2o3s-unsplash.jpg')}
       />
       
@@ -150,7 +151,7 @@ const Home = () => {
       <Figure.Image
         width={1710}
         height={1800}
-        alt="171x180"
+        alt="card"
         src={require('./pictures/afshin-t2y-9iMwtLr1WvI-unsplash.jpg')}
       />
       
@@ -164,7 +165,7 @@ const Home = () => {
       <Figure.Image
         width={1710}
         height={1800}
-        alt="171x180"
+        alt="card"
         src={require('./pictures/new-data-services-0tSiofevpUs-unsplash.jpg')}
       />
       
@@ -286,7 +287,7 @@ const Home = () => {
         <br></br>
       <Row>
       <Col md={{ span: 2, offset: 2 }}>    <Card >
-      <Card.Img variant="top"  src={require('./pictures/brian-tromp-B4VXQIJ_oew-unsplash.jpg')} />
+      <Card.Img variant="top" alt='card' src={require('./pictures/brian-tromp-B4VXQIJ_oew-unsplash.jpg')} />
       <Card.Body>
         <Card.Title>Mom's Review</Card.Title>
         <Card.Text>
@@ -296,7 +297,7 @@ const Home = () => {
 
    
     </Card></Col>  <Col md={{ span: 2, offset: 1 }}>    <Card>
-      <Card.Img variant="top"  src={require('./pictures/m-cooper-vwIthdobS3o-unsplash.jpg')} />
+      <Card.Img variant="top" alt="card" src={require('./pictures/m-cooper-vwIthdobS3o-unsplash.jpg')} />
       <Card.Body>
         <Card.Title>Adina's Review</Card.Title>
         <Card.Text>
@@ -306,7 +307,7 @@ const Home = () => {
 
      
     </Card></Col>  <Col md={{ span: 2, offset: 1 }}>    <Card >
-      <Card.Img variant="top"  src={require('./pictures/jakob-owens-DhS2f0QO7z4-unsplash.jpg')} />
+      <Card.Img alt="card" variant="top"  src={require('./pictures/jakob-owens-DhS2f0QO7z4-unsplash.jpg')} />
       <Card.Body>
         <Card.Title>Card Title</Card.Title>
         <Card.Text>
