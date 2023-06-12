@@ -15,6 +15,7 @@ import ReturnInfo from './ReturnInfo';
 import ReturnInvestors from './ReturnInvestors';
 import SaveInfo from './SaveInfo';
 import Alert from 'react-bootstrap/Alert';
+// import displayTree from '../displayTree/DisplayTree';
 
 const ParentCombined = () => {
     const [isPending, setIsPending] = useState(true)
@@ -384,6 +385,7 @@ const ParentCombined = () => {
       </Tab>
       
     </Tabs>
+    {/* <displayTree tree={tree}/> */}
               </>
     )
 }

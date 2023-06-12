@@ -36,3 +36,19 @@
     transform: rotate(360deg);
   }
 }
+
+.waterfallTree {
+  fill: blue; /* or any other desired color */
+}
+
+.lpTree {
+  fill: green;
+}
+
+.gpTree {
+  fill: red;
+}
+
+.default-color {
+  /* fill: gray; */
+}

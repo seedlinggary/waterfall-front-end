@@ -6,12 +6,15 @@ import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import Accordion from 'react-bootstrap/Accordion';
 import PayoutFrequency from './PayoutFrequency';
+import DisplayTree from '../displayTree/DisplayTree';
+// import Button from 'react-bootstrap/Button';
+import Modal from 'react-bootstrap/Modal';
 
 function FamilyTree({pId, setParentId,tree, setTree,waterfall, setWaterfall,lp, setLP, gp, setGP,payoutFrequency, setPayoutFrequency}) {
 
   const timeElapsed = Date.now();
   const today = new Date(timeElapsed);
-
+  
     // const [pId, setParentId] = useState(null);
     // const [tree, setTree] = useState({});
     // const [waterfall, setWaterfall] = useState({});
@@ -19,6 +22,10 @@ function FamilyTree({pId, setParentId,tree, setTree,waterfall, setWaterfall,lp, 
     // const [gp, setGP] = useState({});
     const [isPending, setIsPending] = useState(true)
     const [error, setError] = useState(null)
+    const [show, setShow] = useState(false);
+
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
     // const [payoutFrequency, setPayoutFrequency] = useState({ 'start_date' : today,
     // 'payout_frequency': 'day',
     // 'transactions': [],
@@ -33,15 +40,71 @@ function FamilyTree({pId, setParentId,tree, setTree,waterfall, setWaterfall,lp, 
         const formattedChildren = parent.children.map((childId) =>
           formatTree(tree, childId)
         );
+        
+        let name="tree";
+        let attributes={'':"Investment Tree"}
+        let colorClass = "default-color";
+        if (waterfall[parent.id]) {
+          let my_attributes = {'name': waterfall[parent.id].name}
+          if (waterfall[parent.id].amount_gp_invested && waterfall[parent.id].amount_lp_invested){
+            my_attributes['gp_invested'] = waterfall[parent.id].amount_gp_invested
+            my_attributes['lp_invested'] = waterfall[parent.id].amount_lp_invested
+          }
+          if (waterfall[parent.id]['percentage_ownership']){
+            my_attributes['ownership %'] = waterfall[parent.id].percentage_ownership.toLocaleString()
+          }
+          name = 'Waterfall';
+          attributes = my_attributes;
+          colorClass = 'waterfall-color';
+          // symbolType= "diamond";
+        }
       
+        if (lp[parent.id]) {
+          let my_attributes = {'name': lp[parent.id].name}
+          if (lp[parent.id].amount_invested ){
+            my_attributes['amount'] = lp[parent.id].amount_invested
+          }
+          if (lp[parent.id]['percentage_ownership']){
+            my_attributes['ownership %'] = lp[parent.id].percentage_ownership.toLocaleString()
+          }
+
+          name = 'LP';
+          attributes = my_attributes
+          colorClass = 'lp-color';
+          
+        }
+      
+        if (gp[parent.id]) {
+          let my_attributes = {'name': gp[parent.id].name}
+          if (gp[parent.id].amount_invested){
+            my_attributes['amount'] = gp[parent.id].amount_invested
+          }
+          if (gp[parent.id]['percentage_ownership']){
+            my_attributes['ownership %'] = gp[parent.id].percentage_ownership.toLocaleString()
+          }
+
+
+          name = 'GP';
+          attributes = my_attributes
+          colorClass = 'gp-color';
+          // [parent.id].selectAll
+     
+        }
+       
+        
         return {
           id: parent.id,
+          name:name,
+          attributes,
+          // colorClass: colorClass,
           waterfall: waterfall[parent.id] ? waterfall[parent.id] : null ,
-          lp: lp[parent.id] ? lp[parent.id] : null ,
+          lp: lp[parent.id] ? lp[parent.id]  : null ,
           gp: gp[parent.id] ? gp[parent.id] : null,
           children: formattedChildren.length ? formattedChildren : null,
         };
       };
+
+      const [graphTree, setGraphTree] =useState(formatTree(tree,pId))
       const unformatTree = (tree) => {
         const flatTree = {};
        
@@ -156,6 +219,8 @@ function FamilyTree({pId, setParentId,tree, setTree,waterfall, setWaterfall,lp, 
     };
   
     const SendApi = (e) => {
+      setGraphTree(formatTree(tree,pId))
+      
       // let backend = 'http://127.0.0.1:5000'
       let backend = 'https://distributionresolutionapi.com'
       // let address = `/waterfall_calc`
@@ -319,6 +384,26 @@ function FamilyTree({pId, setParentId,tree, setTree,waterfall, setWaterfall,lp, 
         {/* <Button onClick={() => {
                 SendApi()
     }}>See info</Button> */}
+        <Button onClick={() => {
+          handleShow()
+                // SendApi()
+                setGraphTree(formatTree(tree,pId))
+    }}>See info</Button>
+    <Modal size="lg" show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Investment Tree</Modal.Title>
+        </Modal.Header>
+        <Modal.Body><DisplayTree tree={graphTree}/></Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Close
+          </Button>
+
+        </Modal.Footer>
+      </Modal>
+    
+    {/* <DisplayTree tree={graphTree}/> */}
+    
       </div>
     );
 }
