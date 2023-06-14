@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react"
 
-function apiRequest(gppd, infor,address) {
+async function apiRequest(gppd, infor,address) {
     console.log('inside func')
     console.log(infor)
     let backend = 'http://127.0.0.1:5000'

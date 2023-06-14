@@ -143,7 +143,7 @@ const PnL = ({dealInfo, setDealInfo,pAndLs,setPandLs}) => {
 
 <Accordion.Item eventKey={i}>
         <Accordion.Header>Account #{i+1}: {pAndLs[i].transaction_name}  &rarr;   <Button variant="outline-danger" size="sm" id={i} onClick={deleteYear}>
-            Delete me
+            Delete Me
           </Button></Accordion.Header> 
         <Accordion.Body>
         <PandL pAndLs={pAndLs} setPandLs={setPandLs} PandLID={i}></PandL>

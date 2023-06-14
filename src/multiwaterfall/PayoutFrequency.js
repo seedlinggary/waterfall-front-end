@@ -190,7 +190,7 @@ const PayoutFrequency = ({payoutFrequency,setPayoutFrequency}) => {
 
         <Row>
       <Col md={{ span: 2, offset: 5 }}>   
-      <Button  variant="outline-primary" onClick={addMultiYears}>add multiple {payoutFrequency.payout_frequency }s</Button>
+      <Button  variant="outline-primary" onClick={addMultiYears}>Add multiple {payoutFrequency.payout_frequency }s</Button>
 
 
       

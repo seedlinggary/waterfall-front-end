@@ -50,7 +50,7 @@ const ParentMortgage = ({mortgages, setMortgages}) => {
 
             return ( 
                 <> 
- <Button  variant="outline-primary" onClick={addMortgage}>add mortgage</Button>
+ <Button  variant="outline-primary" onClick={addMortgage}>Add Mortgage</Button>
 
  <Accordion defaultActiveKey="0" flush>
               {mortgages && mortgages.map((item, i) => {

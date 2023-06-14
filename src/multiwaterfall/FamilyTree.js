@@ -342,7 +342,7 @@ function FamilyTree({pId, setParentId,tree, setTree,waterfall, setWaterfall,lp, 
       <Button onClick={() => addPerson(person.id, 'lp')}>Add Investor</Button>
       </Col>
     <Col md={{ span: 2, offset: 2 }}>   
-    <Button onClick={() => addPerson(person.id, 'waterfall')}>Add waterfall</Button>
+    <Button onClick={() => addPerson(person.id, 'waterfall')}>Add Waterfall</Button>
     </Col>  
                </Row>}
           {/* <Row>
@@ -388,7 +388,7 @@ function FamilyTree({pId, setParentId,tree, setTree,waterfall, setWaterfall,lp, 
           handleShow()
                 // SendApi()
                 setGraphTree(formatTree(tree,pId))
-    }}>See info</Button>
+    }}>Investment Tree Visual</Button>
     <Modal size="lg" show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Investment Tree</Modal.Title>

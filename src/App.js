@@ -17,6 +17,9 @@ import ParentCalculator from './mortgageCaluclator/ParentMortgage';
 import ParentPandL from './profitlosses/ParentPandL';
 import FamilyTree from './multiwaterfall/FamilyTree';
 import ParentCombined from './combined/ParentCombined';
+import SignIn from './databaseRoutes/users/SignIn';
+import SignUp from './databaseRoutes/users/SignUp';
+import ForgotPassword from './databaseRoutes/users/ForgotPassword';
 function App() {
 
   return (
@@ -41,6 +44,9 @@ function App() {
             <Route path="/parentcombined" element={<ParentCombined />} />
             <Route path="/disclaimer" element={<Disclaimer />} />
             <Route path="*" element={<NotFound />} />
+            <Route path="/signin" element={<SignIn />} />
+            <Route path="/signup" element={<SignUp />} />
+            <Route path="/forgotpassword" element={<ForgotPassword />} />
 
           </Routes>
         </div>
