@@ -133,7 +133,8 @@ const PnL = ({dealInfo, setDealInfo,pAndLs,setPandLs}) => {
                 <br></br>
                 <DealInfo dealInfo={dealInfo} setDealInfo={setDealInfo}></DealInfo>
                 <br></br>
- <Button  variant="outline-primary" onClick={addPandL}>Add Statement</Button>
+                
+<Button variant="outline-primary" onClick={addPandL}>Add Statement</Button>
 
  <Accordion defaultActiveKey={['0']} alwaysOpen>
               {pAndLs && pAndLs.map((item, i) => {
@@ -142,9 +143,12 @@ const PnL = ({dealInfo, setDealInfo,pAndLs,setPandLs}) => {
         <div key={i}>
 
 <Accordion.Item eventKey={i}>
-        <Accordion.Header>Account #{i+1}: {pAndLs[i].transaction_name}  &rarr;   <Button variant="outline-danger" size="sm" id={i} onClick={deleteYear}>
+        <Accordion.Header>Account #{i+1}: {pAndLs[i].transaction_name}  &rarr;   
+        <span className="AccordionButton" variant="outline-danger" size="sm" id={i} onClick={deleteYear}>  Delete me</span> 
+        {/* <Button variant="outline-danger" size="sm" id={i} onClick={deleteYear}>
             Delete Me
-          </Button></Accordion.Header> 
+          </Button> */}
+          </Accordion.Header> 
         <Accordion.Body>
         <PandL pAndLs={pAndLs} setPandLs={setPandLs} PandLID={i}></PandL>
 

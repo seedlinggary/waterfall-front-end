@@ -73,13 +73,13 @@ const ForgotPassword = ({}) => {
     //             return error
     //         });  }
     
-            const SendApi = (e) => {
+            const SendApi= async(e) => {
                 e.preventDefault();
                 let info = {"resetCode": resetCode,
                             "password": password,
                             "email": email}
                 
-                let a = apiRequest('POST',info,'/send_message')
+                let a = await apiRequest('POST',info,'/send_message')
                 console.log(a)
                 }
         

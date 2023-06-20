@@ -268,6 +268,7 @@ const ParentCombined = () => {
       
       <Table striped bordered hover>
       <tbody>
+        <tr>
       <th>
         {respCatagories && Object.entries(respCatagories).map( ([key, value],i) => {
           return (
@@ -316,6 +317,7 @@ const ParentCombined = () => {
    )
   } )}
   </th>
+  </tr>
    </tbody>
           </Table>
           {respCatagoriesTotal && <div>

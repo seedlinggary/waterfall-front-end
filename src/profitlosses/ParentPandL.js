@@ -222,9 +222,12 @@ const ParentPandL = () => {
         <div key={i}>
 
 <Accordion.Item eventKey={i}>
-        <Accordion.Header>Account #{i+1}: {pAndLs[i].transaction_name}  &rarr;   <Button variant="outline-danger" size="sm" id={i} onClick={deleteYear}>
+        <Accordion.Header>Account #{i+1}: {pAndLs[i].transaction_name}  &rarr; 
+        <span className="AccordionButton" variant="outline-danger" size="sm" id={i} onClick={deleteYear}>  Delete me</span> 
+        {/* <Button variant="outline-danger" size="sm" id={i} onClick={deleteYear}>
             Delete me
-          </Button></Accordion.Header> 
+          </Button> */}
+          </Accordion.Header> 
         <Accordion.Body>
         <PandL pAndLs={pAndLs} setPandLs={setPandLs} PandLID={i}></PandL>
 
@@ -279,6 +282,7 @@ const ParentPandL = () => {
       
       <Table striped bordered hover>
       <tbody>
+        <tr>
       <th>
         {respCatagories && Object.entries(respCatagories).map( ([key, value],i) => {
           return (
@@ -327,6 +331,7 @@ const ParentPandL = () => {
    )
   } )}
   </th>
+  </tr>
    </tbody>
           </Table>
           {respCatagoriesTotal && <div>
