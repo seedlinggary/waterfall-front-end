@@ -318,15 +318,17 @@ function FamilyTree({pId, setParentId,tree, setTree,waterfall, setWaterfall,lp, 
           {/* {waterfall[person.id] && waterfall[person.id]['profit_recieved'] && <h3> -  { JSON.stringify(waterfall[person.id]['profit_recieved'])}</h3>  }
           {lp[person.id] && lp[person.id]['profit_recieved'] && <h3> - {JSON.stringify(lp[person.id]['profit_recieved'])}</h3>  }
           {gp[person.id] && gp[person.id]['profit_recieved'] && <h3> - {JSON.stringify(gp[person.id]['profit_recieved'])}</h3>  } */}
-          {person.id != 12212 && <Button variant="outline-danger" onClick={() => handleDelete(person.id)}>Delete Me
+          {person.id != 12212 && <span className="AccordionButton" onClick={() => handleDelete(person.id)}>  Delete me</span> }
+
+          {/* // <Button variant="outline-danger" onClick={() => handleDelete(person.id)}>Delete Me
           
-          </Button>}
+          // </Button>} */}
           {person.id == 12212 && <h3> Your Investment Tree</h3> }
         </Accordion.Header>
         <Accordion.Body>
-          {waterfall[person.id] && <Calculator waterfall={waterfall}  setWaterfall={setWaterfall} personId={person.id} payoutFrequency={payoutFrequency}  />}
-          {lp[person.id] && <Investor investor={lp} setInvestor={setLP} personId={person.id} payoutFrequency={payoutFrequency}/>}
-          {gp[person.id] && <Investor investor={gp} setInvestor={setGP} personId={person.id} payoutFrequency={payoutFrequency}/>}
+          {waterfall[person.id] && <Calculator waterfall={waterfall} key={person.id+1} setWaterfall={setWaterfall} personId={person.id} payoutFrequency={payoutFrequency}  />}
+          {lp[person.id] && <Investor investor={lp} key={person.id+1} setInvestor={setLP} personId={person.id} payoutFrequency={payoutFrequency}/>}
+          {gp[person.id] && <Investor investor={gp} key={person.id+1} setInvestor={setGP} personId={person.id} payoutFrequency={payoutFrequency}/>}
           {waterfall[person.id] &&           <Row>
       <Col md={{ span: 2, offset: 3 }}>   
       <Button onClick={() => addPerson(person.id, 'lp')}>Add LP</Button>

@@ -59,9 +59,11 @@ const ParentMortgage = ({mortgages, setMortgages}) => {
         <div key={i}>
       <Accordion.Item eventKey={i}>
         <Accordion.Header>
-                        <h3>Name: {mortgages[i].name} / Amount:{mortgages[i].loan_amount} </h3><Button variant="outline-danger" id={i} onClick={deleteMortgage}>
-            Delete Me
-          </Button>
+                        <h3>Name: {mortgages[i].name} / Amount:{mortgages[i].loan_amount} </h3>
+                        {/* <Button variant="outline-danger" id={i} onClick={deleteMortgage}> */}
+                        <span className="AccordionButton" id={i} onClick={deleteMortgage}>  Delete me</span> 
+            {/* Delete Me
+          </Button> */}
         </Accordion.Header>
         <Accordion.Body>
 

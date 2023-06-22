@@ -92,7 +92,7 @@ const Hurdle = ({arr, setArr}) => {
       {arr.map((item, i) => {
                     return (
                         
-        <div>
+        <div key={i}>
            {i == 0 && <h3>Preferred Return: </h3>}
            {i != 0 && <h3>Hurdle {i}: <Button variant="danger" id={i} onClick={deleteHurdle}>
             Delete Hurdle

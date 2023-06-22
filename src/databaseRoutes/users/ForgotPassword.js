@@ -79,10 +79,10 @@ const ForgotPassword = ({}) => {
                             "password": password,
                             "email": email}
                 
-                let a = await apiRequest('POST',info,'/send_message')
+                let a = apiRequest('POST',info,'/send_message')
                 console.log(a)
                 }
-        
+        // console.log(e)
   
     return ( 
         <div>

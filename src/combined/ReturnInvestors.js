@@ -309,9 +309,9 @@ function ReturnInvestors({pId, setParentId,tree, setTree,waterfall, setWaterfall
       {/* {waterfall[person.id]['profit_recieved'][Object.keys(waterfall[person.id]['profit_recieved'])[Object.keys(waterfall[person.id]['profit_recieved']).length-1]]} */}
     </>}
 
-{waterfall[person.id] && <Calculator waterfall={waterfall}  setWaterfall={setWaterfall} personId={person.id} payoutFrequency={payoutFrequency}  />}
-          {lp[person.id] && <Investor investor={lp} setInvestor={setLP} personId={person.id} payoutFrequency={payoutFrequency}/>}
-          {gp[person.id] && <Investor investor={gp} setInvestor={setGP} personId={person.id} payoutFrequency={payoutFrequency}/>}
+{waterfall[person.id] && <Calculator waterfall={waterfall} key={person.id} setWaterfall={setWaterfall} personId={person.id} payoutFrequency={payoutFrequency}  />}
+          {lp[person.id] && <Investor investor={lp} setInvestor={setLP} key={person.id} personId={person.id} payoutFrequency={payoutFrequency}/>}
+          {gp[person.id] && <Investor investor={gp} setInvestor={setGP} key={person.id} personId={person.id} payoutFrequency={payoutFrequency}/>}
 
           {person.children && person.children.length > 0 && (
             <div>
@@ -323,7 +323,7 @@ function ReturnInvestors({pId, setParentId,tree, setTree,waterfall, setWaterfall
     >
               {person.children.map((childId) => (
 
-                <Tab eventKey={getChildName(childId)} title={getChildName(childId)}>
+                <Tab key={childId} eventKey={getChildName(childId)} title={getChildName(childId)}>
                 <div key={childId}>{renderPerson(tree[childId])}</div>
                 </Tab>
               ))}

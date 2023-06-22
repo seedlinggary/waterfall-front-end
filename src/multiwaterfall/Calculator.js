@@ -209,14 +209,14 @@ const Calculator = ({waterfall, setWaterfall, personId, payoutFrequency }) => {
       <Accordion.Item eventKey="2">
         <Accordion.Header>Split and Hurdle Information</Accordion.Header>
         <Accordion.Body>
-        <Hurdle waterfall={waterfall} setWaterfall={setWaterfall} personId={personId} ></Hurdle>
+        <Hurdle waterfall={waterfall} key={personId} setWaterfall={setWaterfall} personId={personId} ></Hurdle>
 
               </Accordion.Body>
       </Accordion.Item>  
        <Accordion.Item eventKey="3">
         <Accordion.Header>Fee's (optional)</Accordion.Header>
         <Accordion.Body>
-    <Fee waterfall={waterfall} setWaterfall={setWaterfall} personId={personId}></Fee>
+    <Fee waterfall={waterfall} key={personId} setWaterfall={setWaterfall} personId={personId}></Fee>
               </Accordion.Body>
       </Accordion.Item>  
     </Accordion>

@@ -1151,19 +1151,19 @@ id: 8}
       <Accordion.Item eventKey="2">
         <Accordion.Header>Split and Hurdle Information</Accordion.Header>
         <Accordion.Body>
-        <Hurdle arr={arr} setArr={setArr}></Hurdle>
+        <Hurdle arr={arr} key={parent.id} setArr={setArr}></Hurdle>
 
               </Accordion.Body>
       </Accordion.Item>  
        <Accordion.Item eventKey="3">
         <Accordion.Header>Fee's (optional)</Accordion.Header>
         <Accordion.Body>
-    <Fee fee={fee} setFee={setFee}></Fee>
+    <Fee fee={fee} key={parent.id} setFee={setFee}></Fee>
               </Accordion.Body>
       </Accordion.Item>     <Accordion.Item eventKey="4">
         <Accordion.Header>Add Investors (optional)</Accordion.Header>
         <Accordion.Body>
-          <Investor investora={investora} setInvestorA={setInvestorA}></Investor>
+          <Investor investora={investora}key={parent.id} setInvestorA={setInvestorA}></Investor>
 
               </Accordion.Body>
       </Accordion.Item>
