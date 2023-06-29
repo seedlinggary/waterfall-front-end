@@ -24,7 +24,7 @@ const Investor = ({investor, setInvestor,personId, payoutFrequency}) => {
         }))
     }
             return ( 
-        <div > 
+        <div key={personId}> 
                   <Row className="mb-3">
                   <Form.Group as={Col}  >
               <Form.Label>Name</Form.Label >
@@ -48,7 +48,7 @@ const Investor = ({investor, setInvestor,personId, payoutFrequency}) => {
               <Form.Select aria-label="Default select example" onChange={(e) => handleInvestorChange(e.target.value,'year_bought_in')}>
           {payoutFrequency.transactions && payoutFrequency.transactions.map((transaction, i) => {
                     return (
-                      <option value={i}>{JSON.stringify(transaction.date)}</option>
+                      <option key={i} value={i}>{JSON.stringify(transaction.date)}</option>
                     )
       })} 
         </Form.Select>

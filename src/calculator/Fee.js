@@ -132,7 +132,7 @@ const Fee = ({fee, setFee}) => {
       {fee.map((item, i) => {
                     return (
                     
-        <div>
+        <div key={i}>
                <h3>Fee {i+ 1}:
                 {/* <Button variant="danger" id={i} onClick={deleteFee}>
             Delete Fee

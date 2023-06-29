@@ -104,7 +104,7 @@ const Investor = ({investora, setInvestorA}) => {
       {investora.map((item, i) => {
                     return (
                         
-        <div>
+        <div key={i}>
                   <Row className="mb-3">
                   <Form.Group as={Col}  >
               <Form.Label>Name</Form.Label >

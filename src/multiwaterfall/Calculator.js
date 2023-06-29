@@ -66,7 +66,7 @@ const Calculator = ({waterfall, setWaterfall, personId, payoutFrequency }) => {
 
   }
             return ( 
-        <div > 
+        <div key={personId} > 
          
           <p>Add the Investment information so you can check the numbers and see if it is a good deal for you!</p>     
           <h3>Investment information</h3>     

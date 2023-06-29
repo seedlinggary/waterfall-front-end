@@ -57,7 +57,7 @@ setWaterfall(prevState => ({
     }
               
             return ( 
-        <div > 
+        <div key={personId}> 
  
 
     <Button  variant="primary" onClick={addHurdle}>add more  hurdles</Button>
@@ -65,7 +65,7 @@ setWaterfall(prevState => ({
       {waterfall[personId].splits.map((item, i) => {
                     return (
                         
-        <div>
+        <div key={i}>
            {i == 0 && <h3>Preferred Return: </h3>}
            {i != 0 && <h3>Hurdle {i}: <Button variant="danger" id={i} onClick={deleteHurdle}>
             Delete Hurdle

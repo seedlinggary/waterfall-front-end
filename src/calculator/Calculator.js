@@ -1151,19 +1151,19 @@ id: 8}
       <Accordion.Item eventKey="2">
         <Accordion.Header>Split and Hurdle Information</Accordion.Header>
         <Accordion.Body>
-        <Hurdle arr={arr} key={parent.id} setArr={setArr}></Hurdle>
+        <Hurdle arr={arr} setArr={setArr}></Hurdle>
 
               </Accordion.Body>
       </Accordion.Item>  
        <Accordion.Item eventKey="3">
         <Accordion.Header>Fee's (optional)</Accordion.Header>
         <Accordion.Body>
-    <Fee fee={fee} key={parent.id} setFee={setFee}></Fee>
+    <Fee fee={fee} setFee={setFee}></Fee>
               </Accordion.Body>
       </Accordion.Item>     <Accordion.Item eventKey="4">
         <Accordion.Header>Add Investors (optional)</Accordion.Header>
         <Accordion.Body>
-          <Investor investora={investora}key={parent.id} setInvestorA={setInvestorA}></Investor>
+          <Investor investora={investora} setInvestorA={setInvestorA}></Investor>
 
               </Accordion.Body>
       </Accordion.Item>
@@ -1220,7 +1220,8 @@ id: 8}
       className="mb-3"
     >
       <Tab eventKey="home" title="General Waterfall Info">
-        <div>        <Table responsive>
+        <div>        
+          <Table responsive>
       <thead>
         <tr>
         <th>Hurdle</th>
@@ -1240,7 +1241,8 @@ id: 8}
                                <td>{id + 1}  {new_splits  && new_splits[id] && <div>Hurdle:{new_splits[id].hurdle.toLocaleString()} Split:{new_splits[id].limited_partner_percent.toLocaleString()}/{new_splits[id].sponsor_percent.toLocaleString()}</div>}</td>
 
                 <td>
-                                            <Table striped>
+                                          
+                                <Table striped>
                                 <tbody>
                                 
                                 <tr>
@@ -1335,7 +1337,8 @@ id: 8}
                                 <tr>
                             <td> Sponsor Capital</td>
                             <td>{capital[1].toLocaleString()}</td>
-                            </tr>       <tr>
+                            </tr>       
+                            <tr>
                             <td>LP capital</td>
                             <td>{capital[0].toLocaleString()}</td>
                             </tr>
@@ -1350,7 +1353,9 @@ id: 8}
       ))}
         </tr>
       </tbody>
-      {total_returned && <div>    <tbody>
+      <tbody>
+      {total_returned && <div> 
+           {/* <tbody> */}
         <tr>
         <th>Total returned</th>
 
@@ -1367,8 +1372,8 @@ id: 8}
             </Table>
    
         </tr>
-      </tbody></div>}
-  
+      </div>}
+      </tbody>
     </Table>
 </div>
       </Tab><Tab eventKey="in_depth" title="In Depth Waterfall">

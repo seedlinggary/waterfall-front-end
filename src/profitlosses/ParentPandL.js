@@ -286,7 +286,7 @@ const ParentPandL = () => {
       <th>
         {respCatagories && Object.entries(respCatagories).map( ([key, value],i) => {
           return (
-    <div>
+    <div key={i}>
       <Table striped bordered hover>
 <thead>
         <tr>
@@ -303,7 +303,7 @@ const ParentPandL = () => {
       <tbody>
       {Object.entries(value['seperate_costs']).map( ([key2, value2],index) => {
           return (
-            <tr>
+            <tr key={index}>
             <td>{index + 1}</td>
             <td>{value2['name']}</td>
             <td>{value2['total_amount'].toLocaleString()}</td>
@@ -352,7 +352,7 @@ const ParentPandL = () => {
                   
           { Object.entries(respCatagoriesTotal['communal_totals']).map( ([key3, value3],index) => {
                     return (
-                      <tr>
+                      <tr key={index}>
                       <td>{index + 1}</td>
                       <td>{key3}</td>
                       <td>{value3['totals'].toLocaleString()}</td>
@@ -389,14 +389,14 @@ const ParentPandL = () => {
    
       {respMonth && Object.entries(respMonth).map( ([k, v],index) => {
           return (
-            <Tab eventKey={k} title={k}>
+            <Tab key={index} eventKey={k} title={k}>
               {/* <Tab eventKey="home" title="Home">
                 HI
       </Tab> */}
          <h3>Year-Month {k}</h3>
                   { Object.entries(v).map( ([key, value],i) => {
                     return (
-              <div>
+              <div key={i}>
                 <Table striped bordered hover>
           <thead>
           <tr>         
@@ -417,7 +417,7 @@ const ParentPandL = () => {
                 <tbody>
                 {Object.entries(value['seperate_costs']).map( ([key2, value2],index) => {
                     return (
-                      <tr>
+                      <tr key={index}>
                       <td>{index + 1}</td>
                       <td>{value2['name']}</td>
                       <td>{value2['amount'].toLocaleString()}</td>
@@ -460,7 +460,7 @@ const ParentPandL = () => {
                 <tbody>
           {Object.entries(respMonthTotal[k]['communal_totals']).map( ([key3, value3],index) => {
                     return (
-                      <tr>
+                      <tr key={index}>
                       <td>{index + 1}</td>
                       <td>{key3}</td>
                       <td>{value3['totals'].toLocaleString()}</td>
@@ -504,7 +504,7 @@ const ParentPandL = () => {
 
       {respYear && Object.entries(respYear).map( ([k, v],index) => {
           return (
-            <Tab eventKey={k} title={k}>
+            <Tab key={index} eventKey={k} title={k}>
          <h3>Year {k}</h3>
                   { Object.entries(v).map( ([key, value],i) => {
                     return (
@@ -530,7 +530,7 @@ const ParentPandL = () => {
                 <tbody>
                 {Object.entries(value['seperate_costs']).map( ([key2, value2],index) => {
                     return (
-                      <tr>
+                      <tr key={index}>
                       <td>{index + 1}</td>
                       <td>{value2['name']}</td>
                       <td>{value2['amount'].toLocaleString()}</td>
@@ -574,7 +574,7 @@ const ParentPandL = () => {
                 <tbody>
           {Object.entries(respYearTotal[k]['communal_totals']).map( ([key3, value3],index) => {
                     return (
-                      <tr>
+                      <tr key={index}>
                       <td>{index + 1}</td>
                       <td>{key3}</td>
                       <td>{value3['totals'].toLocaleString()}</td>

@@ -6,8 +6,16 @@ import NavDropdown from 'react-bootstrap/NavDropdown';
 import {reactLocalStorage} from 'reactjs-localstorage';
 
 function ColorSchemesExample() {
-  let email = reactLocalStorage.get('email')
+  // let email = reactLocalStorage.get('email')
 
+  const [email, setEmail] = useState('');
+
+  useEffect(() => {
+    
+    const loggedInEmail = reactLocalStorage.get('email');
+    console.log(loggedInEmail)
+    setEmail(loggedInEmail);
+  }, []);
   return (
     <>
         <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">

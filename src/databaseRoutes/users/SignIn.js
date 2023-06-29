@@ -4,8 +4,8 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import {reactLocalStorage} from 'reactjs-localstorage';
-import { useNavigate } from "react-router-dom";
-
+import { redirect, useNavigate } from "react-router-dom";
+// import { useNavigate } from 'react-router-dom';
 let base64 = require('base-64');
 
 
@@ -61,7 +61,7 @@ const SignIn = ({}) => {
                 reactLocalStorage.set('email', email);
                 setLoggedIn(true)
                 // console.log(eml)
-                navigate('/')
+                window.location.href='/about'
 
                 return  data.id 
             })

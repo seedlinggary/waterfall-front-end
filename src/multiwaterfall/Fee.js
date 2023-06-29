@@ -59,14 +59,14 @@ setWaterfall(prevState => ({
         };
        
             return ( 
-        <div > 
+        <div key={personId}> 
 
     
     <Button  variant="primary" onClick={addFee}>Add more Fees (advanced)</Button>
       {waterfall[personId].fees.map((item, i) => {
                     return (
                     
-        <div>
+        <div key={i}>
                <h3>Fee {i+ 1}:
                 {/* <Button variant="danger" id={i} onClick={deleteFee}>
             Delete Fee
