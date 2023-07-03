@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
@@ -22,7 +22,7 @@ const Calculator = ({waterfall, setWaterfall, personId, payoutFrequency }) => {
     }
 
     function changeDate(data) {
-      var today2 = new Date(data);
+      // var today2 = new Date(data);
   
       let newDate = new Date(data);
       return newDate

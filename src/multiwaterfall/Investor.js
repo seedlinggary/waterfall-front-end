@@ -1,5 +1,4 @@
-import React, { useState } from 'react'
-import Button from 'react-bootstrap/Button';
+import React from 'react'
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
@@ -9,7 +8,7 @@ const Investor = ({investor, setInvestor,personId, payoutFrequency}) => {
 
 
   function changeDate(data) {
-    var today2 = new Date(data);
+    // var today2 = new Date(data);
 
     let newDate = new Date(data);
     return newDate

@@ -945,7 +945,7 @@ id: 8}
         {arr.map((item, i) => {
                     return (
                         
-        <div>
+        <div key={i}>
          Split {i + 1}: LP: {item.value.limited_partner_percent} / GP: {item.value.sponsor_percent} :  Hurdle: {item.value.hurdle} 
          <br></br>
 
@@ -955,7 +955,7 @@ id: 8}
         {profit.map((prof, i) => {
                         return (
                             
-            <div>
+            <div key={i}>
              Year {i + 1}: profit ${prof.value.profit}  
              <br></br>
     
@@ -966,7 +966,7 @@ id: 8}
                           {fee[0].value.percentage_or_cash && fee.map((fee, i) => {
                         return (
                             
-            <div>
+            <div key={i}>
              Fee {i + 1}:to Whom:{fee.value.type_of_fee} amount {fee.value.percentage_or_cash}  {fee.value.type_transaction}to whom: {fee.value.who_gets_this_fee}  yr:{fee.value.year} hurdle:{fee.value.before_what_hurdle} 
              <br></br>
     
@@ -982,7 +982,7 @@ id: 8}
                           // "tax_percentage_withheld": .06,
                           // "amount_invested": 100,
                           // "year_bought_in": 1},   
-            <div>
+            <div key={i}>
              Investor {i + 1}: Name: {investor.value.name}, Amount invested: ${investor.value.amount_invested}, Country: {investor.value.country_of_origin}, Tax percentage withheld: {investor.value.tax_percentage_withheld}
              <br></br>
     
@@ -1221,12 +1221,11 @@ id: 8}
     >
       <Tab eventKey="home" title="General Waterfall Info">
         <div>        
-          <Table responsive>
-      <thead>
-        <tr>
-        <th>Hurdle</th>
-        <th>info/yrs</th>
-
+        <Table responsive>
+          <thead>
+          <tr>
+          <th>Hurdle</th>
+          <th>info/yrs</th>
           {new_investor_profits && new_investor_profits.map((profit, index) => (
             <th key={index}>{profit.toLocaleString()}
             </th>
@@ -1234,46 +1233,35 @@ id: 8}
         </tr>
       </thead>
       <tbody>
-
               { waterfall_resp && waterfall_resp.map((year, id) =>  
-               
                <tr>
-                               <td>{id + 1}  {new_splits  && new_splits[id] && <div>Hurdle:{new_splits[id].hurdle.toLocaleString()} Split:{new_splits[id].limited_partner_percent.toLocaleString()}/{new_splits[id].sponsor_percent.toLocaleString()}</div>}</td>
-
+                  <td>{id + 1}  {new_splits  && new_splits[id] && <div>Hurdle:{new_splits[id].hurdle.toLocaleString()} Split:{new_splits[id].limited_partner_percent.toLocaleString()}/{new_splits[id].sponsor_percent.toLocaleString()}</div>}\</td>
                 <td>
-                                          
-                                <Table striped>
-                                <tbody>
-                                
-                                <tr>
-                            <td>capital_returned</td>
-                            </tr>
-                            
-                          
-                            <tr>
-                            <td>Amount to distribute</td>
-                            </tr>
-                            <tr>
-                            <td>Sponsor Share</td>
-                            </tr>
-                            <tr>
-                            <td>LP share</td>
-                            </tr>
-                            
-                                </tbody>
-                                </Table>
-                                </td>
+              <Table striped>
+              <tbody>
+                <tr>
+                    <td>capital_returned</td>
+                    </tr> 
+                    <tr>
+                    <td>Amount to distribute</td>
+                    </tr>
+                    <tr>
+                    <td>Sponsor Share</td>
+                    </tr>
+                    <tr>
+                    <td>LP share</td>
+                    </tr>
+                        </tbody>
+                        </Table>
+                        </td>
                {year.map((inf, index) => (
                  <td key={index}> 
 
                     <Table striped>
                         <tbody>
-                
                         <tr>
                             <td>{inf.capital_returned.toLocaleString()}  </td>
                             </tr>
-                            
-                    
                             <tr>
                             <td>{inf.amount_to_distribute_in_this_hurdle.toLocaleString()}</td>
                             </tr>
@@ -1283,15 +1271,11 @@ id: 8}
                             <tr>
                             <td>{inf.lp_share.toLocaleString()}</td>
                             </tr>
-                            
                             {inf.fees && inf.fees.map((fee, index) => (
                                  <>
-                                
                             <tr>
                             <td>{fee.name}: {fee.amount_given}/{fee.out_of}</td>
                             </tr>
-                          
-                                
                                  </>
                             ))
                             }
@@ -1299,7 +1283,6 @@ id: 8}
                         </Table>
                  </td>
                ))}
-               
              </tr>
            )}
             </tbody>
@@ -1308,7 +1291,6 @@ id: 8}
         <th>Yearly Respective Profits</th>
           {respective_returns && respective_returns.map((profit, index) => (
                             <td key={index}> 
-
                             <Table striped>
                                 <tbody>
                                 <tr>
@@ -1321,44 +1303,33 @@ id: 8}
                                 </tbody>
                                 </Table>
                          </td>
-        
-               
-           
       ))}
         </tr>
-      </tbody>          <tbody>
+      </tbody>          
+      <tbody>
         <tr>
         <th>Total returned  capital till this point in year</th>
           {respective_returns && cap_by_yr.map((capital, index) => (
                             <td key={index}> 
-
                             <Table striped>
                                 <tbody>
                                 <tr>
                             <td> Sponsor Capital</td>
                             <td>{capital[1].toLocaleString()}</td>
-                            </tr>       
-                            <tr>
+                            </tr>       <tr>
                             <td>LP capital</td>
                             <td>{capital[0].toLocaleString()}</td>
                             </tr>
                                 </tbody>
                                 </Table>
                          </td>
-            // const [cap_by_yr,setCapByYr] = useState(null)
-            // const [total_returned,setTotalReturned] = useState(null)
-        
-               
-           
       ))}
         </tr>
       </tbody>
-      <tbody>
-      {total_returned && <div> 
-           {/* <tbody> */}
+      {total_returned && <div>
+        <tbody>
         <tr>
         <th>Total returned</th>
-
         <Table striped>
             <tbody>
             <tr>
@@ -1370,19 +1341,18 @@ id: 8}
         </tr>
             </tbody>
             </Table>
-   
         </tr>
-      </div>}
-      </tbody>
+      </tbody></div>}
     </Table>
 </div>
-      </Tab><Tab eventKey="in_depth" title="In Depth Waterfall">
-        <div>        <Table responsive>
+      </Tab>
+      <Tab eventKey="in_depth" title="In Depth Waterfall">
+        <div>
+          <Table responsive>
       <thead>
         <tr>
         <th>Hurdle</th>
         <th>info/yrs</th>
-
           {new_investor_profits && new_investor_profits.map((profit, index) => (
             <th key={index}>{profit.toLocaleString()}
             </th>
@@ -1390,31 +1360,25 @@ id: 8}
         </tr>
       </thead>
       <tbody>
-
               { waterfall_resp && waterfall_resp.map((year, id) =>  
-               
                <tr>
-                               <td>{id + 1}  {new_splits  && new_splits[id] && <div>Hurdle:{new_splits[id].hurdle.toLocaleString()} Split:{new_splits[id].limited_partner_percent.toLocaleString()}/{new_splits[id].sponsor_percent.toLocaleString()}</div>}</td>
-
+               <td>{id + 1}  {new_splits  && new_splits[id] && <div>Hurdle:{new_splits[id].hurdle.toLocaleString()} Split:{new_splits[id].limited_partner_percent.toLocaleString()}/{new_splits[id].sponsor_percent.toLocaleString()}</div>}</td>
                 <td>
-                                            <Table striped>
-                                <tbody>
-                                {id == 0 && <><tr>
-                            <td>gp_prehurdle  </td>
-                            </tr>
-                            
-                            <tr>
-                            <td>gp_hurdle_top_amount</td>
-                            </tr>
-                        </>}
+                <Table striped>
+                    <tbody>
+                    {id == 0 && <><tr>
+                    <td>gp_prehurdle  </td>
+                    </tr>
+                    <tr>
+                    <td>gp_hurdle_top_amount</td>
+                    </tr>
+                  </>}
                                 <tr>
                             <td>capital_returned</td>
                             </tr>
-                            
                             <tr>
                             <td>pre hurdle amount</td>
                             </tr>
-                        
                             <tr>
                             <td>Amount to distribute</td>
                             </tr>
@@ -1438,13 +1402,11 @@ id: 8}
                                 </td>
                {year.map((inf, index) => (
                  <td key={index}> 
-
                     <Table striped>
                         <tbody>
                         {id == 0 && <><tr>
                             <td>{inf.gp_prehurdle.toLocaleString()}  </td>
                             </tr>
-                            
                             <tr>
                             <td>{inf.gp_hurdle_top_amount.toLocaleString()}</td>
                             </tr>
@@ -1452,11 +1414,9 @@ id: 8}
                         <tr>
                             <td>{inf.capital_returned.toLocaleString()}  </td>
                             </tr>
-                            
                             <tr>
                             <td>{inf.prehurdle.toLocaleString()}</td>
                             </tr>
-                        
                             <tr>
                             <td>{inf.amount_to_distribute_in_this_hurdle.toLocaleString()}</td>
                             </tr>
@@ -1477,12 +1437,9 @@ id: 8}
                             </tr>
                             {inf.fees && inf.fees.map((fee, index) => (
                                  <>
-                                
                             <tr>
                             <td>{fee.name}: {fee.amount_given.toLocaleString()}/{fee.out_of.toLocaleString()}</td>
                             </tr>
-                          
-                                
                                  </>
                             ))
                             }
@@ -1490,7 +1447,6 @@ id: 8}
                         </Table>
                  </td>
                ))}
-               
              </tr>
            )}
             </tbody>
@@ -1499,7 +1455,6 @@ id: 8}
         <th>Yearly Respective Profits</th>
           {respective_returns && respective_returns.map((profit, index) => (
                             <td key={index}> 
-
                             <Table striped>
                                 <tbody>
                                 <tr>
@@ -1512,9 +1467,6 @@ id: 8}
                                 </tbody>
                                 </Table>
                          </td>
-        
-               
-           
       ))}
         </tr>
       </tbody>          <tbody>
@@ -1522,7 +1474,6 @@ id: 8}
         <th>Total returned  capital till this point in year</th>
           {respective_returns && cap_by_yr.map((capital, index) => (
                             <td key={index}> 
-
                             <Table striped>
                                 <tbody>
                                 <tr>
@@ -1534,8 +1485,7 @@ id: 8}
                             </tr>
                                 </tbody>
                                 </Table>
-                         </td>               
-           
+                         </td>
       ))}
         </tr>
       </tbody>
@@ -1554,10 +1504,8 @@ id: 8}
         </tr>
             </tbody>
             </Table>
-   
         </tr>
       </tbody></div>}
-  
     </Table>
 </div>
       </Tab>
@@ -1567,17 +1515,13 @@ id: 8}
       <thead>
         <tr>
         <th>Investor</th>
-        
         { investor_returns && investor_returns.map((investor_return, id) =>  
         <>
-               
-               
                {id == 0 && investor_return[1].map((inv, index) => (
                 <>
                 <td> year # {index + 1}</td>
                  {inv.returns.map((inv, index) => (
                 <>
-                
                     <td>hurdle num</td>
                     <td>portion recieved</td>
                 </>
@@ -1589,16 +1533,13 @@ id: 8}
                     <td>country</td>
                     <td>ownership %</td>
                     <td>capital returned</td>
-                    
                 </>
-               
                ))}
              </>
         )}
         </tr>
       </thead>
       <tbody>
-
               { investor_returns && investor_returns.map((investor_return, id) =>  
                <tr>
                <td>{investor_return[0]}</td>
@@ -1618,16 +1559,12 @@ id: 8}
                     <td>{inv.country_of_origin}</td>
                     <td>{inv.percentage_of_total}</td>
                     <td>{inv.capital_returned.toLocaleString()}</td>
-                   
                 </>
-              
                 ))}       
              </tr>
            )}
             </tbody>
-
-  
-    </Table>
+     </Table>
 </div>
       </Tab>
       }

@@ -70,9 +70,9 @@ const ParentPandL = () => {
             Object.entries(savedData.deal_info).map( ([k, v],index) => {
               if (k == 'purchase_date'){
                 var today2 = new Date(v);
-                newParent[k] = today2
+                return newParent[k] = today2
               }else{
-                newParent[k] = v
+                return newParent[k] = v
               }
             })
             let newpnl = savedData.pandls.map(profitlosses =>{
@@ -82,9 +82,9 @@ const ParentPandL = () => {
                 Object.entries(transaction).map( ([k, v],index) => {
                   if (k == 'date'){
                     var today2 = new Date(v);
-                    newTransaction[k] = today2
+                    return newTransaction[k] = today2
                   }else{
-                    newTransaction[k] = v
+                    return newTransaction[k] = v
                   }
                 })
                 return newTransaction
@@ -509,7 +509,7 @@ const ParentPandL = () => {
                   { Object.entries(v).map( ([key, value],i) => {
                     return (
                       <div>
-                <h4></h4>
+                <h4> </h4>
                 <Table striped bordered hover>
           <thead>
           <tr>         

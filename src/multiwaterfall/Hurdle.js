@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
@@ -8,7 +8,7 @@ const Hurdle = ({waterfall, setWaterfall ,personId}) => {
   const addHurdle = () => {
 
     const newHurdle =  
-    [... waterfall[personId].splits,
+    [...waterfall[personId].splits,
       {'limited_partner_percent' : 0,
       'sponsor_percent' : 1,
   'hurdle' : 0.0}

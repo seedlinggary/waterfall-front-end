@@ -61,7 +61,7 @@ const Profit = ({ profit, setProfit,profitFrequency, setProfitFrequency}) => {
 
     const addProfit = () => {
         setProfit(s => {
-          const lastId = s[s.length - 1].id;
+          // const lastId = s[s.length - 1].id;
           const timeElapsed = Date.now();
         const today = new Date(timeElapsed);
           return [

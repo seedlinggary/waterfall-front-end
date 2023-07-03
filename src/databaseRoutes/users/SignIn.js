@@ -1,16 +1,16 @@
-import React, { useState,useEffect } from 'react'
+import React, { useState } from 'react'
 import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import {reactLocalStorage} from 'reactjs-localstorage';
-import { redirect, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 // import { useNavigate } from 'react-router-dom';
 let base64 = require('base-64');
 
 
 
-const SignIn = ({}) => {
+const SignIn = () => {
     const [password, setPassword] = useState([{}])
     const [email, setEmail] = useState([{}])
     const [isLoggedIn, setLoggedIn] = useState(false)
@@ -30,10 +30,6 @@ const SignIn = ({}) => {
     }
     const SendApi = (e) => {
         e.preventDefault();
-        let info = {
-                    email: password
-                    }
-        
         console.log('inside func')
         let headers = new Headers();
         headers.append('Authorization', 'Basic ' + base64.encode(email + ":" + password));

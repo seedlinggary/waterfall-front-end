@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
@@ -9,7 +9,7 @@ const Fee = ({waterfall, setWaterfall,personId}) => {
   const addFee = () => {
 
     const newfee =  
-    [... waterfall[personId].fees,
+    [...waterfall[personId].fees,
       {'year' : 1000,
                 'before_what_hurdle' : 1,
                 'who_gets_this_fee' : 'NEED AN INPUT',
