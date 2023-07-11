@@ -13,65 +13,15 @@ let base64 = require('base-64');
 
 const ForgotPassword = ({}) => {
     const [emailSent, setEmailSent] = useState(false)
-    const [password, setPassword] = useState([{}])
+    const [password, setPassword] = useState(false)
     const [resetCode, setResetCode] = useState(false)
-    const [email, setEmail] = useState([{}])
+    const [email, setEmail] = useState()
     const [isLoggedIn, setLoggedIn] = useState(false)
     const navigate = useNavigate()
     let eml = reactLocalStorage.get('email')
 
-    const SignOut = (e) => {
-      reactLocalStorage.remove('cookie')
-      reactLocalStorage.remove('email')
-      setLoggedIn(false)
-      // navigate('/')
-      // let eml = reactLocalStorage.get('email')
-      console.log(eml)
 
 
-    }
-    // const SendApi = (e) => {
-    //     e.preventDefault();
-    //     let info = {
-    //                 email: password
-    //                 }
-        
-    //     console.log('inside func')
-    //     let headers = new Headers();
-    //     headers.append('Authorization', 'Basic ' + base64.encode(email + ":" + password));
-
-
-    //     const requestOptions = {
-    //         method: 'GET',
-    //         headers: headers,
-    //     };
-    //     fetch(`http://127.0.0.1:5000/send_message`, requestOptions)
-    //         .then(async response => {
-    //             const isJson = response.headers.get('content-type')?.includes('application/json');
-    //             const data = isJson && await response.json();
-    //             console.error('There was a response!', response);
-    //             // check for error response
-    //             if (!response.ok) {
-    //                 // get error message from body or default to response status
-    //                 const error = (data && data.message) || response.status;
-    //                 return Promise.reject(error);
-    //             }
-    
-    //             // this.setState({ postId: data.id })
-    //             console.error('There was data!', data);
-    //             // reactLocalStorage.set('cookie', data.token);
-    //             // reactLocalStorage.set('email', email);
-    //             setLoggedIn(true)
-    //             // console.log(eml)
-    //             // navigate('/')
-    //             setEmailSent(true)
-    //             return  data.id 
-    //         })
-    //         .catch(error => {
-    //             // this.setState({ errorMessage: error.toString() });
-    //             console.error('There was an error!', error);
-    //             return error
-    //         });  }
     
          const SendApi = async (e) => {
                 e.preventDefault();
@@ -79,9 +29,9 @@ const ForgotPassword = ({}) => {
                             "password": password,
                             "email": email}
                 
-                 let  a = apiRequest('POST',info,'/send_message')
+                 let  a = apiRequest('POST',info,'/reset_password/')
+                 setEmailSent(true)
                 }
-        console.log(se)
   
     return ( 
         <div>

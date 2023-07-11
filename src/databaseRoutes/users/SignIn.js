@@ -43,6 +43,8 @@ const SignIn = ({}) => {
             method: 'GET',
             headers: headers,
         };
+        
+        // fetch(`'https://distributionresolutionapi.com/login`, requestOptions)
         fetch(`http://127.0.0.1:5000/login`, requestOptions)
             .then(async response => {
                 const isJson = response.headers.get('content-type')?.includes('application/json');
@@ -62,6 +64,7 @@ const SignIn = ({}) => {
                 setLoggedIn(true)
                 // console.log(eml)
                 navigate('/')
+                window.location.href='/'
 
                 return  data.id 
             })

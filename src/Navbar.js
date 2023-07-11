@@ -30,7 +30,7 @@ function ColorSchemesExample() {
           </Nav>
           <Nav>
           <Nav.Link href="/about">About Us</Nav.Link>
-          {email &&<Nav.Link href="/signin">HI {email}</Nav.Link>}
+          {email &&<Nav.Link href="/userhome">HI {email}</Nav.Link>}
           <Nav.Link href="/signin">Sign In</Nav.Link>
           <Nav.Link href="/signup">Sign Up</Nav.Link>
             <Nav.Link eventKey={2} href="/contact">

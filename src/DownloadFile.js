@@ -1,7 +1,20 @@
+
+
+
+
+
+
 import { useState, useEffect } from "react"
 import {reactLocalStorage} from 'reactjs-localstorage';
 
-async function apiRequest(gppd, infor,address) {
+function saveBlob(blob, filename) {
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = filename;
+    a.click(); 
+  }
+async function DownloadFile(gppd, infor,address) {
     console.log('inside func')
     console.log(infor)
     // let backend = 'https://distributionresolutionapi.com'
@@ -26,13 +39,42 @@ async function apiRequest(gppd, infor,address) {
             const error = (data && data.message) || response.status;
             throw error;
         }
+        response.blob().then((blob) => {
+            saveBlob(blob, 'Investor_CSV');
+         });
 
-        console.error('There was data!', data);
-        console.log(data)
-        return data;
+        // console.error('There was data!', data);
+        // console.log(data)
+        // return data;
     } catch (error) {
         console.error('There was an error!', error);
         throw error;
     }
 }
-export default apiRequest
+export default DownloadFile
+
+
+
+
+
+
+// const downloadcsv = (e) => {
+    
+       
+//     let backend = 'https://distributionresolutionapi.com'
+//     let address = `/downloadcsv`
+//     const requestOptions = {
+//         method: 'POST',
+//         headers: { 'Content-Type': 'application/json',
+//         },
+//         body: JSON.stringify(info)
+//     };
+//     fetch(`${backend}${address}`, requestOptions)
+//         .then((response) => {
+//           response.blob().then((blob) => {
+//              saveBlob(blob, 'waterfallDistribution');
+//           });
+//     });
+
+//     e.preventDefault();
+//     }    

@@ -20,7 +20,14 @@ import ParentCombined from './combined/ParentCombined';
 import SignIn from './databaseRoutes/users/SignIn';
 import SignUp from './databaseRoutes/users/SignUp';
 import ForgotPassword from './databaseRoutes/users/ForgotPassword';
+import {reactLocalStorage} from 'reactjs-localstorage';
+import UserHome from './databaseRoutes/users/UserHome';
+import CompanyHome from './databaseRoutes/companies/CompanyHome';
+import DealHome from './databaseRoutes/deal/DealHome';
+import DiligenceHome from './databaseRoutes/diligence/DiliginceHome';
+
 function App() {
+  let email = reactLocalStorage.get('email')
 
   return (
     <div>
@@ -37,16 +44,17 @@ function App() {
             <Route path="/contact" element={<Contact />} />
             <Route path="/comingsoon" element={<ComingSoon />} />
             <Route path="/mortgagecalculator" element={<MortgageCalculator />} />
-            {/* <Route path="/dynamicmortgage" element={<DynamicMortgage />} /> */}
-            {/* <Route path="/multimortgage" element={<ParentCalculator />} /> */}
             <Route path="/pandl" element={<ParentPandL />} />
-            {/* <Route path="/famtree" element={<FamilyTree />} /> */}
             <Route path="/parentcombined" element={<ParentCombined />} />
             <Route path="/disclaimer" element={<Disclaimer />} />
             <Route path="*" element={<NotFound />} />
             <Route path="/signin" element={<SignIn />} />
             <Route path="/signup" element={<SignUp />} />
             <Route path="/forgotpassword" element={<ForgotPassword />} />
+            {email &&<Route path="/userhome" element={<UserHome />} />}
+            {email &&<Route path="/companyhome/"  element={<CompanyHome />} />}
+            {email &&<Route path="/dealhome/"  element={<DealHome />} />}
+            {email &&<Route path="/diligencehome/"  element={<DiligenceHome />} />}
 
           </Routes>
         </div>

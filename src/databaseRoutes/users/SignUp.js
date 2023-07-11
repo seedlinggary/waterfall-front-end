@@ -25,6 +25,7 @@ const SignUp = ({}) => {
                   "email": email}
       
       let a = apiRequest('POST',info,'/user')
+      console.log(a)
       }  
     return ( 
         <div className="blog-list">
