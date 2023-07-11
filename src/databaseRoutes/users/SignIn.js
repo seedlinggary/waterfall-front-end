@@ -57,7 +57,8 @@ const SignIn = () => {
                 reactLocalStorage.set('email', email);
                 setLoggedIn(true)
                 // console.log(eml)
-                window.location.href='/about'
+                // navigate('/')
+                window.location.href='/'
 
                 return  data.id 
             })

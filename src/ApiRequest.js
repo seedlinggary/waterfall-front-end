@@ -1,12 +1,17 @@
 import { useState, useEffect } from "react"
+import {reactLocalStorage} from 'reactjs-localstorage';
 
 async function apiRequest(gppd, infor,address) {
     console.log('inside func')
     console.log(infor)
+    // let backend = 'https://distributionresolutionapi.com'
     let backend = 'https://distributionresolutionapi.com'
+    // let backend = 'http://127.0.0.1:5000'
+    let cookie = reactLocalStorage.get('cookie')
     const requestOptions = {
         method: gppd,
         headers: { 'Content-Type': 'application/json',
+        'x-access-token': cookie
         },
         body: JSON.stringify(infor)
     };
@@ -23,13 +28,11 @@ async function apiRequest(gppd, infor,address) {
         }
 
         console.error('There was data!', data);
+        console.log(data)
         return data;
     } catch (error) {
         console.error('There was an error!', error);
         throw error;
     }
 }
-
-    
-
 export default apiRequest
