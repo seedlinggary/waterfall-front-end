@@ -154,7 +154,7 @@ const MortgageInfo = ({mortgages,setMortgages, mortgageID}) => {
               {mtypes && mtypes.map((mtype, i) => {
                     return (
                         
-                        <option value={mtype.id}>{mtype.name} </option>
+                        <option key={i} value={mtype.id}>{mtype.name} </option>
                     )
       })} 
               {/* <option value="Standard">Standard</option>
