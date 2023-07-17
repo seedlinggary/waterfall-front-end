@@ -17,7 +17,7 @@ const CreateProperty = ({company, deal}) => {
     const [country, setCountry] = useState('USA')
     const [street, setStreet] = useState('Sesame Place')
     const [num, setNum] = useState('123')
-    const [apt, setApt] = useState(null)
+    const [apt, setApt] = useState()
     const [ptype_id, setPtypeID] = useState(1)
 
     const navigate = useNavigate()

@@ -1220,7 +1220,7 @@ id: 8}
       className="mb-3"
     >
       <Tab eventKey="home" title="General Waterfall Info">
-        <div>        
+        <>        
         <Table responsive>
           <thead>
           <tr>
@@ -1235,7 +1235,7 @@ id: 8}
       <tbody>
               { waterfall_resp && waterfall_resp.map((year, id) =>  
                <tr>
-                  <td>{id + 1}  {new_splits  && new_splits[id] && <div>Hurdle:{new_splits[id].hurdle.toLocaleString()} Split:{new_splits[id].limited_partner_percent.toLocaleString()}/{new_splits[id].sponsor_percent.toLocaleString()}</div>}\</td>
+                  <td>{id + 1}  {new_splits  && new_splits[id] && <>Hurdle:{new_splits[id].hurdle.toLocaleString()} Split:{new_splits[id].limited_partner_percent.toLocaleString()}/{new_splits[id].sponsor_percent.toLocaleString()}</>}\</td>
                 <td>
               <Table striped>
               <tbody>
@@ -1326,7 +1326,7 @@ id: 8}
       ))}
         </tr>
       </tbody>
-      {total_returned && <div>
+      {total_returned && <>
         <tbody>
         <tr>
         <th>Total returned</th>
@@ -1342,12 +1342,12 @@ id: 8}
             </tbody>
             </Table>
         </tr>
-      </tbody></div>}
+      </tbody></>}
     </Table>
-</div>
+</>
       </Tab>
       <Tab eventKey="in_depth" title="In Depth Waterfall">
-        <div>
+        <>
           <Table responsive>
       <thead>
         <tr>
@@ -1362,7 +1362,7 @@ id: 8}
       <tbody>
               { waterfall_resp && waterfall_resp.map((year, id) =>  
                <tr>
-               <td>{id + 1}  {new_splits  && new_splits[id] && <div>Hurdle:{new_splits[id].hurdle.toLocaleString()} Split:{new_splits[id].limited_partner_percent.toLocaleString()}/{new_splits[id].sponsor_percent.toLocaleString()}</div>}</td>
+               <td>{id + 1}  {new_splits  && new_splits[id] && <>Hurdle:{new_splits[id].hurdle.toLocaleString()} Split:{new_splits[id].limited_partner_percent.toLocaleString()}/{new_splits[id].sponsor_percent.toLocaleString()}</>}</td>
                 <td>
                 <Table striped>
                     <tbody>
@@ -1489,7 +1489,7 @@ id: 8}
       ))}
         </tr>
       </tbody>
-      {total_returned && <div>    <tbody>
+      {total_returned && <>    <tbody>
         <tr>
         <th>Total returned</th>
 
@@ -1505,13 +1505,13 @@ id: 8}
             </tbody>
             </Table>
         </tr>
-      </tbody></div>}
+      </tbody></>}
     </Table>
-</div>
+</>
       </Tab>
       {investor_returns && 
       <Tab eventKey="profile" title="Each persons return">
-      <div>        <Table responsive striped="columns">
+      <>        <Table responsive striped="columns">
       <thead>
         <tr>
         <th>Investor</th>
@@ -1565,7 +1565,7 @@ id: 8}
            )}
             </tbody>
      </Table>
-</div>
+</>
       </Tab>
       }
     </Tabs>

@@ -176,7 +176,7 @@ function ReturnInvestors({pId, setParentId,tree, setTree,waterfall, setWaterfall
     return(
 
 
-        <Tab eventKey={year} title={year}>
+        <Tab key={index} eventKey={year} title={year}>
         <div key={year}>
             <h3> Year {year}</h3>
         <h3> Total Funds Recieved - {funds.totals} </h3>
@@ -215,7 +215,7 @@ function ReturnInvestors({pId, setParentId,tree, setTree,waterfall, setWaterfall
     return(
 
 
-        <Tab eventKey={year} title={year}>
+        <Tab key={index} eventKey={year} title={year}>
         <div key={year}>
             <h3> Year {year}</h3>
         <h3> Total Funds Recieved - {funds.totals} </h3>
@@ -258,7 +258,7 @@ function ReturnInvestors({pId, setParentId,tree, setTree,waterfall, setWaterfall
     return(
 
 
-      <Tab eventKey={year} title={year}>
+      <Tab key={index} eventKey={year} title={year}>
         <div key={year}>
             <h3> Year {year}</h3>
           <h3> Total Funds Recieved - {funds.totals} </h3>
@@ -321,9 +321,9 @@ function ReturnInvestors({pId, setParentId,tree, setTree,waterfall, setWaterfall
       className="mb-3"
       justify
     >
-              {person.children.map((childId) => (
+              {person.children.map((childId ,index) => (
 
-                <Tab key={childId} eventKey={getChildName(childId)} title={getChildName(childId)}>
+                <Tab key={index} eventKey={getChildName(childId)} title={getChildName(childId)}>
                 <div key={childId}>{renderPerson(tree[childId])}</div>
                 </Tab>
               ))}

@@ -114,11 +114,11 @@ const ParentCombined = () => {
           Object.entries(flatTree).map( ([key2, value2],index) => {
           if (value2['gp']){
   
-            newGP[key2]= value2['gp']
+            return newGP[key2]= value2['gp']
           }else if (value2['lp']){
-            newLP[key2]= value2['lp']
+            return newLP[key2]= value2['lp']
           }else if (value2['waterfall']){
-            newWaterfall[key2]= value2['waterfall']
+            return newWaterfall[key2]= value2['waterfall']
           }
           })
           setGP(newGP)
@@ -272,7 +272,7 @@ const ParentCombined = () => {
       <th>
         {respCatagories && Object.entries(respCatagories).map( ([key, value],i) => {
           return (
-    <div>
+    <div key={i}>
       <Table striped bordered hover>
 <thead>
         <tr>
@@ -289,7 +289,7 @@ const ParentCombined = () => {
       <tbody>
       {Object.entries(value['seperate_costs']).map( ([key2, value2],index) => {
           return (
-            <tr>
+            <tr key={index}>
             <td>{index + 1}</td>
             <td>{value2['name']}</td>
             <td>{value2['total_amount'].toLocaleString()}</td>
@@ -338,7 +338,7 @@ const ParentCombined = () => {
                   
           { Object.entries(respCatagoriesTotal['communal_totals']).map( ([key3, value3],index) => {
                     return (
-                      <tr>
+                      <tr key={index}>
                       <td>{index + 1}</td>
                       <td>{key3}</td>
                       <td>{value3['totals'].toLocaleString()}</td>

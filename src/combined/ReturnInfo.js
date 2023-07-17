@@ -27,14 +27,14 @@ className="mb-3"
 
 {resp && Object.entries(resp).map( ([k, v],index) => {
     return (
-      <Tab eventKey={k} title={k}>
+      <Tab key={index} eventKey={k} title={k}>
         {/* <Tab eventKey="home" title="Home">
           HI
 </Tab> */}
    <h3>{date} {k}</h3>
             { Object.entries(v).map( ([key, value],i) => {
               return (
-        <div>
+        <div key={i}>
           <Table striped bordered hover>
     <thead>
     <tr>         
@@ -55,7 +55,7 @@ className="mb-3"
           <tbody>
           {Object.entries(value['seperate_costs']).map( ([key2, value2],index) => {
               return (
-                <tr>
+                <tr key={index}>
                 <td>{index + 1}</td>
                 <td>{value2['name']}</td>
                 <td>{value2['amount'].toLocaleString()}</td>
@@ -98,7 +98,7 @@ className="mb-3"
           <tbody>
     {respTotal && respTotal[k]['communal_totals'] &&Object.entries(respTotal[k]['communal_totals']).map( ([key3, value3],index) => {
               return (
-                <tr>
+                <tr key={index}>
                 <td>{index + 1}</td>
                 <td>{key3}</td>
                 <td>{value3['totals'].toLocaleString()}</td>

@@ -29,7 +29,8 @@ function WaterfallPopover(props) {
       className="mb-3"
     >
       <Tab eventKey="home" title="General Waterfall Info">
-        <div>        <Table responsive>
+        <div> 
+                 <Table responsive>
       <thead>
         <tr>
         <th>Hurdle</th>
@@ -48,7 +49,7 @@ function WaterfallPopover(props) {
       <tbody>
               { props.profit_recieved.profits && props.profit_recieved.profits.map((year, id) =>  
                
-               <tr>
+               <tr key={id}>
                                <td>{id + 1}  {props.profit_recieved.new_splits  && props.profit_recieved.new_splits[id] && <div>Hurdle:{props.profit_recieved.new_splits[id].hurdle.toLocaleString()} Split:{props.profit_recieved.new_splits[id].limited_partner_percent.toLocaleString()}/{props.profit_recieved.new_splits[id].sponsor_percent.toLocaleString()}</div>}</td>
 
                 <td>
@@ -95,14 +96,14 @@ function WaterfallPopover(props) {
                             </tr>
                             
                             {inf.fees && inf.fees.map((fee, index) => (
-                                 <>
+                                 <React.Fragment key={index}>
                                 
                             <tr>
                             <td>{fee.name}: {fee.amount_given}/{fee.out_of}</td>
                             </tr>
                           
                                 
-                                 </>
+                                 </React.Fragment>
                             ))
                             }
                         </tbody>
@@ -233,7 +234,7 @@ function WaterfallPopover(props) {
 
               { props.profit_recieved.profits && props.profit_recieved.profits.map((year, id) =>  
                
-               <tr>
+               <tr key={id}>
                                <td>{id + 1}  {props.profit_recieved.new_splits  && props.profit_recieved.new_splits[id] && <div>Hurdle:{props.profit_recieved.new_splits[id].hurdle.toLocaleString()} Split:{props.profit_recieved.new_splits[id].limited_partner_percent.toLocaleString()}/{props.profit_recieved.new_splits[id].sponsor_percent.toLocaleString()}</div>}</td>
 
                 <td>
@@ -316,14 +317,14 @@ function WaterfallPopover(props) {
                             <td>{inf.total_up_to_date_amount_distributed_to_lp.toLocaleString()}</td>
                             </tr>
                             {inf.fees && inf.fees.map((fee, index) => (
-                                 <>
+                                 <React.Fragment key={index}>
                                 
                             <tr>
                             <td>{fee.name}: {fee.amount_given.toLocaleString()}/{fee.out_of.toLocaleString()}</td>
                             </tr>
                           
                                 
-                                 </>
+                                 </React.Fragment>
                             ))
                             }
                         </tbody>
@@ -409,18 +410,18 @@ function WaterfallPopover(props) {
         <th>Investor</th>
         
         { props.profit_recieved.investor_returns && props.profit_recieved.investor_returns.map((investor_return, id) =>  
-        <>
+        <React.Fragment key={id}>
                
                
                {id == 0 && investor_return[1].map((inv, index) => (
-                <>
+                <React.Fragment key={index}>
                 <td> year # {index + 1}</td>
                  {inv.returns.map((inv, index) => (
-                <>
+                <React.Fragment key={index}>
                 
                     <td>hurdle num</td>
                     <td>portion recieved</td>
-                </>
+                </React.Fragment>
                  ))}
                 <td>Total year recieved</td>
                     <td>amount withheld</td>
@@ -430,26 +431,26 @@ function WaterfallPopover(props) {
                     <td>ownership %</td>
                     <td>capital returned</td>
                     
-                </>
+                </React.Fragment>
                
                ))}
-             </>
+             </React.Fragment>
         )}
         </tr>
       </thead>
       <tbody>
 
               { props.profit_recieved.investor_returns && props.profit_recieved.investor_returns.map((investor_return, id) =>  
-               <tr>
+               <tr key={id}>
                <td>{investor_return[0]}</td>
                {investor_return[1].map((inv, index) => (
-                <>
+                <React.Fragment key={index}>
                  <td> new year</td>
                  {inv.returns.map((inv, index) => (
-                <>
+                <React.Fragment key={index}>
                     <td>{inv.hurdle_num}</td>
                     <td>{inv.portion_recieved.toLocaleString()}</td>
-                </>
+                </React.Fragment>
                  ))}
                 <td>{inv.total_investor_returned.toLocaleString()}</td>
                     <td >{inv.amount_withheld.toLocaleString()}</td>
@@ -459,7 +460,7 @@ function WaterfallPopover(props) {
                     <td>{inv.percentage_of_total}</td>
                     <td>{inv.capital_returned.toLocaleString()}</td>
                    
-                </>
+                </React.Fragment>
               
                 ))}       
              </tr>

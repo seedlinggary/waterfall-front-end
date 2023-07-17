@@ -14,9 +14,12 @@ const User = () => {
         <Col></Col>
         <Col xs={9}>    <Card className="text-center" bg="dark"key="Info" text="white">
       <Card.Body>
-        <Card.Text>
+        {/* <Card.Title className="display-6 fw-bolder">
+         COMING SOON!
+        </Card.Title> */}
+        <Card.Title>
          <h1>COMING SOON!</h1>
-        </Card.Text>
+        </Card.Title>
       </Card.Body>
      
     </Card>
@@ -30,7 +33,9 @@ const User = () => {
       <Col md={{ span: 2, offset: 2 }}>    <Card >
       <Card.Img variant="top"  src={require('./pictures/compu_work.jpg')} />
       <Card.Body>
-        <Card.Title>Log In</Card.Title>
+      <Card.Title>
+          <Link to="/signin">Log In</Link>
+        </Card.Title>
         <Card.Text>
         Nice userfaces depending if you are an Investor or a General Partner. Have employees? limit/grant access to what they can see.
         </Card.Text>

@@ -127,7 +127,7 @@ const Calculator = ({waterfall, setWaterfall, personId, payoutFrequency }) => {
         <Form.Select aria-label="Default select example" onChange={(e) => handlewaterfallChange(e.target.value,'year_bought_in')}>
           {payoutFrequency.transactions && payoutFrequency.transactions.map((transaction, i) => {
                     return (
-                      <option value={i}>{JSON.stringify(transaction.date)}</option>
+                      <option key={i} value={i}>{JSON.stringify(transaction.date)}</option>
                     )
       })} 
         </Form.Select>
