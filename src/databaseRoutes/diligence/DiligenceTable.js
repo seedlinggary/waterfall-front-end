@@ -48,9 +48,9 @@ const DiligenceTable = ({pAndLs}) => {
                           <th> Name</th>
                           {pAndLs[0] && getDatesOrdered(pAndLs).map((date,i) => {
                             return(
-                                <>
-                                <th> {  formatDate(date) }</th>
-                                </>
+                                
+                                <th key={i}> {  formatDate(date) }</th>
+                                
                             )
                           })}
 
@@ -59,22 +59,22 @@ const DiligenceTable = ({pAndLs}) => {
                       <tbody>
     {pAndLs.map((pandls, i) => {
                     return (
-                        <>
-                        <tr>
+                        // <>
+                        <tr key={i}>
                           <td>{i + 1}</td>
                           <td>{pandls.transaction_type}</td>
                           <td>{pandls.name}</td>
                           {pAndLs[0] && getDatesOrdered(pAndLs).map((date,i) => {
                             return(
                                 <>
-                                <th> {  checkDate(pandls,date) }</th>
+                                <th key={i}> {  checkDate(pandls,date) }</th>
                                 </>
                             )
                           })}
 
                         </tr>
                       
-                      </>
+                      // </>
                     )})}
                    
                       </tbody>
