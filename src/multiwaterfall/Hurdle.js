@@ -35,6 +35,12 @@ setWaterfall(prevState => ({
 
 
     function handleHurdleChange(e, mortgageInfoType) {
+      // console.log(!isNaN(parseFloat(e.target)))
+      // if(!isNaN(parseFloat(e.target))){
+      //   console.log(!isNaN(parseFloat(e.target)))
+      // }else{
+
+
       let index = e.target.id;
         if (e.target.id > 0){
             index = e.target.id
@@ -54,7 +60,7 @@ setWaterfall(prevState => ({
   ...prevState,
   [`${personId}`]: newWaterfall
 }))
-    }
+      }
               
             return ( 
         <div key={personId}> 
@@ -73,16 +79,16 @@ setWaterfall(prevState => ({
                   <Row className="mb-3">
                   {i != 0 && <>   <Form.Group as={Col}  >
               <Form.Label>LP's take of the cut </Form.Label >
-              <Form.Control  value={item.limited_partner_percent} id={i}  onChange={(e) => handleHurdleChange(e,'limited_partner_percent')}/>
+              <Form.Control type="number" step="any" value={item.limited_partner_percent} id={i}  onChange={(e) => handleHurdleChange(e,'limited_partner_percent')}/>
             </Form.Group>
             <Form.Group as={Col}>
               <Form.Label>GP's take of the cut (Promote amount)</Form.Label>
-              <Form.Control  value={item.sponsor_percent}  id={i} onChange={(e) => handleHurdleChange(e,'sponsor_percent')}/>
+              <Form.Control type="number" step="any" value={item.sponsor_percent}  id={i} onChange={(e) => handleHurdleChange(e,'sponsor_percent')}/>
             </Form.Group></>}
            
             <Form.Group as={Col} >
               <Form.Label>Hurdle top amount</Form.Label>
-              <Form.Control  value={item.hurdle} id={i} onChange={(e) => handleHurdleChange(e,'hurdle')} />
+              <Form.Control type="number" step="any" value={item.hurdle} id={i} onChange={(e) => handleHurdleChange(e,'hurdle')} />
             </Form.Group>
             </Row>
       </div>

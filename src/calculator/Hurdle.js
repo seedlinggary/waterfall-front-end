@@ -37,6 +37,11 @@ const Hurdle = ({arr, setArr}) => {
       };
 
       const handleLPChange = e => {
+        const { value } = e.target;
+        console.log(!isNaN(parseFloat(e.target)))
+        if(!isNaN(parseFloat(e.target))){
+
+        
         e.preventDefault();
         let index = e.target.id;
         if (e.target.id > 0){
@@ -50,6 +55,10 @@ const Hurdle = ({arr, setArr}) => {
     
           return newArr;
         });
+      }
+      else{
+        console.log('not a number')
+      }
       };   
       const handleGPChange = e => {
         e.preventDefault();
@@ -100,7 +109,7 @@ const Hurdle = ({arr, setArr}) => {
                   <Row className="mb-3">
                   {i != 0 && <>   <Form.Group as={Col}  >
               <Form.Label>LP's take of the cut </Form.Label >
-              <Form.Control  value={item.value.limited_partner_percent} id={i}  onChange={handleLPChange}/>
+              <Form.Control type={'number'} step={"any"} value={item.value.limited_partner_percent} id={i}  onChange={handleLPChange}/>
             </Form.Group>
             <Form.Group as={Col}>
               <Form.Label>GP's take of the cut (Promote amount)</Form.Label>
