@@ -8,13 +8,13 @@ import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Popover from 'react-bootstrap/Popover';
 import Container from 'react-bootstrap/Container';
 import Accordion from 'react-bootstrap/Accordion';
-import MortgageInfo from './MortgageInfo';
+import MortgageAdd from './MortgageAdd';
 import {reactLocalStorage} from 'reactjs-localstorage';
 import useFetch from '../../useFetch';
 import apiRequest from '../../ApiRequest'
 
 
-const AddMortgage = ({deal,company,diligence_id, returned_mortgages}) => {
+const MortgageHome = ({deal,company,diligence_id, bill_url, url_id}) => {
     const [mortgages, setMortgages] = useState([])
 
     const timeElapsed = Date.now();
@@ -53,7 +53,7 @@ const AddMortgage = ({deal,company,diligence_id, returned_mortgages}) => {
         //   e.preventDefault();
           let info = mortgages
           // console.log(mortgages)
-          let a = await apiRequest('POST',info,`/mortgage/${company.id}/${deal.id}/${diligence_id}`)
+          let a = await apiRequest('POST',info,`/mortgage/${bill_url}/${company.id}/${deal.id}/${url_id}`)
           // console.log(a)
           // navigate(0)
         } 
@@ -77,7 +77,7 @@ const AddMortgage = ({deal,company,diligence_id, returned_mortgages}) => {
   
           setMortgages(newList);
       }; 
-      const { data: new_mortgages, error, isPending} = useFetch(`/mortgage/all/${company.id}/${deal.id}/${diligence_id}` , requestOptions)
+      const { data: new_mortgages, error, isPending} = useFetch(`/mortgage/all/${bill_url}/${company.id}/${deal.id}/${url_id}` , requestOptions)
       useEffect(() => {
         if (new_mortgages ){
             edit_times(new_mortgages)
@@ -103,7 +103,7 @@ const AddMortgage = ({deal,company,diligence_id, returned_mortgages}) => {
 
 
 
- <MortgageInfo mortgages={mortgages} setMortgages={setMortgages} mortgageID= {i}></MortgageInfo>
+ <MortgageAdd mortgages={mortgages} setMortgages={setMortgages} mortgageID={i} deal={deal} company={company}></MortgageAdd>
            </Accordion.Body>
       </Accordion.Item>
  
@@ -120,4 +120,4 @@ const AddMortgage = ({deal,company,diligence_id, returned_mortgages}) => {
     )
 }
  
-export default AddMortgage;
+export default MortgageHome;

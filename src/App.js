@@ -25,6 +25,11 @@ import UserHome from './databaseRoutes/users/UserHome';
 import CompanyHome from './databaseRoutes/companies/CompanyHome';
 import DealHome from './databaseRoutes/deal/DealHome';
 import DiligenceHome from './databaseRoutes/diligence/DiliginceHome';
+import DInfoHome from './databaseRoutes/diligence/Info/DInfoHome';
+import CompareDiligence from './databaseRoutes/deal/CompareDiligence';
+import Employees from './databaseRoutes/companies/Employees';
+import InvestorReturnsHome from './databaseRoutes/diligence/InvestorReturnsHome';
+import PropertyHome from './databaseRoutes/property.js/PropertyHome';
 
 function App() {
   let email = reactLocalStorage.get('email')
@@ -55,6 +60,11 @@ function App() {
             {email &&<Route path="/companyhome/"  element={<CompanyHome />} />}
             {email &&<Route path="/dealhome/"  element={<DealHome />} />}
             {email &&<Route path="/diligencehome/"  element={<DiligenceHome />} />}
+            {email &&<Route path="/dinfohome/"  element={<DInfoHome />} />}
+            {email &&<Route path="/comparediligence/"  element={<CompareDiligence />} />}
+            {email &&<Route path="/employees/"  element={<Employees />} />}
+            {email &&<Route path="/investorReturnsHome/"  element={<InvestorReturnsHome />} />}
+            {email &&<Route path="/PropertyHome/"  element={<PropertyHome />} />}
 
           </Routes>
         </div>

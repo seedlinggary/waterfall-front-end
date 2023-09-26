@@ -9,9 +9,13 @@ import {
   Heading,
 } from "./FooterStyles";
 import { useNavigate } from "react-router-dom";
+import {reactLocalStorage} from 'reactjs-localstorage';
+
+
 
 const Footer = () => {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
+  let email = reactLocalStorage.get('email')
     function handleClick(path) {
       navigate(path);
     }
@@ -26,7 +30,11 @@ const Footer = () => {
         <Column>
             <Heading>Home</Heading>
             <FooterLink href="#"onClick={() => handleClick("/")}>Home</FooterLink>
-
+            {email && <FooterLink href="#"onClick={() => handleClick("signin")}>Sign Out</FooterLink>}
+            {!email && <FooterLink href="#"onClick={() => handleClick("signin")}>Sign In</FooterLink>}
+            {/* {email && <Nav.Link href="/signin">Sign Out</Nav.Link>}
+         {!email && <Nav.Link href="/signin">Sign In</Nav.Link>}
+ */}
           </Column>
           <Column>
             <Heading>About Us</Heading>

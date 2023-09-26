@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState,useEffect } from 'react'
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
@@ -55,6 +55,28 @@ const MortgageInfo = ({mortgages,setMortgages, mortgageID}) => {
         });
 
     } 
+    function handleInterestRateChange(data,  index) {
+      // console.log(data)
+      let newList = mortgages[mortgageID].interestRates
+      newList[index] = parseFloat(data)
+      // let updatedList = mortgages[mortgageID].interestRates.map((item, i) => 
+      // {
+      //   if (i == index){
+      //     return [...item, data]; //gets everything that was already in item, and updates "done"
+      //   }
+      //   return item; // else return unmodified item 
+      // });
+      // console.log(newList)
+      handleMortgageInfoChange(newList, 'interestRates')
+      // let keyvalue = mortgageInfoType.toString()
+      //   setMortgages(s => {
+      //     const newMortgages = s.slice();
+      //     newMortgages[mortgageID][`${keyvalue}`] = data;
+    
+      //     return newMortgages;
+      //   });
+
+    } 
     
     function changeDate(data) {
       var today2 = new Date(data);
@@ -65,8 +87,8 @@ const MortgageInfo = ({mortgages,setMortgages, mortgageID}) => {
     const SendApi = (e) => {
      
 
-      let backend = 'http://127.0.0.1:5000'
-      // let backend = 'https://distributionresolutionapi.com'
+      // let backend = 'http://127.0.0.1:5000'
+      let backend = 'https://distributionresolutionapi.com'
       // let address = `/waterfall_calc`
       let address = `/mortgage_calc`
       const requestOptions = {
@@ -86,7 +108,7 @@ const MortgageInfo = ({mortgages,setMortgages, mortgageID}) => {
                   return Promise.reject(error);
               }
   
-            console.log(data[1])
+            // console.log(data[1])
             setMortgages(s => {
                 const newMortgages = s.slice();
                 newMortgages[mortgageID].mortgage_resp = data[0];
@@ -118,6 +140,29 @@ const MortgageInfo = ({mortgages,setMortgages, mortgageID}) => {
 
       const { data: mtypes, erro, isPendin} = useFetch(`/mtype` , requestOptions)
 
+      function GetInterestRateAmount(investmentLength) {
+        let new_num = (investmentLength)%12
+        let num = Math.floor(Number(investmentLength)/12) + 1
+        // if (new_num){
+        //   num+=1
+        // }
+        handleMortgageInfoChange([...Array((Number(investmentLength) *12)).keys()], 'interestRates')
+        // setCapRates([...Array(num).keys()])
+  
+      }
+      useEffect(() => {
+        let new_num = (mortgages[mortgageID].length)%12
+        let num = Math.floor(Number(mortgages[mortgageID].length)/12) + 1
+        if (new_num){
+          num+=1
+        }
+        let new_array =([...Array(num).keys()])
+  
+        if (mortgages[mortgageID].length ){
+          // if (mortgages[mortgageID].length && (mortgages[mortgageID].interestRates.length == 0 || diligence.caprates.length != new_array.length )){
+            GetInterestRateAmount(mortgages[mortgageID].length)
+        }
+    }, [,mortgages[mortgageID].length]);
             return ( 
                 <> 
                         <Row className="mb-3">
@@ -134,16 +179,21 @@ const MortgageInfo = ({mortgages,setMortgages, mortgageID}) => {
 
           <Form.Group as={Col} controlId="formGridEmail">
             <Form.Label>How many Years will this mortgage be?</Form.Label>
-            <Form.Control  value={mortgages[mortgageID].length} onChange={(e) => handleMortgageInfoChange(e.target.value,'length')} />
+            <Form.Control type="number" value={mortgages[mortgageID].length} onChange={(e) => handleMortgageInfoChange(e.target.value,'length')} />
           </Form.Group>        
           <Form.Group as={Col} controlId="formGridEmail">
             <Form.Label>What will the intererst rate be?</Form.Label>
-            <Form.Control  value={mortgages[mortgageID].starting_rate} onChange={(e) => handleMortgageInfoChange(e.target.value,'starting_rate')} />
+            <Form.Control  type="number" value={mortgages[mortgageID].starting_rate} onChange={(e) => handleMortgageInfoChange(e.target.value,'starting_rate')} />
             {/* <Form.Control  value={starting_rate} onChange={(e) => setInterestRate(e.target.value)} /> */}
           </Form.Group>
           <Form.Group as={Col} controlId="formGridEmail">
             <Form.Label>How much are you looking to borrow?</Form.Label>
-            <Form.Control  value={mortgages[mortgageID].amount} onChange={(e) => handleMortgageInfoChange(e.target.value,'amount')} />
+            <Form.Control  type="number" value={mortgages[mortgageID].amount} onChange={(e) => handleMortgageInfoChange(e.target.value,'amount')} />
+            {/* <Form.Control  value={amount} onChange={(e) => setLoanAmount(e.target.value)} /> */}
+          </Form.Group>  
+          <Form.Group as={Col} controlId="formGridEmail">
+            <Form.Label>Fees to take out this loan?</Form.Label>
+            <Form.Control type="number" value={mortgages[mortgageID].fees} onChange={(e) => handleMortgageInfoChange(e.target.value,'fees')} />
             {/* <Form.Control  value={amount} onChange={(e) => setLoanAmount(e.target.value)} /> */}
           </Form.Group>  
           <Form.Group as={Col} controlId="formGridEmail">
@@ -171,8 +221,27 @@ const MortgageInfo = ({mortgages,setMortgages, mortgageID}) => {
          </Form.Group> 
           }
         </Row>
+        <hr></hr>
+        <h5>Optional: Add in which months the interest rate would change.</h5>
+        <Row className="mb-3">
 
-                
+        {mortgages[mortgageID].length && mortgages[mortgageID].interestRates.map((cap_rate, i) => {
+                    return (
+                        
+        < >
+                  {/* <Row className="mb-3"> */}
+  
+
+          <Form.Group as={Col} controlId="formGridEmail">
+        <Form.Label>Interest Rate month {i+1}</Form.Label>
+        <Form.Control  value={cap_rate.percentage} onChange={(e) => handleInterestRateChange(e.target.value,i)} />
+
+
+          </Form.Group>         
+      </>
+                    )
+                    })}
+                    </Row>
                      {/* <Button variant="success" onClick={SendApi}>
                 Create Mortgage
               </Button> */}

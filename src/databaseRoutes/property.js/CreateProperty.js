@@ -24,7 +24,7 @@ const CreateProperty = ({company, deal}) => {
 
   
       
-    const SendApi = (e) => {
+    const SendApi = async (e) => {
     //   e.preventDefault();
       let info = {"state": state,
       'country': country,
@@ -34,7 +34,7 @@ const CreateProperty = ({company, deal}) => {
       'ptype_id': ptype_id 
                   
                  }
-      let a = apiRequest('POST',info,`/property/${company.id}/${deal.id}`)
+      let a = await apiRequest('POST',info,`/property/${company.id}/${deal.id}`)
       navigate(0)
     } 
       

@@ -39,7 +39,7 @@ const DiligenceTable = ({pAndLs}) => {
       }
             return ( 
                 <> 
- {pAndLs && <Table striped responsive>
+ {pAndLs && <Table striped bordered hover responsive>
 
                         <thead>
                         <tr>

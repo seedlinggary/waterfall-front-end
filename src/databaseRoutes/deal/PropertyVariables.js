@@ -9,9 +9,12 @@ import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Popover from 'react-bootstrap/Popover';
 import Container from 'react-bootstrap/Container';
 import DatePicker from 'react-datepicker';
+import apiRequest from '../../ApiRequest'
 
 
-const PropertyVariables = ({propertyVariables,setPropertyVariables, PandLID}) => {
+const PropertyVariables = ({propertyVariables,setPropertyVariables, PandLID,deal,company,diligence_id}) => {
+  const navigate = useNavigate()
+
     const deletePropertyVariable = e => {
         setPropertyVariables(propertyVariables=> propertyVariables.filter((s,i)=>(i != e.target.id)))
           }
@@ -20,7 +23,7 @@ const PropertyVariables = ({propertyVariables,setPropertyVariables, PandLID}) =>
         let keyvalue = mortgageInfoType.toString()
         setPropertyVariables(s => {
             const newpropertyVariables = s.slice();
-            newpropertyVariables[i][`${keyvalue}`] = data;
+            newpropertyVariables[i]['pinfo'][`${keyvalue}`] = data;
       
             return newpropertyVariables;
           });
@@ -30,14 +33,21 @@ const PropertyVariables = ({propertyVariables,setPropertyVariables, PandLID}) =>
 
         setPropertyVariables(s => {
             const newpropertyVariable = s.slice();
-            newpropertyVariable.push({ 'name' : 'legal fee',
+            newpropertyVariable.push({ 'pinfo' : {'name': 'gsf'},
             // 'amount': 10,
                 })
       
             return newpropertyVariable;
         });
       };
-
+      const SendApi = async(e) => {
+        //   e.preventDefault();
+          let info = propertyVariables
+          let  a = await apiRequest('POST',info,`/pinfo/${company.id}/${deal.id}`)
+          console.log(a)
+          // setPropertyVariables( a)
+          navigate(0)
+        } 
             return ( 
                 <> 
                         <Row className="mb-3">
@@ -51,7 +61,7 @@ const PropertyVariables = ({propertyVariables,setPropertyVariables, PandLID}) =>
 
       
       </Col>  <Col md={{ span: 2, offset: 2 }}>   
-      <Button  variant="outline-primary" onClick={addPropertyVariable}>Add one more transaction</Button>
+      <Button  variant="outline-primary" onClick={addPropertyVariable}>Add Property Variables</Button>
 
     </Col>  
                </Row>
@@ -70,12 +80,8 @@ const PropertyVariables = ({propertyVariables,setPropertyVariables, PandLID}) =>
             <Form.Label>What Type of property Variable is this? <Button variant="outline-danger" id={i} onClick={deletePropertyVariable}>
             Delete Property Variable
           </Button></Form.Label>
-            <Form.Control  value={propertyVariable.name} onChange={(e) => handlePropertyVariableChange(e.target.value,'name',i)} />
+            <Form.Control  value={propertyVariable.pinfo.name} onChange={(e) => handlePropertyVariableChange(e.target.value,'name',i)} />
           </Form.Group>        
-          {/* <Form.Group as={Col} controlId="formGridEmail">
-            <Form.Label> Amount of {propertyVariable.name}? </Form.Label>
-            <Form.Control  value={propertyVariable.amount} onChange={(e) => handlePropertyVariableChange(e.target.value,'amount',i)} />
-          </Form.Group>         */}
 
              </Row>
       </div>
@@ -85,6 +91,10 @@ const PropertyVariables = ({propertyVariables,setPropertyVariables, PandLID}) =>
 
               <Container>
           </Container>
+          <Button variant="primary" onClick={SendApi}>
+        Submit
+      </Button>
+
               </>
     )
 }

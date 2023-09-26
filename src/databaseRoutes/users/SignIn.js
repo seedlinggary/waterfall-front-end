@@ -44,7 +44,7 @@ const SignIn = ({}) => {
             headers: headers,
         };
         
-        // fetch(`'https://distributionresolutionapi.com/login`, requestOptions)
+        // fetch(`https://distributionresolutionapi.com/login`, requestOptions)
         fetch(`http://127.0.0.1:5000/login`, requestOptions)
             .then(async response => {
                 const isJson = response.headers.get('content-type')?.includes('application/json');
@@ -63,8 +63,8 @@ const SignIn = ({}) => {
                 reactLocalStorage.set('email', email);
                 setLoggedIn(true)
                 // console.log(eml)
-                navigate('/')
-                window.location.href='/'
+                // navigate('/')
+                window.location.href='/userhome'
 
                 return  data.id 
             })

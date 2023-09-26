@@ -19,12 +19,12 @@ const CreateDeal = ({company}) => {
 
   
       
-    const SendApi = (e) => {
+    const SendApi = async (e) => {
     //   e.preventDefault();
       let info = {"name": name,
                   
                  }
-      let a = apiRequest('POST',info,`/deal/${company.id}`)
+      let a = await apiRequest('POST',info,`/deal/${company.id}`)
       navigate(0)
     } 
       

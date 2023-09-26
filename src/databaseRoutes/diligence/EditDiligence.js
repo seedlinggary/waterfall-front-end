@@ -13,23 +13,33 @@ import DatePicker from 'react-datepicker';
 
 let base64 = require('base-64');
 
-const EditDiligence = ({deal,company,diligence, propertyVariables}) => {
+const EditDiligence = ({deal,company,diligence}) => {
     const [investmentLength, setInvestmentLength] = useState(diligence.length_of_investment)
     const [numUnits, setNumUnits] = useState(diligence.number_of_units)
     const [gsf, setGSF] = useState(diligence.gsf)
     const [nsf, setNSF] = useState(diligence.nsf)
+    const [reversion_closing_costs, setReversionClosingCosts] = useState(diligence.reversion_closing_costs)
     const [occupancyRate, setOccupancyRate] = useState(diligence.occupancy_rate)
-    const [myPropertyVariables, setMyPropertyVariables] = useState(propertyVariables.map((propertyVariable, i) =>  ({'name': propertyVariable.name, 'amount': 500})))
-    const [dealStartDate, setStartDate] = useState(new Date(diligence.deal_start_date))
+    const [myPropertyVariables, setMyPropertyVariables] = useState(diligence.attributes)
+    // const [myPropertyVariables, setMyPropertyVariables] = useState(propertyVariables.map((propertyVariable, i) =>  ({'name': propertyVariable.pinfo.name, 'amount': 500, 'id':propertyVariable.id})))
+    const [dealStartDate, setStartDate] = useState(create_proper_time(diligence.deal_start_date))
+    const [capRates, setCapRates] = useState(diligence.caprates)
+  // console.log(dealStartDate)
+    
+  function create_proper_time(bad_time){
+    const good_array = bad_time.split('-').join(',').split('T').join(',').split(':').join(',').split(',');
+    // console.log(good_array)
+    return new Date(Date.UTC(good_array[0],good_array[1] -1,good_array[2],good_array[3],good_array[4],good_array[5]))
+  }
 
     const navigate = useNavigate()
   
-    function InitialPropertyVariables() {
-      let newPropertyVariables = propertyVariables.map((propertyVariable, i) =>  ({'name': propertyVariable.name, 'amount': 500}))
+    // function InitialPropertyVariables() {
+    //   let newPropertyVariables = propertyVariables.map((propertyVariable, i) =>  ({'name': propertyVariable.name, 'amount': 500}))
         
-        return newPropertyVariables
+    //     return newPropertyVariables
 
-    }
+    // }
     function handlePropertyVariableChange(data, mortgageInfoType, i) {
       let keyvalue = mortgageInfoType.toString()
       setMyPropertyVariables(s => {
@@ -40,18 +50,41 @@ const EditDiligence = ({deal,company,diligence, propertyVariables}) => {
         });
 
     }
+    function handleCapRateChange(data, i) {
+      setCapRates(s => {
+          const newCapRates = s.slice();
+          newCapRates[i] = data;
+    
+          return newCapRates;
+        });
 
-    const SendApi = (e) => {
+    }
+    function GetCapRateAmount(investmentLength) {
+      let new_num = (investmentLength)%12
+      let num = Math.floor(Number(investmentLength)/12) + 1
+      if (new_num){
+        num+=1
+      }
+      setCapRates([...Array(num).keys()])
+
+    }
+
+    const SendApi = async (e) => {
     //   e.preventDefault();
       let info = {"length_of_investment": investmentLength,
       'number_of_units': numUnits,
       'gsf': gsf,
       'nsf':nsf,
       'occupancy_rate':occupancyRate,
-      'deal_start_date': dealStartDate 
+      'deal_start_date': dealStartDate.toUTCString(),
+      'cap_rates': capRates,
+      'reversion_closing_costs': reversion_closing_costs,
+      'myPropertyVariables':  myPropertyVariables
                   
                  }
-      let a = apiRequest('POST',info,`/diligence/${company.id}/${deal.id}/${diligence.id}`)
+      // let new_date = new Date(dealStartDate.toUTCString())
+      // console.log(new_date.toUTCString())
+      let a = await apiRequest('POST',info,`/diligence/${company.id}/${deal.id}/${diligence.id}`)
       navigate(0)
     } 
       
@@ -63,6 +96,25 @@ const EditDiligence = ({deal,company,diligence, propertyVariables}) => {
     };
 
     // const { data: ptypes, error, isPending} = useFetch(`/ptype/` , requestOptions)
+    useEffect(() => {
+      let new_num = (investmentLength)%12
+      let num = Math.floor(Number(investmentLength)/12) + 1
+      if (new_num){
+        num+=1
+      }
+      let new_array =([...Array(num).keys()])
+
+      if (investmentLength && (capRates.length == 0 || diligence.caprates.length != new_array.length )){
+        GetCapRateAmount(investmentLength)
+      }
+  }, [,investmentLength]);
+  useEffect(() => {
+    if (dealStartDate){
+
+    }
+
+
+}, [dealStartDate]);
 
     return ( 
         <div className="blog-list">
@@ -71,47 +123,60 @@ const EditDiligence = ({deal,company,diligence, propertyVariables}) => {
 
 <Form.Group as={Col} controlId="formGridEmail">
             <Form.Label>Prospective Purchase Date</Form.Label>
-             <DatePicker selected={dealStartDate}  onChange={(e) => setStartDate(e)}  />
+             <DatePicker selected={dealStartDate}  onChange={(e) =>{
+              
+              
+              setStartDate(e)
+              }}  />
           </Form.Group> 
        
-<Form.Group as={Col} controlId="formGridEmail">
+{/* <Form.Group as={Col} controlId="formGridEmail">
 <Form.Label>Occupancy Rate</Form.Label>
 <Form.Control  value={occupancyRate} onChange={(e) => setOccupancyRate(e.target.value)}/>
-</Form.Group>
-            <Form.Group as={Col} controlId="formGridEmail">
-<Form.Label>Length Of Investment</Form.Label>
-<Form.Control  value={investmentLength} onChange={(e) => setInvestmentLength(e.target.value)}/>
-</Form.Group>
-{/* <Form.Group as={Col} controlId="formGridEmail">
-<Form.Label>How many Units</Form.Label>
-<Form.Control  value={numUnits} onChange={(e) => setNumUnits(e.target.value)}/>
 </Form.Group> */}
+<Form.Group as={Col} controlId="formGridEmail">
+<Form.Label>Length Of Investment In Months</Form.Label>
+<Form.Control type="number" value={investmentLength} onChange={(e) => setInvestmentLength(e.target.value)}/>
+</Form.Group>
+<Form.Group as={Col} controlId="formGridEmail">
+<Form.Label>Reversion Closing Costs</Form.Label>
+<Form.Control type="number" value={reversion_closing_costs} onChange={(e) => setReversionClosingCosts(e.target.value)}/>
+</Form.Group>
 </Row>
-{/* <Row className="mb-3">
-<Form.Group as={Col} controlId="formGridEmail">
-<Form.Label>GSF</Form.Label>
-<Form.Control  value={gsf} onChange={(e) => setGSF(e.target.value)}/>
-</Form.Group>
-<Form.Group as={Col} controlId="formGridEmail">
-<Form.Label>NSF</Form.Label>
-<Form.Control  value={nsf} onChange={(e) => setNSF(e.target.value)}/>
-</Form.Group>
-</Row> */}
+
 <Row className="mb-3">
-{myPropertyVariables && myPropertyVariables.map((expense, i) => {
+{myPropertyVariables && myPropertyVariables.map((propertyvariable, i) => {
                     return (
                         
-        <div key={i}>
+        <>
                   {/* <Row className="mb-3"> */}
   
 
           <Form.Group as={Col} controlId="formGridEmail">
-        <Form.Label>{expense.name}</Form.Label>
-        <Form.Control  value={expense.amount} onChange={(e) => handlePropertyVariableChange(e.target.value,'amount',i)} />
+        <Form.Label>{propertyvariable.pinfo.name}</Form.Label>
+        <Form.Control type="number" value={propertyvariable.amount} onChange={(e) => handlePropertyVariableChange(e.target.value,'amount',i)} />
 
 
           </Form.Group>         
-      </div>
+      </>
+                    )
+                    })}
+                       </Row>
+  <Row className="mb-3">
+{investmentLength && capRates.map((cap_rate, i) => {
+                    return (
+                        
+        < >
+                  {/* <Row className="mb-3"> */}
+  
+
+          <Form.Group as={Col} controlId="formGridEmail">
+        <Form.Label>Cap Rate year {i}</Form.Label>
+        <Form.Control type="number" value={cap_rate.percentage} onChange={(e) => handleCapRateChange(e.target.value,i)} />
+
+
+          </Form.Group>         
+      </>
                     )
                     })}
                        </Row>

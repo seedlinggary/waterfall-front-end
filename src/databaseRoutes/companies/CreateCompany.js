@@ -20,12 +20,12 @@ const CreateCompany = ({}) => {
 
   
       
-    const SendApi = (e) => {
+    const SendApi = async (e) => {
     //   e.preventDefault();
       let info = {"name": name,
                   "profession_id": professionID,
                  }
-      let a = apiRequest('POST',info,'/company')
+      let a = await apiRequest('POST',info,'/company')
       navigate(0)
     } 
       

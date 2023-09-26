@@ -1,9 +1,9 @@
-import React, { useState } from 'react'
+import React, { useState,useEffect } from 'react'
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import { useNavigate, useLocation  } from "react-router-dom";
+import { useNavigate, useLocation, Link  } from "react-router-dom";
 import Accordion from 'react-bootstrap/Accordion';
 import {reactLocalStorage} from 'reactjs-localstorage';
 import useFetch from '../../useFetch';
@@ -11,39 +11,23 @@ import CreateProperty from '../property.js/CreateProperty';
 import EditDiligence from './EditDiligence';
 import AddBill from './AddBill';
 import AddExpenseType from './AddExpenseType';
-import PropertyVariables from './PropertyVariables';
+// import PropertyVariables from './PropertyVariables';
 import DiligenceTable from './DiligenceTable';
 import AddMortgage from '../mortgage/AddMortgage';
 import MortgageBills from '../mortgage/MortgageBills';
+import Spinner from 'react-bootstrap/Spinner';
+import DistributionTree from '../distributions/DistributionTree';
 
 const DiligenceHome = () => {
     let email = reactLocalStorage.get('email')
     const location = useLocation()
     const company = location.state.company
     const deal = location.state.deal
+    const property = location.state.property
     const diligence_id = location.state.property.diligence_id
     const [index, setIndex] = useState(0);
     const [pAndLs, setPandLs] = useState([])
-    const [propertyVariables, setPropertyVariables] = useState([{ 'name' : 'unit_amount'},{ 'name' : 'GSF'},{ 'name' : 'NSF'},])
-    const [expenseTypes, setExpenseTypes] = useState([{ 'name' : 'soft_costs',
-    'payable_recievable': 'Payable',
-        },{ 'name' : 'hard_costs',
-        'payable_recievable': 'Payable',
-            },{ 'name' : 'marketing',
-            'payable_recievable': 'Payable',
-                },{ 'name' : 'g_a',
-                'payable_recievable': 'Payable',
-                    },{ 'name' : 'closing_costs',
-                    'payable_recievable': 'Payable',
-                        },{ 'name' : 'recurring_costs',
-                        'payable_recievable': 'Payable',
-                            },{ 'name' : 'miscellaneous',
-                            'payable_recievable': 'Payable',
-                                },{ 'name' : 'income',
-                                'payable_recievable': 'Recievable',
-                                    }])
-    
-
+    const [expenseTypes, setExpenseTypes] = useState()
     const mystyle = {
         color: "white",
         backgroundColor: "#f4f4f4",
@@ -59,15 +43,15 @@ const DiligenceHome = () => {
       };
   
       const { data: diligence, error, isPending} = useFetch(`/diligence/${company.id}/${deal.id}/${diligence_id}` , requestOptions)
-      const { data: bills, err, isPend} = useFetch(`/bill/${company.id}/${deal.id}/${diligence_id}` , requestOptions)
+      const { data: returned_mortgages, errr, isPeding} = useFetch(`/mortgage/all_bills/${company.id}/${deal.id}/${diligence_id}` , requestOptions)
+      const { data: distributionTree, er, isPend} = useFetch(`/distribution/${company.id}/${deal.id}/${diligence_id}` , requestOptions)
 
-    const handleSelect = (selectedIndex, e) => {
-      setIndex(selectedIndex);
-    };
-    const navigate = useNavigate();
-  function handleClick(path) {
-    navigate(path);
-  }
+    //   useEffect(() => {
+    //     if (diligence){
+
+    //       console.log(diligence.deal_start_date)
+    //     }
+    // }, [diligence]);
     return ( 
         <>
         <div style={mystyle}>
@@ -75,11 +59,16 @@ const DiligenceHome = () => {
         <Col></Col>
         <Col xs={9}>    <Card className="text-center" bg="dark"key="Info" text="white">
       <Card.Body>
-        <Card.Title><h2>Welcome to the diligence page {company.name} </h2></Card.Title>
+        <Card.Title><h2>Welcome to the diligence page of: {property.number} {property.street} </h2></Card.Title>
         <Card.Text>
-         hello you are a {company.profession.name} {diligence && diligence.nsf}
+         hello you are at Company: {company.name}, Deal {deal.name}
         </Card.Text>
-        <Button variant="outline-primary" onClick={() => handleClick("parentcombined")}>Profit Distributor</Button>
+        {!diligence  && <Spinner animation="border" variant="primary" />}
+{   diligence  &&     <Link to={`/dinfohome/`} state={{'company': company, 'deal':deal, 'diligence_id':diligence_id, 'returned_mortgages':returned_mortgages, 'diligence':diligence}}>
+ 
+                <h5> Advance Metrics</h5>
+                </Link>}
+        {/* <Button variant="outline-primary" onClick={() => handleClick("parentcombined")}>Profit Distributor</Button> */}
       </Card.Body>
      
     </Card>
@@ -99,28 +88,28 @@ const DiligenceHome = () => {
         <Accordion.Item eventKey="0">
         <Accordion.Header >Edit your due diligence basic information</Accordion.Header>
         <Accordion.Body>
-{diligence && <EditDiligence deal={deal} company={company} diligence={diligence} propertyVariables={propertyVariables}/>}
+{diligence && <EditDiligence deal={deal} company={company} diligence={diligence} />}
         </Accordion.Body>
         </Accordion.Item> 
 
-        <Accordion.Item eventKey="1">
+        {/* <Accordion.Item eventKey="1">
         <Accordion.Header >What type of Property Variables</Accordion.Header>
         <Accordion.Body>
-{diligence && <PropertyVariables propertyVariables={propertyVariables} setPropertyVariables={setPropertyVariables} />}
+{diligence && <PropertyVariables propertyVariables={propertyVariables} setPropertyVariables={setPropertyVariables} deal={deal} company={company} diligence_id={diligence_id} />}
         </Accordion.Body>
-      </Accordion.Item>  
+      </Accordion.Item>   */}
 
           <Accordion.Item eventKey="2">
         <Accordion.Header >What type of expenses</Accordion.Header>
         <Accordion.Body>
-{diligence && <AddExpenseType expenseTypes={expenseTypes} setExpenseTypes={setExpenseTypes} />}
+{diligence && <AddExpenseType expenseTypes={expenseTypes} setExpenseTypes={setExpenseTypes} deal={deal} company={company} diligence_id={diligence_id} btype_url={'diligence'}/>}
         </Accordion.Body>
       </Accordion.Item>  
        
       <Accordion.Item eventKey="3">
         <Accordion.Header >manually add in bills</Accordion.Header>
         <Accordion.Body>
-<AddBill pAndLs={pAndLs} setPandLs={setPandLs} expenseTypes={expenseTypes} deal={deal} company={company} diligence_id={diligence_id}/>
+<AddBill pAndLs={pAndLs} setPandLs={setPandLs} expenseTypes={expenseTypes} deal={deal} company={company} diligence_id={diligence_id} bill_url={'Diligence'} url_id={diligence_id}/>
         </Accordion.Body>
       </Accordion.Item>
       <Accordion.Item eventKey="4">
@@ -132,13 +121,20 @@ const DiligenceHome = () => {
       <Accordion.Item eventKey="5">
         <Accordion.Header >Mortgages</Accordion.Header>
         <Accordion.Body>
-<AddMortgage deal={deal} company={company} diligence_id={diligence_id} />
+<AddMortgage deal={deal} company={company} diligence_id={diligence_id} returned_mortgages={returned_mortgages} />
         </Accordion.Body>
       </Accordion.Item>
       <Accordion.Item eventKey="6">
         <Accordion.Header >Mortgage Info</Accordion.Header>
         <Accordion.Body>
-<MortgageBills deal={deal} company={company} diligence_id={diligence_id} />
+        {/* <MortgageBills deal={deal} company={company} diligence_id={diligence_id} /> */}
+        <MortgageBills returned_mortgages={returned_mortgages}  />
+        </Accordion.Body>
+      </Accordion.Item>
+      <Accordion.Item eventKey="7">
+        <Accordion.Header >Waterfall Info</Accordion.Header>
+        <Accordion.Body>
+        <DistributionTree deal={deal} company={company} diligence_id={diligence_id} distributionTree={distributionTree} />
         </Accordion.Body>
       </Accordion.Item>
     </Accordion>

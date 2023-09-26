@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState,useEffect } from 'react'
 import Carousel from 'react-bootstrap/Carousel';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
@@ -14,13 +14,17 @@ import useFetch from '../../useFetch';
 import CreateDeal from '../deal/CreateDeal';
 import Accounting from '../accounting/Accounting';
 import KOne from '../accounting/KOne';
+import apiRequest from '../../ApiRequest'
 
-const CompanyHome = ({}) => {
+const CompanyHome = ({companyt}) => {
     let email = reactLocalStorage.get('email')
     // const { company } =useParams();
     const location = useLocation()
-    const company = location.state
+    const company = location.state || companyt
     const [index, setIndex] = useState(0);
+    const [allEmployees, setallEmployees] = useState([])
+    const [allAccesses, setallAccesses] = useState([])
+
     const mystyle = {
         color: "white",
         backgroundColor: "#f4f4f4",
@@ -36,6 +40,7 @@ const CompanyHome = ({}) => {
       };
   
       const { data: deals, error, isPending} = useFetch(`/deal/${company.id}` , requestOptions)
+      const { data: boss, er, isP} = useFetch(`/deal/boss/${company.id}` , requestOptions)
 
     const handleSelect = (selectedIndex, e) => {
       setIndex(selectedIndex);
@@ -44,6 +49,28 @@ const CompanyHome = ({}) => {
   function handleClick(path) {
     navigate(path);
   }
+
+  useEffect(() => {
+    if (boss){
+      setallEmployees(boss[0])
+      setallAccesses(boss[1])
+    }
+  }, [boss]);
+
+
+  const deleteDeal = async e => {
+    let info = []
+    let a = await apiRequest('DELETE',info,`/deal/delete/${company.id}/${e.target.id}`)
+    navigate(0)
+
+      }
+  // const SendDeleteApi = (e) => {
+  //   //   e.preventDefault();
+  //     let info = expenseTypes
+  //     let a = apiRequest('DELETE',info,`/deal/delete/${company.id}/${deal.id}`)
+  //     navigate(0)
+  //     updatebtypes(a)
+  //   } 
     return ( 
         <>
         <div style={mystyle}>
@@ -53,7 +80,7 @@ const CompanyHome = ({}) => {
       <Card.Body>
         <Card.Title><h2>Welcome To the company page {company.name}. </h2></Card.Title>
         <Card.Text>
-         hello you are a {company.profession.name}. Here are all of your deals. 
+          Here are all of your deals. 
         </Card.Text>
         <Button variant="outline-primary" onClick={() => handleClick("parentcombined")}>Profit Distributor</Button>
       </Card.Body>
@@ -80,8 +107,11 @@ const CompanyHome = ({}) => {
  
                 <h5> deal {deal.name}</h5>
                 </Link>
-
-                    hello you are a {company.profession.name}
+                <Button
+                Button variant="outline-danger" size="sm" id={deal.id} onClick={deleteDeal}>
+            Delete Me
+          </Button>
+                    {/* hello you are a {company.profession.name} */}
                 </Accordion.Body>
               </Accordion.Item>
                     )
@@ -93,6 +123,15 @@ const CompanyHome = ({}) => {
 <CreateDeal company={company}></CreateDeal>
         </Accordion.Body>
       </Accordion.Item>
+{ boss &&     <Accordion.Item eventKey="3">
+        <Accordion.Header>All Employees</Accordion.Header>
+        <Accordion.Body>
+        <Link to={`/employees/`} state={{'company': company, 'allEmployees':allEmployees, 'allAccesses':allAccesses}}>
+ 
+          <h5> Edit acces to employees</h5>
+          </Link>
+        </Accordion.Body>
+      </Accordion.Item>}
       {company.profession.name == 'Accounting' && <Accordion.Item eventKey="3">
         <Accordion.Header>Check taxes for investors</Accordion.Header>
         <Accordion.Body>

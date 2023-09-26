@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Carousel from 'react-bootstrap/Carousel';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
@@ -11,11 +11,13 @@ import Accordion from 'react-bootstrap/Accordion';
 import {reactLocalStorage} from 'reactjs-localstorage';
 import CreateCompany from '../companies/CreateCompany';
 import useFetch from '../../useFetch';
+import CompanyHome from '../companies/CompanyHome';
 
 const UserHome = () => {
     let email = reactLocalStorage.get('email')
 
     const [index, setIndex] = useState(0);
+    const [compLn, setcompLn] = useState([1,2]);
     const mystyle = {
         color: "white",
         backgroundColor: "#f4f4f4",
@@ -29,7 +31,7 @@ const UserHome = () => {
           headers: { 
           'x-access-token': cookie},
       };
-  
+    // console.log(cookie)
       const { data: companies, error, isPending} = useFetch(`/company` , requestOptions)
 
     const handleSelect = (selectedIndex, e) => {
@@ -39,6 +41,12 @@ const UserHome = () => {
   function handleClick(path) {
     navigate(path);
   }
+  useEffect(() => {
+    if (companies){
+      setcompLn(companies)
+    }
+  }, [companies]);
+  if(compLn.length != 1){
     return ( 
         <>
         <div style={mystyle}>
@@ -50,7 +58,7 @@ const UserHome = () => {
         <Card.Text>
          here are all the companies you are associated with
         </Card.Text>
-        <Button variant="outline-primary" onClick={() => handleClick("parentcombined")}>Profit Distributor</Button>
+        {/* <Button variant="outline-primary" onClick={() => handleClick("parentcombined")}>Profit Distributor</Button> */}
       </Card.Body>
      
     </Card>
@@ -94,6 +102,14 @@ const UserHome = () => {
 
         </>
      );
+} else {
+  return (
+    <>
+    ONLY Ibe
+    <CompanyHome companyt={companies[0]} ></CompanyHome>
+    </>
+  )
+}
 }
  
 export default UserHome;

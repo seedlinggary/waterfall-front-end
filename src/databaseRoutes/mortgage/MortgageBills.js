@@ -1,34 +1,15 @@
 import React, { useState,useEffect } from 'react'
 import apiRequest from '../../ApiRequest'
 import Table from 'react-bootstrap/Table'
-// import Investor from './Investor';
-import Form from 'react-bootstrap/Form';
-// import EditTable from './DiligenceTable';
-import {reactLocalStorage} from 'reactjs-localstorage';
-import useFetch from '../../useFetch';
 
-const MortgageBills = ({deal,company,diligence_id}) => {
+const MortgageBills = ({returned_mortgages}) => {
 
-    let cookie = reactLocalStorage.get('cookie')
-    const requestOptions = {
-        method: 'GET',
-        headers: { 
-        'x-access-token': cookie},
-    };
-
-      const { data: returned_mortgages, error, isPending} = useFetch(`/mortgage/all_bills/${company.id}/${deal.id}/${diligence_id}` , requestOptions)
-      useEffect(() => {
-        if (returned_mortgages){
-            console.log(returned_mortgages)
-            // setMortgages(new_mortgages)
-        }
-    }, [returned_mortgages]);
             return ( 
                 <> 
       {returned_mortgages  && returned_mortgages.map((new_mortgages,index) => {
                             return(
                                 <>
-                                 {new_mortgages && <Table striped responsive>
+                                 {new_mortgages && <Table striped  bordered hover responsive>
 
 <thead>
 <tr>
@@ -61,7 +42,7 @@ return (
 { new_mortgages && new_mortgages.map((mortgage_info, i) => {
 return (
 <>
-  <td>{(mortgage_info.mbill.principal_paid + mortgage_info.mbill.remaining_balance).toLocaleString()}</td>
+  <td>{mortgage_info.mbill && (mortgage_info.mbill.principal_paid + mortgage_info.mbill.remaining_balance).toLocaleString()}</td>
 
 
 </>
@@ -85,7 +66,7 @@ return (
 { new_mortgages && new_mortgages.map((mortgage_info, i) => {
 return (
 <>
-  <td>{mortgage_info.mbill.rate}</td>
+  <td>{mortgage_info.mbill &&  mortgage_info.mbill.rate}</td>
 
 
 
@@ -98,7 +79,7 @@ return (
 { new_mortgages && new_mortgages.map((mortgage_info, i) => {
 return (
 <>
-  <td>{mortgage_info.mbill.interest_paid}</td>
+  <td>{ mortgage_info.mbill && mortgage_info.mbill.interest_paid}</td>
 
 
 
@@ -111,7 +92,7 @@ return (
 { new_mortgages && new_mortgages.map((mortgage_info, i) => {
 return (
 <>
-  <td>{mortgage_info.mbill.principal_paid}</td>
+  <td>{ mortgage_info.mbill &&  mortgage_info.mbill.principal_paid}</td>
 
 
 
@@ -124,7 +105,7 @@ return (
 { new_mortgages && new_mortgages.map((mortgage_info, i) => {
 return (
 <>
-  <td>{mortgage_info.mbill.remaining_balance}</td>
+  <td>{mortgage_info.mbill &&  mortgage_info.mbill.remaining_balance}</td>
 
 
 
@@ -137,7 +118,7 @@ return (
 { new_mortgages && new_mortgages.map((mortgage_info, i) => {
 return (
 <>
-  <td>{mortgage_info.mbill.total_principal_payment}</td>
+  <td>{mortgage_info.mbill &&  mortgage_info.mbill.total_principal_payment}</td>
 
 
 
@@ -150,7 +131,7 @@ return (
 { new_mortgages && new_mortgages.map((mortgage_info, i) => {
 return (
 <>
-  <td>{mortgage_info.mbill.total_interest_payment}</td>
+  <td>{mortgage_info.mbill &&  mortgage_info.mbill.total_interest_payment}</td>
 
 
 

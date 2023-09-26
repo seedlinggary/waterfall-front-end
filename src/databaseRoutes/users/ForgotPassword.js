@@ -29,7 +29,7 @@ const ForgotPassword = ({}) => {
                             "password": password,
                             "email": email}
                 
-                 let  a = apiRequest('POST',info,'/reset_password/')
+                 let  a = await apiRequest('POST',info,'/reset_password/')
                  setEmailSent(true)
                 }
   

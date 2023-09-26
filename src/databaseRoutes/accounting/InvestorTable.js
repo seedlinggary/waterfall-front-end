@@ -96,7 +96,7 @@ const InvestorTable = ({investors, setInvestors}) => {
         // console.log(getLongestProfit(investors))
             return ( 
                 <> 
- {investors && <Table striped responsive>
+ {investors && <Table striped  bordered hover responsive>
 
                         <thead>
                         <tr>

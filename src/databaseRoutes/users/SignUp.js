@@ -17,15 +17,15 @@ const SignUp = ({}) => {
 
   
       
-    const SendApi = (e) => {
+    const SendApi = async (e) => {
       e.preventDefault();
       let info = {"first_name": first_name,
                   "last_name": last_name,
                   "password": password,
                   "email": email}
       
-      let a = apiRequest('POST',info,'/user')
-      console.log(a)
+      let a = await apiRequest('POST',info,'/user')
+      // console.log(a)
       }  
     return ( 
         <div className="blog-list">
