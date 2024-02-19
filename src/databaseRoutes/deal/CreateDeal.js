@@ -12,8 +12,9 @@ import useFetch from '../../useFetch';
 
 let base64 = require('base-64');
 
-const CreateDeal = ({company}) => {
-    const [name, setName] = useState()
+const CreateDeal = ({company,deal}) => {
+  const [name, setName] = useState(deal ? deal.name : 'New Deal')
+  const [deal_id, setDealid] = useState(deal ? deal.id : '')
 
     const navigate = useNavigate()
 
@@ -22,10 +23,17 @@ const CreateDeal = ({company}) => {
     const SendApi = async (e) => {
     //   e.preventDefault();
       let info = {"name": name,
+                  "deal_id": deal_id,
                   
                  }
       let a = await apiRequest('POST',info,`/deal/${company.id}`)
-      navigate(0)
+      if (deal_id){
+        navigate(-1)
+
+      }else{
+
+        navigate(0)
+      }
     } 
       
       
@@ -36,7 +44,8 @@ const CreateDeal = ({company}) => {
 
 <Form.Group as={Col} controlId="formGridEmail">
 <Form.Label>Name of Deal</Form.Label>
-<Form.Control  value={name} onChange={(e) => setName(e.target.value)}/>
+<Form.Control  noValidate 
+  validated='false' value={name} onChange={(e) => setName(e.target.value)}/>
 </Form.Group>
 
 </Row>

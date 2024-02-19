@@ -63,8 +63,8 @@ const ThirdMortgageCalculator = ({mortgages,setMortgages, mortgageID}) => {
     const SendApi = (e) => {
      
 
-      let backend = 'http://127.0.0.1:5000'
-      // let backend = 'https://distributionresolutionapi.com'
+      // let backend = 'http://127.0.0.1:5000'
+      let backend = 'https://distributionresolutionapi.com'
       // let address = `/waterfall_calc`
       let address = `/mortgage_calc`
       const requestOptions = {

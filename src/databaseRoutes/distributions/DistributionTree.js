@@ -15,6 +15,8 @@ import useFetch from '../../useFetch';
 import {reactLocalStorage} from 'reactjs-localstorage';
 import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
+import CreateProposal from '../proposal/CreateProposal';
+import ProposalInfo from '../proposal/ProposalInfo';
 
 
 function DistributionTree({deal, company, diligence_id, newPid=null, new_unformatted_tree=null, live_info=false, investmentDetails=[], distributionTree=false}) {
@@ -80,7 +82,7 @@ function DistributionTree({deal, company, diligence_id, newPid=null, new_unforma
   const ShowInvestmentDetails = (investmentdetails) => {
     return ( 
       <>
-      Total Returns per Year
+      Total Returns Per Year
       <Tabs
       defaultActiveKey="profile"
       id="justify-tab-example"
@@ -194,7 +196,7 @@ function DistributionTree({deal, company, diligence_id, newPid=null, new_unforma
        
         const addPerson = (person, parentId = null) => {
           const { id, name, waterfall, lp, gp, children } = person;
-          flatTree[id] = { id, name, waterfall, lp, gp, children: [],saved_to_db:  true };
+          flatTree[id] = { id, name, waterfall, lp, gp, children: [],saved_to_db:  true,  };
          
           if (parentId) {
             flatTree[parentId].children.push(id);
@@ -211,6 +213,7 @@ function DistributionTree({deal, company, diligence_id, newPid=null, new_unforma
         let newGP = {}
         let newWaterfall = {}
         Object.entries(flatTree).map( ([key2, value2],index) => {
+          // console.log(value2)
         if (value2['gp']){
           let new_date =new Date(value2['gp']['date_funds_recieved'])
           value2['gp']['date_funds_recieved'] = new_date
@@ -313,25 +316,44 @@ function DistributionTree({deal, company, diligence_id, newPid=null, new_unforma
       });
     };
     const SendApi = async (e) => {
+      // setGraphTree(formatTree(tree,pId))
+      //   e.preventDefault();
+        let info = formatTree(tree,pId)
+       
+        console.log(tree)
+        console.log(pId)
+        console.log(info)
+        if (!live_info){
+
+          let a = await apiRequest('POST',info,`/distribution/${company.id}/${deal.id}/${diligence_id}`)
+        } else{
+          let a = await apiRequest('POST',info,`/distribution/live/${company.id}/${deal.id}/${diligence_id}`)
+
+        }
+        navigate(0)
+      } 
+      const DeleteInvestorApi = async (distribution_id) => {
         // setGraphTree(formatTree(tree,pId))
         //   e.preventDefault();
-          let info = formatTree(tree,pId)
+          let info = {distribution_id : distribution_id}
          
-          console.log(tree)
-          console.log(pId)
-          console.log(info)
-          if (!live_info){
 
-            let a = await apiRequest('POST',info,`/distribution/${company.id}/${deal.id}/${diligence_id}`)
-          } else{
-            let a = await apiRequest('POST',info,`/distribution/live/${company.id}/${deal.id}/${diligence_id}`)
+         
+            let a = await apiRequest('POST',info,`/distribution/investor/delete/${company.id}/${deal.id}`)
 
-          }
+        if (a){
+
           navigate(0)
+        }
         } 
-     
+   
       const handleDelete = (id) => {
-        console.log(id)
+        if(tree[id].saved_to_db){
+          console.log(tree[id])
+          DeleteInvestorApi(id)
+        }
+        else{
+        console.log(tree[id])
         let newTree =[]
         setTree((prevTree) => {
           const treeCopy = { ...prevTree };
@@ -360,6 +382,7 @@ function DistributionTree({deal, company, diligence_id, newPid=null, new_unforma
          
           return treeCopy;
         });
+      }
         // setTree((prevTree) => {
         //   const treeCopy = { ...prevTree };
         //   newTree.map((childId) => (
@@ -392,6 +415,9 @@ function DistributionTree({deal, company, diligence_id, newPid=null, new_unforma
           {person.id != 12212 && <Button variant="outline-danger" onClick={() => handleDelete(person.id)}>Delete Me
           
           </Button>}
+          {(lp[person.id] && lp[person.id].saved_in_db ) && <ProposalInfo distribution_ID={person.id} proposal={lp[person.id].proposal} profits={investmentDetails[person.id]}></ProposalInfo> }
+          {(gp[person.id] && gp[person.id].saved_in_db ) && <ProposalInfo distribution_ID={person.id} proposal={gp[person.id].proposal} profits={investmentDetails[person.id]}></ProposalInfo>}
+          {( waterfall[person.id] && waterfall[person.id].saved_in_db ) && <ProposalInfo distribution_ID={person.id} proposal={waterfall[person.id].proposal} profits={investmentDetails[person.id]}></ProposalInfo>}
           {person.id}
           {(person.id == 12212 || newPid== person.id) && <h3> Your Investment Tree</h3> }
         </Accordion.Header>
@@ -468,7 +494,10 @@ function DistributionTree({deal, company, diligence_id, newPid=null, new_unforma
         <Modal.Header closeButton>
           <Modal.Title>Investment Tree</Modal.Title>
         </Modal.Header>
-        <Modal.Body><DisplayTree tree={graphTree}/></Modal.Body>
+        <Modal.Body>
+          
+          
+          <DisplayTree tree={graphTree}/></Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
             Close

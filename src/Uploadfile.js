@@ -24,8 +24,8 @@ const [fileName, setFileName] = useState([])
     data.append('file', uploadInput.files[0]);
     data.append('filename', fileName.value);
 // console.log(value)
-// fetch(`http://localhost:5000/${apiextension}`, {
-  fetch(`https://distributionresolutionapi.com/${apiextension}`, {
+fetch(`http://localhost:5000/${apiextension}`, {
+  // fetch(`https://distributionresolutionapi.com/${apiextension}`, {
     method: 'POST',
       body: data,
       headers: { 

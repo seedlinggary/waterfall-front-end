@@ -62,7 +62,7 @@ setWaterfall(prevState => ({
         <div > 
 
     
-    <Button  variant="primary" onClick={addFee}>Add more Fees (advanced)</Button>
+{!waterfall[personId].saved_in_db && <Button  variant="primary" onClick={addFee}>Add more Fees (advanced)</Button>}
       {waterfall[personId] && waterfall[personId].fees && waterfall[personId].fees.map((item, i) => {
                     return (
                     
@@ -75,7 +75,7 @@ setWaterfall(prevState => ({
                   <Row className="mb-3">
                   <Form.Group as={Col} >
       <Form.Label>Type of fee</Form.Label>
-      <Form.Select aria-label="Default select example" id={i} onChange={(e) => handleFeeChange(e,'type_of_fee')}>
+      <Form.Select disabled={waterfall[personId].saved_in_db} aria-label="Default select example" id={i} onChange={(e) => handleFeeChange(e,'type_of_fee')}>
             <option value={item.type_of_fee}>{item.type_of_fee} </option>
             <option value="hurdle">hurdle </option>
             <option value="capital">capital</option>
@@ -85,26 +85,26 @@ setWaterfall(prevState => ({
         {item.type_of_fee === "hurdle" && <>
                   <Form.Group as={Col}  >
               <Form.Label>What year would you like the fee to come in? Type x for all years.</Form.Label >
-              <Form.Control  placeholder={item.year} id={i}  onChange={(e) => handleFeeChange(e,'year')}/>
+              <Form.Control disabled={waterfall[personId].saved_in_db} placeholder={item.year} id={i}  onChange={(e) => handleFeeChange(e,'year')}/>
             </Form.Group>
             <Form.Group as={Col}>
               <Form.Label>Before which Hurdle?</Form.Label>
-              <Form.Control  placeholder={item.before_what_hurdle}  id={i} onChange={(e) => handleFeeChange(e,'before_what_hurdle')}/>
+              <Form.Control disabled={waterfall[personId].saved_in_db} placeholder={item.before_what_hurdle}  id={i} onChange={(e) => handleFeeChange(e,'before_what_hurdle')}/>
             </Form.Group>
             </>
       }
             <Form.Group as={Col} >
               <Form.Label>Name of company that recieves this fee.</Form.Label>
-              <Form.Control  placeholder={item.who_gets_this_fee} id={i} onChange={(e) => handleFeeChange(e,'who_gets_this_fee')} />
+              <Form.Control disabled={waterfall[personId].saved_in_db} placeholder={item.who_gets_this_fee} id={i} onChange={(e) => handleFeeChange(e,'who_gets_this_fee')} />
             </Form.Group>
             <Form.Group as={Col}  >
               <Form.Label>Type in your amount of cash or percentage amount</Form.Label >
-              <Form.Control  placeholder={item.percentage_or_cash} id={i}  onChange={(e) => handleFeeChange(e,'percentage_or_cash')}/>
+              <Form.Control disabled={waterfall[personId].saved_in_db} placeholder={item.percentage_or_cash} id={i}  onChange={(e) => handleFeeChange(e,'percentage_or_cash')}/>
             </Form.Group>
 
             <Form.Group as={Col} >
       <Form.Label>Choose Cash or Percentage</Form.Label>
-      <Form.Select aria-label="Default select example" id={i} onChange={(e) => handleFeeChange(e,'type_transaction')}>
+      <Form.Select disabled={waterfall[personId].saved_in_db} aria-label="Default select example" id={i} onChange={(e) => handleFeeChange(e,'type_transaction')}>
       
             <option value={item.type_transaction}>{item.type_transaction} </option>
             <option value="cash">cash </option>

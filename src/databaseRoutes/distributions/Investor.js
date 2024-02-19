@@ -14,7 +14,7 @@ const Investor = ({investor, setInvestor,personId, payoutFrequency, live_info=fa
     let newDate = new Date(data);
     return newDate
   }
-
+  // console.log(investor[personId])
     function handleInvestorChange(e, mortgageInfoType) {
         let keyvalue = mortgageInfoType.toString()
         const newInvestor= Object.assign(investor[personId],{[`${keyvalue}`]:e})
@@ -28,23 +28,24 @@ const Investor = ({investor, setInvestor,personId, payoutFrequency, live_info=fa
                   <Row className="mb-3">
                   <Form.Group as={Col}  >
               <Form.Label>Name</Form.Label >
-              <Form.Control  value={investor[personId].name}  onChange={(e) => handleInvestorChange(e.target.value,'name')}/>
+              <Form.Control  disabled={investor[personId].saved_in_db} value={investor[personId].name}  onChange={(e) => handleInvestorChange(e.target.value,'name')}/>
             </Form.Group>
 { live_info   &&        <Form.Group as={Col} >
               <Form.Label>Email Adrress</Form.Label>
-              <Form.Control  value={investor[personId].email}  onChange={(e) => handleInvestorChange(e.target.value,'email')} />
+              <Form.Control    disabled={investor[personId].saved_in_db} value={investor[personId].email}  onChange={(e) => handleInvestorChange(e.target.value,'email')} />
             </Form.Group>}
-            <Form.Group as={Col} >
+            <Form.Group as={Col}  required>
               <Form.Label>Amount Invested</Form.Label>
-              <Form.Control  value={investor[personId].amount_invested}  onChange={(e) => handleInvestorChange(e.target.value,'amount_invested')} />
+              <Form.Control  type="number"  disabled={investor[personId].saved_in_db}
+   value={investor[personId].amount_invested}  onChange={(e) => handleInvestorChange(e.target.value,'amount_invested')} />
             </Form.Group>
             <Form.Group as={Col}  >
               <Form.Label>Country of Origin</Form.Label >
-              <Form.Control  value={investor[personId].country_of_origin}  onChange={(e) => handleInvestorChange(e.target.value,'country_of_origin')}/>
+              <Form.Control  disabled={investor[personId].saved_in_db} value={investor[personId].country_of_origin}  onChange={(e) => handleInvestorChange(e.target.value,'country_of_origin')}/>
             </Form.Group>
             <Form.Group as={Col}  >
               <Form.Label>Tax Withholding percentage</Form.Label >
-              <Form.Control  value={investor[personId].tax_percentage_withheld}   onChange={(e) => handleInvestorChange(e.target.value,'tax_percentage_withheld')}/>
+              <Form.Control  disabled={investor[personId].saved_in_db} value={investor[personId].tax_percentage_withheld}   onChange={(e) => handleInvestorChange(e.target.value,'tax_percentage_withheld')}/>
             </Form.Group>
             {/* <Form.Group as={Col}  >
               <Form.Label>Year Bought In</Form.Label > */}
@@ -60,7 +61,7 @@ const Investor = ({investor, setInvestor,personId, payoutFrequency, live_info=fa
             </Form.Group> */}
             <Form.Group as={Col} controlId="formGridEmail">
             <Form.Label>Date Bought in</Form.Label>
-            <DatePicker selected={changeDate(investor[personId].date_funds_recieved)}  onChange={(e) => handleInvestorChange(e,'date_funds_recieved')}  showYearDropdown
+            <DatePicker disabled={investor[personId].saved_in_db} selected={changeDate(investor[personId].date_funds_recieved)}  onChange={(e) => handleInvestorChange(e,'date_funds_recieved')}  showYearDropdown
       scrollableMonthYearDropdown />
 
           </Form.Group> 

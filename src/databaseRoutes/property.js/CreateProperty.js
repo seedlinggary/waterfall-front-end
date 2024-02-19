@@ -12,13 +12,14 @@ import useFetch from '../../useFetch';
 
 let base64 = require('base-64');
 
-const CreateProperty = ({company, deal}) => {
-    const [state, setState] = useState('New York')
-    const [country, setCountry] = useState('USA')
-    const [street, setStreet] = useState('Sesame Place')
-    const [num, setNum] = useState('123')
-    const [apt, setApt] = useState(null)
-    const [ptype_id, setPtypeID] = useState(1)
+const CreateProperty = ({company, deal, property}) => {
+    const [state, setState] = useState(property ? property.state : 'New York')
+    const [country, setCountry] = useState(property ? property.country : 'USA')
+    const [street, setStreet] = useState(property ? property.street : 'Sesame Place')
+    const [num, setNum] = useState(property ? property.number : '123')
+    const [apt, setApt] = useState(property ? property.apt : null)
+    const [ptype_id, setPtypeID] = useState(property ? property.ptype_id : 1)
+    const [property_id, setPropertyid] = useState(property ? property.id : '')
 
     const navigate = useNavigate()
 
@@ -31,11 +32,18 @@ const CreateProperty = ({company, deal}) => {
       'street': street,
       'number':num,
       'apt':apt,
-      'ptype_id': ptype_id 
+      'ptype_id': ptype_id,
+      'property_id': property_id 
                   
                  }
+                 console.log(ptype_id)
       let a = await apiRequest('POST',info,`/property/${company.id}/${deal.id}`)
-      navigate(0)
+      if(property_id){
+        navigate(-1)
+      }else{
+
+        navigate(0)
+      }
     } 
       
     let cookie = reactLocalStorage.get('cookie')

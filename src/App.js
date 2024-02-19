@@ -30,6 +30,14 @@ import CompareDiligence from './databaseRoutes/deal/CompareDiligence';
 import Employees from './databaseRoutes/companies/Employees';
 import InvestorReturnsHome from './databaseRoutes/diligence/InvestorReturnsHome';
 import PropertyHome from './databaseRoutes/property.js/PropertyHome';
+import InvestorHome from './investor/InvestorHome';
+import InvestmentDetails from './investor/InvestmentDetails';
+import ChartHome from './investor/ChartHome';
+import Trashwork from './investor/Trashwork';
+import SpecificInvestment from './investor/SpecificInvestment';
+import EditProperty from './databaseRoutes/property.js/EditPropertyInfo';
+import PotentialInvestments from './investor/PotentialInvestments';
+import SendFile from './lawyers/SendFile';
 
 function App() {
   let email = reactLocalStorage.get('email')
@@ -55,6 +63,7 @@ function App() {
             <Route path="*" element={<NotFound />} />
             <Route path="/signin" element={<SignIn />} />
             <Route path="/signup" element={<SignUp />} />
+            <Route path="/signup/:paymentcanceled" element={<SignUp />} />
             <Route path="/forgotpassword" element={<ForgotPassword />} />
             {email &&<Route path="/userhome" element={<UserHome />} />}
             {email &&<Route path="/companyhome/"  element={<CompanyHome />} />}
@@ -63,8 +72,16 @@ function App() {
             {email &&<Route path="/dinfohome/"  element={<DInfoHome />} />}
             {email &&<Route path="/comparediligence/"  element={<CompareDiligence />} />}
             {email &&<Route path="/employees/"  element={<Employees />} />}
+            {email &&<Route path="/editProperties/"  element={<EditProperty />} />}
             {email &&<Route path="/investorReturnsHome/"  element={<InvestorReturnsHome />} />}
             {email &&<Route path="/PropertyHome/"  element={<PropertyHome />} />}
+            {email &&<Route path="/InvestorHome/"  element={<InvestorHome />} />}
+            {email &&<Route path="/InvestmentDetails/"  element={<InvestmentDetails />} />}
+            {email &&<Route path="/ChartHome/"  element={<ChartHome />} />}
+            {email &&<Route path="/SpecificInvestment/"  element={<SpecificInvestment />} />}
+            {email &&<Route path="/Trashwork/"  element={<Trashwork />} />}
+            {email &&<Route path="/PotentialInvestments/"  element={<PotentialInvestments />} />}
+            {email &&<Route path="/SendFile/"  element={<SendFile />} />}
 
           </Routes>
         </div>

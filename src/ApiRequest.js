@@ -6,8 +6,8 @@ async function apiRequest(gppd, infor,address) {
     // console.log(infor)
     // let backend = 'https://distributionresolutionapi.com'
     // let backend = 'https://distributionresolutionapi.com'
-    let backend = 'http://127.0.0.1:5000'
-    // let backend = 'https://distributionresolutionapi.com'
+    // let backend = 'http://127.0.0.1:5000'
+    let backend = 'https://distributionresolutionapi.com'
 
     let cookie = reactLocalStorage.get('cookie')
     const requestOptions = {

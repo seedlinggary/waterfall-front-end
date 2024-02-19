@@ -11,18 +11,22 @@ import Spinner from 'react-bootstrap/Spinner';
 import ListGroup from 'react-bootstrap/ListGroup';
 import apiRequest from '../../ApiRequest'
 import Form from 'react-bootstrap/Form';
-
+import CreateDeal from '../deal/CreateDeal';
+import AddClient from './AddClient';
+import Tab from 'react-bootstrap/Tab';
+import Tabs from 'react-bootstrap/Tabs';
 const Employees = () => {
     const navigate = useNavigate()
 
     let email = reactLocalStorage.get('email')
     const location = useLocation()
     const company = location.state.company
+    const deals = location.state.deals
     // const all_employees = location.state.allEmployees
     // const employee_info = location.state.allAccesses
     const [employee_info, setEmployeeInfo] = useState(location.state.allAccesses)
     const [all_employees, setall_employees] = useState(location.state.allEmployees)
-
+    
     const [index, setIndex] = useState(0);
     console.log(all_employees)
     const mystyle = {
@@ -31,13 +35,14 @@ const Employees = () => {
         padding: "10px",
       };
 
-            
+      
       let cookie = reactLocalStorage.get('cookie')
       const requestOptions = {
-          method: 'GET',
-          headers: { 
+        method: 'GET',
+        headers: { 
           'x-access-token': cookie},
       };
+          const { data: clients, e, iP} = useFetch(`/investor/client/${company.id}` , requestOptions)
       const SendApi = async (e) => {
         //   e.preventDefault();
           let info = all_employees
@@ -62,7 +67,14 @@ const Employees = () => {
         <Row>
         <Col md={{ span: 10, offset: 1 }}>  
       
-
+        <Tabs
+      defaultActiveKey="profile"
+      id="uncontrolled-tab-example"
+      className="mb-3"
+    >
+      <Tab eventKey="Employees" title="Employees">
+      
+      
         <Accordion defaultActiveKey={['0']} alwaysOpen>
         {all_employees && Object.entries(all_employees).map( ([id, inf],index) => {
             return (
@@ -113,13 +125,57 @@ const Employees = () => {
 }                </div>
                     )
       })} 
-
-    </Accordion>
-    </Col>
-    </Row>
     <Button variant="primary" onClick={SendApi}>
         Submit
       </Button>
+
+    </Accordion>
+
+    </Tab>
+      <Tab eventKey="Deals" title="Deals">
+       
+    <Accordion defaultActiveKey={['0']} alwaysOpen>
+      Edit deals
+    {deals && deals.map((deal, i) => {
+            return (
+                <Accordion.Item eventKey={i}>
+
+              <Accordion.Header>{deal.name}</Accordion.Header>
+                <Accordion.Body>
+                <CreateDeal company={company} deal={deal}></CreateDeal>
+                </Accordion.Body>
+              </Accordion.Item>
+                    )
+      })} 
+
+
+      </Accordion>
+      </Tab>
+      <Tab eventKey="Clients" title="Clients" >
+       
+      <Accordion defaultActiveKey={['0']} alwaysOpen>
+      clients
+    {clients && clients.map((client, i) => {
+            return (
+                <Accordion.Item eventKey={i}>
+
+              <Accordion.Header>{client.user.email}</Accordion.Header>
+                <Accordion.Body>
+                </Accordion.Body>
+              </Accordion.Item>
+                    )
+      })} 
+
+
+      </Accordion>
+<AddClient companyid={company.id} business={true}></AddClient>
+</Tab>
+    </Tabs>
+
+
+
+    </Col>
+    </Row>
 
         </>
      );

@@ -60,29 +60,29 @@ setWaterfall(prevState => ({
         <div > 
  
 
-    <Button  variant="primary" onClick={addHurdle}>add more  hurdles</Button>
+ {!waterfall[personId].saved_in_db &&   <Button  variant="primary" onClick={addHurdle}>add more  hurdles</Button>}
     <p> The first hurdle will be the preferred return.</p>
       {waterfall[personId].splits.map((item, i) => {
                     return (
                         
         <div>
            {i == 0 && <h3>Preferred Return: </h3>}
-           {i != 0 && <h3>Hurdle {i}: <Button variant="danger" id={i} onClick={deleteHurdle}>
+           {i != 0 && !waterfall[personId].saved_in_db &&<h3>Hurdle {i}: <Button variant="danger" id={i} onClick={deleteHurdle}>
             Delete Hurdle
           </Button> </h3>}
                   <Row className="mb-3">
                   {i != 0 && <>   <Form.Group as={Col}  >
               <Form.Label>LP's take of the cut </Form.Label >
-              <Form.Control  value={item.limited_partner_percent} id={i}  onChange={(e) => handleHurdleChange(e,'limited_partner_percent')}/>
+              <Form.Control disabled={waterfall[personId].saved_in_db} value={item.limited_partner_percent} id={i}  onChange={(e) => handleHurdleChange(e,'limited_partner_percent')}/>
             </Form.Group>
             <Form.Group as={Col}>
               <Form.Label>GP's take of the cut (Promote amount)</Form.Label>
-              <Form.Control  value={item.sponsor_percent}  id={i} onChange={(e) => handleHurdleChange(e,'sponsor_percent')}/>
+              <Form.Control disabled={waterfall[personId].saved_in_db} value={item.sponsor_percent}  id={i} onChange={(e) => handleHurdleChange(e,'sponsor_percent')}/>
             </Form.Group></>}
            
             <Form.Group as={Col} >
               <Form.Label>Hurdle top amount</Form.Label>
-              <Form.Control  value={item.hurdle} id={i} onChange={(e) => handleHurdleChange(e,'hurdle')} />
+              <Form.Control disabled={waterfall[personId].saved_in_db} value={item.hurdle} id={i} onChange={(e) => handleHurdleChange(e,'hurdle')} />
             </Form.Group>
             </Row>
       </div>

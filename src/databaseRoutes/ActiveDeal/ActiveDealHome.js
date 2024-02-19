@@ -166,7 +166,16 @@ const activateProperty = async e => {
               
                     )
       })} 
-
+      <Accordion.Item eventKey="-3">
+        <Accordion.Header>Edit Property Info</Accordion.Header>
+        <Accordion.Body>
+        <Link to={`/editProperties/`} state={{'company': company, 'properties':properties, 'deal': deal}}>
+ 
+          <h5> Edit Property Info</h5>
+          </Link>
+        {/* { <PropertyVariables propertyVariables={propertyVariables} setPropertyVariables={setPropertyVariables} deal={deal} company={company}/>} */}
+        </Accordion.Body>
+      </Accordion.Item>
       </Accordion>
          </Tab.Pane>
             <Tab.Pane eventKey="third">
@@ -179,7 +188,7 @@ const activateProperty = async e => {
               {/* <DistributionTree deal={deal} company={company} diligence_id={diligence_id}  /> */}
               
             </Tab.Pane>
-            <Tab.Pane eventKey="fifth"> <Investors investors={investors}/> </Tab.Pane>
+            <Tab.Pane eventKey="fifth"> <Investors old_investors={investors}/> </Tab.Pane>
             <Tab.Pane eventKey="sixth">Coming Soon</Tab.Pane>
             <Tab.Pane eventKey="seventh">Coming Soon</Tab.Pane>
             <Tab.Pane eventKey="eigth">

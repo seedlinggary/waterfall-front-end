@@ -11,6 +11,7 @@ import {reactLocalStorage} from 'reactjs-localstorage';
 import DistributionTree from '../distributions/DistributionTree';
 import DatePicker from 'react-datepicker';
 import Form from 'react-bootstrap/Form';
+import FinalizeDist from './FinalizeDist';
 
 function MultiTree({deal, company, diligence_id}) {
     // function DistributionTree({pId, setParentId,tree, setTree,waterfall, setWaterfall,lp, setLP, gp, setGP,payoutFrequency, setPayoutFrequency}) {
@@ -19,8 +20,9 @@ function MultiTree({deal, company, diligence_id}) {
   const today = new Date(timeElapsed);
   
   const navigate = useNavigate()
-
+  const [modalShow, setModalShow] = useState(false);
   const [pIdList, setParentIdList] = useState([]);
+  const [confirmedDistribution, setConfirmedDistribution] = useState(false);
   const [tree_list, setTreeList] = useState([]);
   const [amountToDistribute, setamountToDistribute] = useState([]);
   const [distributionAnswers, setDistributionAnswers] = useState();
@@ -44,6 +46,7 @@ function MultiTree({deal, company, diligence_id}) {
             all_ids.push(pid.parent_id)
             all_tree_lists.push(pid.formated_tree)
             let new_list = []
+            // console.log(distributionTrees[1][pid.parent_id])
             distributionTrees[1][pid.parent_id].map((dist, i) => { 
                 let new_date =new Date(dist.distribution_date)
 
@@ -93,10 +96,26 @@ function MultiTree({deal, company, diligence_id}) {
                   });
         
               }
-              const sendApi = async (i, pid) => {
-                let info = {'distributions':amountToDistribute[i], 'parent_id':pid}
+              const sendApi = async (i, pid, first_try) => {
+                let info = {'distributions':amountToDistribute[i], 'parent_id':pid, 'confirmed_distribution':confirmedDistribution, 'new_percentages':distributionAnswers, 'first_try':first_try}
                 let a = await apiRequest('POST',info,`/distribution/results/live/${company.id}/${deal.id}`)
                 setDistributionAnswers(a)
+                if(!confirmedDistribution){
+                  setModalShow(true)
+                }
+                else{
+
+                  setModalShow(false)
+                }
+                setConfirmedDistribution(false)
+                console.log(a)
+                // console.log()
+              }
+              const sendApiDeleteProfit = async ( profitid,parent_id) => {
+                console.log(confirmedDistribution)
+                let info = {'profit_id':profitid, 'parent_id':parent_id, 'confirmedDistribution':confirmedDistribution}
+                let a = await apiRequest('POST',info,`/distribution/results/delete/${company.id}/${deal.id}`)
+                navigate(0)
                 console.log(a)
                 // console.log()
               }
@@ -109,6 +128,7 @@ function MultiTree({deal, company, diligence_id}) {
         <Button onClick={() => {
                 AddTree()
     }}>Add Tree </Button>
+    <hr></hr>
         {pIdList && pIdList.map((pid, i) => {   
         
         return (
@@ -128,17 +148,32 @@ return (
   </Form.Group> 
   <Form.Group as={Col} controlId="formGridEmail">
     <Form.Label>Distribution Amount</Form.Label>
-    <Form.Control type="number" value={distributions.amount} onChange={(e) => handleTransactionChange(e.target.value, i, index, 'amount')}/>
-  </Form.Group>
+ <Form.Control  type="number" value={distributions.amount} onChange={(e) => handleTransactionChange(e.target.value, i, index, 'amount')}/>  </Form.Group>
   {distributions.id}
+  {/* {console.log(amountToDistribute[i].length)} */}
+  {index == (amountToDistribute[i].length -1) && <Button variant={'danger'} onClick={() => {
+              sendApiDeleteProfit( distributions.id, pid)
+  }}>Delete Distribution </Button>}
 </Row>
 )
 
           })}
 <Button onClick={() => {
-              sendApi(i, pid)
-  }}>send Transactions </Button>
- 
+              sendApi(i, pid, true)
+  }}>Send Transactions </Button>
+
+    
+      <FinalizeDist
+        show={modalShow}
+        i={i}
+        pid={pid}
+        onHide={() => setModalShow(false)}
+        distributionAnswers={distributionAnswers}
+        sendApi={sendApi}
+        confirmedDistribution={confirmedDistribution}
+        setConfirmedDistribution={setConfirmedDistribution}
+        setDistributionAnswers={setDistributionAnswers}
+      />
           <DistributionTree deal={deal} company={company} diligence_id={diligence_id} newPid={pid} new_unformatted_tree={tree_list[i]} live_info={true} investmentDetails={distributionAnswers}/>
 
           </>

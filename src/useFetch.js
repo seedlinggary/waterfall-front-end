@@ -5,8 +5,8 @@ const useFetch = (url, options) => {
     const [data, setData] = useState(null)
     const [isPending, setIsPending] = useState(true)
     const [error, setError] = useState(null)
-    let backend = 'http://127.0.0.1:5000'
-    // let backend = 'https://distributionresolutionapi.com'
+    // let backend = 'http://127.0.0.1:5000'
+    let backend = 'https://distributionresolutionapi.com'
     useEffect(() => {
         const abortCont = new AbortController();
         options.signal = abortCont.signal

@@ -19,8 +19,51 @@ import AddExpenseType from '../diligence/AddExpenseType';
 import AddBill from '../diligence/AddBill';
 import MultiTree from './MultiTree';
 import Tabs from 'react-bootstrap/Tabs';
+import Form from 'react-bootstrap/Form';
 
-const Investors = ({ investors}) => {
+const Investors = ({ old_investors}) => {
+  const navigate = useNavigate();
+
+  const [investors, setInvestors] = useState(old_investors)
+  const sendApi = async (id) => {
+    let info = {'investor_id':investors[id].id,'user_id':investors[id].user.public_id, 'name':investors[id].distribution.name, 'email':investors[id].user.email, 'distribution_id': investors[id].distribution.id, }
+    let a = await apiRequest('POST',info,`/investor/edit`)
+    if (a){
+      // navigate(0)
+
+    }
+  }
+
+  function handleInvestorChange(e, mortgageInfoType, i) {
+    let keyvalue = mortgageInfoType.toString()
+     let updatedList = investors
+     updatedList[i][`${keyvalue}`] = e
+     let updff = updatedList[i]
+
+    if (mortgageInfoType == 'name'){
+      setInvestors(s => {
+        const newInvestor = s.slice();
+        newInvestor[i].distribution.name = e;
+  
+        return newInvestor;
+      });
+
+    }else{
+      setInvestors(s => {
+        const newInvestor = s.slice();
+        newInvestor[i].user.email = e;
+  
+        return newInvestor;
+      });
+    }
+
+}
+useEffect(() => {
+  if (old_investors){
+    setInvestors(old_investors)
+  }
+  console.log(old_investors)
+}, [old_investors]);
     const ShowInvestmentDetails = (investmentdetails) => {
         return ( 
           <>
@@ -108,6 +151,22 @@ const Investors = ({ investors}) => {
             Distribution Info:
             <p>Name {investor.distribution.name}</p> 
             {ShowInvestmentDetails(investor.distribution.profits)}
+
+            <Row className="mb-3">
+                  <Form.Group as={Col}  >
+              <Form.Label>Name</Form.Label >
+              <Form.Control   value={investor.distribution.name}  onChange={(e) => handleInvestorChange(e.target.value,'name', i)}/>
+            </Form.Group>
+   <Form.Group as={Col} >
+              <Form.Label>Email Adrress</Form.Label>
+              <Form.Control    value={investor.user.email}  onChange={(e) => handleInvestorChange(e.target.value,'email', i)} />
+            </Form.Group>
+
+            <Button onClick={() => {
+              sendApi(i)
+  }}>Edit Name or email </Button>
+            </Row>
+
             </Tab.Pane>
           }
           </>

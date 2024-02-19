@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState,useEffect } from 'react'
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
@@ -44,7 +44,7 @@ const Profit = ({ profit, setProfit,profitFrequency, setProfitFrequency}) => {
       id: 0       }
 
       ];
-      for (let i = 0; i < years - 1 ; i++) {
+      for (let i = 0; i < years  ; i++) {
         sumTotal = sumTotal * (Number(mulitplicationAmount) + 1)
         datesumTotal = addDateMultiplication(datesumTotal)
         newProfit.push({
@@ -53,6 +53,7 @@ const Profit = ({ profit, setProfit,profitFrequency, setProfitFrequency}) => {
                   type: "",
       id: i +1       })
       }
+      let removed = newProfit.pop();
       setProfit(newProfit)
     }
     const deleteYear = e => {

@@ -78,8 +78,8 @@ setWaterfall(prevState => ({
       <Form.Select aria-label="Default select example" id={i} onChange={(e) => handleFeeChange(e,'type_of_fee')}>
             <option value={item.type_of_fee}>{item.type_of_fee} </option>
             <option value="hurdle">hurdle </option>
-            <option value="capital">capital</option>
-            <option value="catch_up">catch_up</option>
+            {/* <option value="capital">capital</option>
+            <option value="catch_up">catch_up</option> */}
         </Form.Select>
         </Form.Group>
         {item.type_of_fee === "hurdle" && <>

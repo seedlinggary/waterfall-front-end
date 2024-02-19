@@ -88,7 +88,7 @@ const Hurdle = ({arr, setArr}) => {
  
 
     <Button  variant="primary" onClick={addInput}>add more  hurdles</Button>
-    <p> The first hurdle will be the preferred return.</p>
+    <p> The first hurdle will be the preferred return. If equity multiple, capital will be returned first then hurdles multiplied(hurdles should not take into account capital returned).</p>
       {arr.map((item, i) => {
                     return (
                         

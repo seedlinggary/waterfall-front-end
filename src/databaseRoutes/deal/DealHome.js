@@ -157,6 +157,16 @@ const deleteProperty = async e => {
         { <PropertyVariables propertyVariables={propertyVariables} setPropertyVariables={setPropertyVariables} deal={deal} company={company}/>}
         </Accordion.Body>
       </Accordion.Item>
+      <Accordion.Item eventKey="-3">
+        <Accordion.Header>Edit Property Info</Accordion.Header>
+        <Accordion.Body>
+        <Link to={`/editProperties/`} state={{'company': company, 'properties':properties, 'deal': deal}}>
+ 
+          <h5> Edit acces to employees</h5>
+          </Link>
+        {/* { <PropertyVariables propertyVariables={propertyVariables} setPropertyVariables={setPropertyVariables} deal={deal} company={company}/>} */}
+        </Accordion.Body>
+      </Accordion.Item>
     </Accordion>
     </Col>
     </Row>

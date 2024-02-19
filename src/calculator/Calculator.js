@@ -16,11 +16,15 @@ import Profit from './Profit';
 import Hurdle from './Hurdle';
 import Fee from './Fee';
 import Investor from './Investor';
+import Card from 'react-bootstrap/Card';
+
 const Calculator = () => {
     const navigate = useNavigate()
     const [irr_parri_passu, setIRRPariPassu] = useState(true)
     const [pay_gp_principal, setPayGPPrincipal] = useState(false)
     const [pay_gp_prefered, setPayGPPrefered] = useState(false)
+    const [catchup, setCatchup] = useState('none')
+    const [prefHurdleType, SetprefHurdleType] = useState('none')
     const [type_of_split, setTypeOfSplit] = useState("split_plus_percentage")
     const [capital_parri_passu, setCapitalParriPasu] = useState(false)
     const [type_of_hurdle, setTypeOfHurdle] = useState("irr_yearly_compund")
@@ -78,6 +82,8 @@ const Calculator = () => {
          "waterfall_preferences": {'irr_parri_passu': irr_parri_passu,
          'pay_gp_principal': pay_gp_principal,
          'pay_gp_prefered': pay_gp_prefered,
+         'catchup': catchup,
+         'pref_hurdle_type': prefHurdleType,
          'type_of_split': type_of_split,
          'capital_parri_passu': capital_parri_passu,
          'type_of_hurdle': type_of_hurdle,
@@ -88,6 +94,7 @@ const Calculator = () => {
          "percentage_investment_owned": percentage_investment_owned,
          "amount_gp_invested": gp_amount,
          "amount_lp_invested": lp_amount,
+         
          "fees": fee,
         "investors": investora,
         "investment_frequency": profitFrequency,
@@ -104,14 +111,24 @@ const Calculator = () => {
       
       function myFunction(value, index, array) {
         const new_value = value
-        new_value.value.date = Date.parse(value.value.date)
+        if (Number.isInteger(value.value.date)){
+          new_value.value.date = new Date(value.value.date)
+        }else {
+  
+          new_value.value.date = Date.parse(value.value.date)
+        }
+  
+        
         return new_value;
       }
       setProfit(fixed_investment_return)
       
       setIRRPariPassu(savedData.llcs[0].waterfall_preferences.irr_parri_passu)
       setPayGPPrincipal(savedData.llcs[0].waterfall_preferences.pay_gp_principal)
+      setCatchup(savedData.llcs[0].waterfall_preferences.catchup)
       setPayGPPrefered(savedData.llcs[0].waterfall_preferences.pay_gp_prefered)
+      SetprefHurdleType(savedData.llcs[0].waterfall_preferences.pref_hurdle_type)
+      
       setTypeOfSplit(savedData.llcs[0].waterfall_preferences.type_of_split)
       setCapitalParriPasu(savedData.llcs[0].waterfall_preferences.capital_parri_passu)
       setTypeOfHurdle(savedData.llcs[0].waterfall_preferences.type_of_hurdle)
@@ -126,7 +143,13 @@ const Calculator = () => {
       setPercentageInvestmentOwned(savedData.llcs[0].percentage_investment_owned)
       setFee(savedData.llcs[0].fees)
       const new_investment_frequency  = savedData.llcs[0].investment_frequency
-      new_investment_frequency.start_date = Date.parse(savedData.llcs[0].investment_frequency.start_date)
+      if (Number.isInteger(savedData.llcs[0].investment_frequency.start_date)){
+        new_investment_frequency.start_date = new Date(savedData.llcs[0].investment_frequency.start_date )
+      }else {
+
+        new_investment_frequency.start_date = Date.parse(savedData.llcs[0].investment_frequency.start_date)
+      }
+      console.log(savedData.llcs[0].investment_frequency)
       setProfitFrequency(savedData.llcs[0].investment_frequency)
 
     }
@@ -376,7 +399,7 @@ id: 8}
         id: 0       }]
         setProfit(prof)
         setArr(inp);
-        setFee(fe)
+        // setFee(fe)
         setIRRPariPassu(true)
         setPrincipalAfterPreffered(false)
         seYrStartCapitalPayback(0)
@@ -389,6 +412,7 @@ id: 8}
         setIRRPariPassu(false)
       setPayGPPrincipal(false)
       setPayGPPrefered(false)
+      setCatchup('pref')
       setTypeOfSplit("split_plus_percentage")
       setCapitalParriPasu(true)
       setTypeOfHurdle("irr_yearly_compund")
@@ -565,6 +589,8 @@ id: 8}
            'type_of_split': type_of_split,
            'capital_parri_passu': capital_parri_passu,
            'type_of_hurdle': type_of_hurdle,
+           'catchup': catchup,
+           'pref_hurdle_type': prefHurdleType,
            'way_in_which_to_split' : way_in_which_to_split,
            'principal_after_preffered': principal_after_preffered,
            'yr_strt_capital_payback': (yr_strt_capital_payback - 1)},
@@ -646,6 +672,8 @@ id: 8}
              'type_of_hurdle': type_of_hurdle,
              'way_in_which_to_split' : way_in_which_to_split,
              'principal_after_preffered': principal_after_preffered,
+             'catchup': catchup,
+             'pref_hurdle_type': prefHurdleType,
              'yr_strt_capital_payback': (yr_strt_capital_payback - 1)},
              "splits": arr,
              "percentage_investment_owned": percentage_investment_owned,
@@ -814,7 +842,29 @@ id: 8}
     
             
             }    
-       
+            const mystyle = {
+              // display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'center',
+              padding: '7px',
+              textAlign: 'center',
+              outline: 'none',
+              textDecoration: 'none !important',
+              color: '#ffffff ',
+              width: '200px',
+              height: '32px',
+              borderRadius: '16px',
+              backgroundColor: '#0A66C2',
+              fontFamily: '"SF Pro Text", Helvetica, sans-serif',
+              textDecoration: 'none',
+            };
+            function handleCatchup(data) {
+              setPayGPPrefered(false)
+              if (data == 'pref_and_capital'){
+                setPayGPPrincipal(false)
+              }
+             setCatchup(data)
+            }
             return ( 
         <div > 
           {warningTermsAndConditions &&  <Alert variant="danger" onClose={() => setWarningTermsAndConditions(false)} dismissible>
@@ -825,6 +875,31 @@ id: 8}
       </Alert>}
          
                 <>
+                <Row>
+                  <hr></hr>
+        <Col></Col>
+        <Col xs={9}>    <Card className="text-center" bg="dark"key="Info" text="white">
+      <Card.Body>
+        <Card.Title><h2>Welcome To The Distribution Calculator</h2></Card.Title>
+        <Card.Text>
+         We help you calculate distributions to your investors. If you are a Sponsor or GP who needs help creating a specific waterfall, or a Investor who wants to learn more reach out  to Gary@distributionresolution.com or        <a
+    style={mystyle}
+    href="https://www.linkedin.com/comm/mynetwork/discovery-see-all?usecase=PEOPLE_FOLLOWS&followMember=gary-schwartz-749941211"
+    target="_blank"
+    >
+    Follow me on LinkedIn
+  </a>
+        
+    </Card.Text>
+        </Card.Body>
+     
+    </Card>
+</Col>
+        <Col></Col>
+        <h1></h1>
+       
+        </Row>
+
                 <br></br>
                 <Row>
       <Col md={{ span: 2, offset: 3 }}>   
@@ -1075,6 +1150,20 @@ id: 8}
         <Form.Label>Year start paying back principal</Form.Label>
         <Form.Control  placeholder={yr_strt_capital_payback} onChange={(e) => seYrStartCapitalPayback(e.target.value)} />
     </Form.Group>
+    <Form.Group as={Col} controlId="formGridEmail">
+        <Form.Label>Pref type of hurdle (prototype)</Form.Label>
+        <Form.Select aria-label="Default select example" onChange={(e) => SetprefHurdleType(e.target.value)}>
+        <option value={prefHurdleType}>{prefHurdleType}</option>
+        <option value="none">none </option>
+        <option value="non_yearly_compund">non yearly compund </option>
+              <option value="equity_multiple">equity multiple </option>
+              <option value="accrue_no_compund">accrued interest no compunding </option>
+              <option value="paydown_accrue_no_compund"> paydown accrued interest no compunding </option>
+              
+              <option value="irr_yearly_compund">irr yearly compund</option>
+              <option value="paydown_capital_paydown_irr">paydown capital paydown irr</option>
+          </Form.Select>
+          </Form.Group>
 
       </Row>
       <Row className="mb-3">
@@ -1101,6 +1190,10 @@ id: 8}
         <Form.Select aria-label="Default select example"  onChange={(e) => setTypeOfHurdle(e.target.value)}>
               <option value={type_of_hurdle}>{type_of_hurdle}</option>
               <option value="non_yearly_compund">non yearly compund </option>
+              <option value="equity_multiple">equity multiple </option>
+              <option value="accrue_no_compund">accrued interest no compunding </option>
+              <option value="paydown_accrue_no_compund"> paydown accrued interest no compunding </option>
+              
               <option value="irr_yearly_compund">irr yearly compund</option>
               <option value="paydown_capital_paydown_irr">paydown capital paydown irr</option>
           </Form.Select>
@@ -1132,6 +1225,15 @@ id: 8}
   
           onChange={(e) => pay_gp_principal ? setPayGPPrincipal(false) : setPayGPPrincipal(true)}
         />        </Form.Group>
+                <Form.Group as={Col} controlId="formGridEmail">
+        <Form.Label>Catch up</Form.Label>
+        <Form.Select aria-label="Default select example" onChange={(e) => handleCatchup(e.target.value)}>
+              <option value={catchup}>{catchup}</option>
+              <option value="none">None</option>
+              <option value="pref">pref</option>
+              <option value="pref_and_capital">pref_and_capital</option>
+          </Form.Select>
+          </Form.Group>
         </>
         }
           <Form.Group as={Col} controlId="formGridEmail">

@@ -144,8 +144,8 @@ const Fee = ({fee, setFee}) => {
       <Form.Select aria-label="Default select example" id={i} onChange={handleFeeTypeChange}>
             <option value={item.value.type_of_fee}>{item.value.type_of_fee} </option>
             <option value="hurdle">hurdle </option>
-            <option value="capital">capital</option>
-            <option value="catch_up">catch_up</option>
+            {/* <option value="capital">capital</option>
+            <option value="catch_up">catch_up</option> */}
         </Form.Select>
         </Form.Group>
         {item.value.type_of_fee === "hurdle" && <>

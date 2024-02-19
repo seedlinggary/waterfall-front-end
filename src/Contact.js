@@ -34,6 +34,22 @@ const User = () => {
       return subjectEncoded;
     });
   };
+  const buttonstyle = {
+    // display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    padding: '7px',
+    textAlign: 'center',
+    outline: 'none',
+    textDecoration: 'none !important',
+    color: '#ffffff ',
+    width: '200px',
+    height: '32px',
+    borderRadius: '16px',
+    backgroundColor: '#0A66C2',
+    fontFamily: '"SF Pro Text", Helvetica, sans-serif',
+    textDecoration: 'none',
+  };
 
     return ( 
         <div >
@@ -46,8 +62,15 @@ const User = () => {
 <Card className="text-center" bg="dark"key="Info" text="white">
 <Card.Body>
 <Card.Text>
-<h3> If you notice any errors or discrepencies, please contact me at seedling.gary@gmail.com or (201) 685 3403.</h3>
+<h3> If you notice any errors or discrepencies, please contact me at Gary@distributionresolution.com or (201) 685 3403.</h3>
              <h3> Please give me feedback on how I could improve this website. Your help is greatly appreciated.</h3>
+             <a
+    style={buttonstyle}
+    href="https://www.linkedin.com/comm/mynetwork/discovery-see-all?usecase=PEOPLE_FOLLOWS&followMember=gary-schwartz-749941211"
+    target="_blank"
+    >
+    Follow me on LinkedIn
+  </a>
 </Card.Text>
 </Card.Body>
 

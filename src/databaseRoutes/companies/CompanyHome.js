@@ -17,14 +17,21 @@ import KOne from '../accounting/KOne';
 import apiRequest from '../../ApiRequest'
 
 const CompanyHome = ({companyt}) => {
+  const location = useLocation()
+  const [company, setCompany] = useState( companyt)
+  // useEffect(() => {
+  //   if (companyt){
+  //     company = location.state.company || companyt
+  //   }
+  // }, [companyt]);
     let email = reactLocalStorage.get('email')
     // const { company } =useParams();
-    const location = useLocation()
-    const company = location.state || companyt
+    console.log(companyt)
+    // const investments = location.state.investments || 0
     const [index, setIndex] = useState(0);
     const [allEmployees, setallEmployees] = useState([])
     const [allAccesses, setallAccesses] = useState([])
-
+    console.log(company)
     const mystyle = {
         color: "white",
         backgroundColor: "#f4f4f4",
@@ -41,6 +48,7 @@ const CompanyHome = ({companyt}) => {
   
       const { data: deals, error, isPending} = useFetch(`/deal/${company.id}` , requestOptions)
       const { data: boss, er, isP} = useFetch(`/deal/boss/${company.id}` , requestOptions)
+      const { data: customer_id, e, iP} = useFetch(`/subscription/customer_id` , requestOptions)
 
     const handleSelect = (selectedIndex, e) => {
       setIndex(selectedIndex);
@@ -64,6 +72,12 @@ const CompanyHome = ({companyt}) => {
     navigate(0)
 
       }
+      const manageBilling = async e => {
+        let info = []
+        let a = await apiRequest('POST',info,`/subscription/customer_portal`)
+        navigate(0)
+    
+          }
   // const SendDeleteApi = (e) => {
   //   //   e.preventDefault();
   //     let info = expenseTypes
@@ -79,10 +93,22 @@ const CompanyHome = ({companyt}) => {
         <Col xs={9}>    <Card className="text-center" bg="dark"key="Info" text="white">
       <Card.Body>
         <Card.Title><h2>Welcome To the company page {company.name}. </h2></Card.Title>
-        <Card.Text>
-          Here are all of your deals. 
-        </Card.Text>
-        <Button variant="outline-primary" onClick={() => handleClick("parentcombined")}>Profit Distributor</Button>
+        {/* <Card.Text>
+          Here are all of your deals.         <Link to={`/SendFile/`} >
+ 
+ <h5> Lawyer Page</h5>
+ </Link>
+        </Card.Text> */}
+        {/* {investments && <Link to={`/ChartHome/`} state={investments}>
+    
+    <h5> Investment Details</h5>
+    </Link>} */}
+        {customer_id && 
+            <form action={`https://distributionresolutionapi.com/subscription/customer_portal/${customer_id}`} method="POST">
+            {/* <form action={`http://127.0.0.1:5000/subscription/customer_portal/${customer_id}`} method="POST"> */}
+            <Button variant="outline-primary" type="submit">Manage Billing</Button>
+          </form>
+        }
       </Card.Body>
      
     </Card>
@@ -126,7 +152,7 @@ const CompanyHome = ({companyt}) => {
 { boss &&     <Accordion.Item eventKey="3">
         <Accordion.Header>All Employees</Accordion.Header>
         <Accordion.Body>
-        <Link to={`/employees/`} state={{'company': company, 'allEmployees':allEmployees, 'allAccesses':allAccesses}}>
+        <Link to={`/employees/`} state={{'company': company, 'allEmployees':allEmployees, 'allAccesses':allAccesses, 'deals': deals}}>
  
           <h5> Edit acces to employees</h5>
           </Link>

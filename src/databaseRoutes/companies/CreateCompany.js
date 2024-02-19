@@ -51,7 +51,7 @@ const CreateCompany = ({}) => {
 
 
 <Form.Group as={Col}  >
-              <Form.Label>Year Bought In</Form.Label >
+              <Form.Label>Profession</Form.Label >
               <Form.Select aria-label="Default select example" onChange={(e) => setProfessionID(e.target.value)}>
           {professions && professions.map((profession, i) => {
                     return (

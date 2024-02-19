@@ -32,7 +32,8 @@ const UserHome = () => {
           'x-access-token': cookie},
       };
     // console.log(cookie)
-      const { data: companies, error, isPending} = useFetch(`/company` , requestOptions)
+    const { data: companies, error, isPending} = useFetch(`/company` , requestOptions)
+    const { data: investments, e, isP} = useFetch(`/investor/investor_investments` , requestOptions)
 
     const handleSelect = (selectedIndex, e) => {
       setIndex(selectedIndex);
@@ -45,8 +46,21 @@ const UserHome = () => {
     if (companies){
       setcompLn(companies)
     }
+    console.log(companies)
   }, [companies]);
-  if(compLn.length != 1){
+  if (compLn.length == 1 && companies[0].profession.name == 'Investor'){
+    return (
+      <>
+      
+      {/* <CompanyHome companyt={companies[0]} ></CompanyHome> */}
+      {investments && <Link to={`/ChartHome/`} state={investments}>
+      
+      <h5> Investment Details</h5>
+      </Link>}
+      </>
+    )
+  }
+  else if(!companies ||compLn.length != 1){
     return ( 
         <>
         <div style={mystyle}>
@@ -56,7 +70,16 @@ const UserHome = () => {
       <Card.Body>
         <Card.Title><h2>Welcome Home {email} </h2></Card.Title>
         <Card.Text>
-         here are all the companies you are associated with
+          {/* { investments &&
+        <Link to={`/InvestorHome/`} state={investments}>
+ {console.log(investments)}
+ <h5> All of your investments</h5>
+ </Link> } */}
+{investments && <Link to={`/ChartHome/`} state={investments}>
+    
+    <h5> Investment Details</h5>
+    </Link>}
+         here are all the companies you are associated with.
         </Card.Text>
         {/* <Button variant="outline-primary" onClick={() => handleClick("parentcombined")}>Profit Distributor</Button> */}
       </Card.Body>
@@ -79,7 +102,7 @@ const UserHome = () => {
 
                 <Accordion.Header>{company.name}</Accordion.Header>
                 <Accordion.Body>
-                <Link to={`/companyhome/`} state={company}>
+                <Link to={`/companyhome/`} state={{'company': company, 'investments':investments}}>
  
                   <h5> company {company.name}</h5>
                   </Link>
@@ -105,8 +128,12 @@ const UserHome = () => {
 } else {
   return (
     <>
-    ONLY Ibe
+    
     <CompanyHome companyt={companies[0]} ></CompanyHome>
+    {investments && <Link to={`/ChartHome/`} state={investments}>
+    
+    <h5> Investment Details</h5>
+    </Link>}
     </>
   )
 }
